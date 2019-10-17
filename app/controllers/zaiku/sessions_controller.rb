@@ -7,6 +7,13 @@ module Zaiku
       redirect_to oauth_client.auth_code.authorize_url(redirect_uri: approve_zaiku_sessions_url)
     end
 
+    def destroy
+      Current.user = nil
+      cookies.delete :person_id
+
+      redirect_to root_path
+    end
+
     def approve
       access_token = oauth_client.auth_code.get_token(params[:code])
       response = access_token.get('/api/v1/person')
@@ -21,6 +28,18 @@ module Zaiku
 
       redirect_to(cookies.encrypted[:origin] || '/')
       cookies.delete :origin
+    end
+
+    private
+
+    def oauth_client
+      OAuth2::Client.new(
+        Zaiku.client_id,
+        Zaiku.client_secret,
+        site: Zaiku.directory_url,
+        authorize_url: 'oauth/authorize',
+        token_url: 'oauth/access_token',
+        connection_opts: { headers: { 'Accept': 'application/json' } }
     end
   end
 end
