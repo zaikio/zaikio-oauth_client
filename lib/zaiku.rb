@@ -1,4 +1,5 @@
 require "zaiku/engine"
+require "zaiku/jeweler"
 
 module Zaiku
   # OAuth2 Settings

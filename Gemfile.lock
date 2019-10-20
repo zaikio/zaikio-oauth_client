@@ -1,9 +1,18 @@
+GIT
+  remote: https://github.com/crispymtn/rest_jeweler.git
+  revision: 18e548493e2b6757de43420625dc2dcf9e746b94
+  specs:
+    rest_jeweler (1.3.4)
+      activesupport
+      faraday
+
 PATH
   remote: .
   specs:
     zaiku (1.0)
       oauth2
       rails (~> 6.0.0)
+      rest_jeweler
 
 GEM
   remote: https://rubygems.org/
@@ -86,7 +95,7 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.12.2)
-    multi_json (1.14.0)
+    multi_json (1.14.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nio4r (2.5.2)
@@ -150,6 +159,7 @@ PLATFORMS
 
 DEPENDENCIES
   pg
+  rest_jeweler!
   zaiku!
 
 BUNDLED WITH

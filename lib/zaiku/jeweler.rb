@@ -1,0 +1,8 @@
+require 'jeweler/client'
+require 'jeweler/connection'
+require 'jeweler/writeable'
+require 'jeweler/resource'
+require 'jeweler/singleton_resource'
+require 'jeweler/finders'
+require 'jeweler/collection'
+require 'jeweler/errors'
