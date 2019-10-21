@@ -1,10 +1,10 @@
 module Zaiku
   class Person < ApplicationRecord
     # Concerns
-    include TokenBearer
-    
+    include Zaiku::TokenBearer
+
     # Associations
-    has_many :memberships, class_name: 'Zaiku/OrganizationMembership', dependent: :destroy
+    has_many :memberships, class_name: 'Zaiku::OrganizationMembership', dependent: :destroy
     has_many :organizations, through: :memberships
 
     # Validations

@@ -3,6 +3,6 @@ module Zaiku::TokenBearer
 
   included do
     # Associations
-    has_many :access_tokens, as: :bearer, class_name: 'Zaiku/AccessToken'
+    has_many :access_tokens, as: :bearer, class_name: 'Zaiku::AccessToken'
   end
 end
