@@ -8,12 +8,12 @@ module Zaiku
       get new_session_url
 
       params = {
-        client_id: Zaiku::Directory.client_id,
-        redirect_uri: new_callback_url,
+        client_id: Zaiku.client_id,
+        redirect_uri: approve_sessions_url,
         response_type: 'code'
       }
 
-      assert_redirected_to "#{Zaiku.approve_sessions_url}/oauth/authorize?#{params.to_query}"
+      assert_redirected_to "#{Zaiku.directory_url}/oauth/authorize?#{params.to_query}"
     end
   end
 end
