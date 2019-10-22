@@ -1,7 +1,7 @@
 <h1>Welcome to the Warehouse!</h1>
 <% unless Current.user %>
   To process, please
-  <%= link_to 'Login via ZAIKU Directory OAuth', login_path %>
+  <%= link_to 'Login via ZAIKU Directory OAuth', zaiku.new_session_path %>
 <% else %>
   Logged in: <%= Current.user.email %>
   <p>

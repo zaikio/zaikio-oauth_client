@@ -23,7 +23,7 @@ $ bundle config https://rubygems.pkg.github.com/crispymtn USERNAME:TOKEN
 
 ```ruby
 source "https://rubygems.pkg.github.com/crispymtn" do
-  gem "zaiku-directory"
+  gem "zaiku"
 end
 ```
 4. To also make this work on Heroku or your CI App you can set an ENV variable like this:
@@ -38,81 +38,52 @@ BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
 rails zaiku_directory:install:migrations
 rails db:migrate
 ```
-This will create the table `zaiku_directory_access_tokens` which stores AccessTokens for certain bearers (Persons or Organizations).
+This will create the tables:
++ `zaiku_people`
++ `zaiku_organizations`
++ `zaiku_organization_memberships`
++ `zaiku_access_tokens`
+
 
 2. Mount routes
 ```ruby
-mount Zaiku::Engine => "/zaiku/directory"
+mount Zaiku::Engine => "/zaiku"
 ```
 
 3. Setup config in `config/initializers/zaiku_directory.rb`
 ```ruby
 Zaiku.tap do |config|
-  # OAuth2 Settings
+  # App Settings
   config.client_id      = '36b25aa2-2547-4411-b8d0-bfc1f79f21e4'
   config.client_secret  = 'e415a98b72f0b48f554de75756f31780'
   config.directory_url  = 'http://directory.hc.test'
-
-  # Model Settings
-  config.person_class       = 'Person' # could be sth like User
-  config.organization_class = 'Organization' # could be sth like Company
-  config.membership_class   = 'OrganizationMembership'
 end
 ```
 
 
-4. In your own models that represent the above stated ZAIKU Directory objects include the corresponding concerns:
-```ruby
-# in your model that represents the Person, e.g. User.rb
-include Zaiku::Person
+4. How to use the Zaiku models - tbd
 
-# in your model that represents the Organization, e.g. Company.rb
-include Zaiku::Organization
-
-# in your model that represents the OrganizationMembership, e.g. Membership.rb
-include Zaiku::OrganizationMembership
-```
-
-5. Your models that represent the ZAIKU Directory Person/Organization **are required to use UUIDs** in order to be matched with the data from the Directory API.
 
 ## Use Engine in your application
 
 ### Redirect to OAuth
 
-From any point in your application (e.g. a `SessionsController`) you can start using the ZAIKU Directory OAuth2 flow with
+From any point in your application you can start using the ZAIKU Directory OAuth2 flow with
 
 ```ruby
-redirect_to zaiku_directory.new_authorization_url
+redirect_to zaiku.new_session_path
 ```
 
 This will redirect the user to the OAuth Authorize endpoint of the ZAIKU Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
 
 ### Create or Update User
 
-After the user logged in successfully at the ZAIKU Directory a redirect will happen back to your application to `.../zaiku/directory/callbacks/new` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
+After the user logged in successfully at the ZAIKU Directory a redirect will happen back to your application to `.../zaiku/sessions/approve` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
 
-Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaiku::CallbacksController`.
+Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaiku::SessionsController`.
 
-With your used Model Settings in `config/initializers/zaiku_directory.rb` the matching between the models of ZAIKU Directory and your application will also happen automatically and a created/updates user object with a current access token will be saved in your database.
 
-### Matching attributes
 
-To create/update the ZAIKU Person/Organization objects the UUID of the object within the ZAIKU Directory is used as a primary key. All other attributes will be matched 1 to 1 if present in your model:
-
-#### For the Person class
-* first_name
-* name
-* full_name
-* email
-* pronoun
-* locale
-* time_zone
-* country_code
-
-#### For the Organization class
-* name
-
-See the [ZAIKU Directory API Documentation](https://www.example.com) for more information.
 
 ### Logging in the User
 
@@ -120,7 +91,7 @@ tbd
 
 ### Final Redirect
 
-The `new_authorization_url` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin: params[:origin]` which will then be used to redirect the user at the end of a completed & successful OAuth flow (in the CallbacksController).
+The `zaiku.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin: params[:origin]` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
 
 
 
@@ -134,10 +105,9 @@ puma-dev link -n 'zaiku-app'
 This will make the dummy app available at: [http://zaiku-app.test](http://zaiku-app.test/)
 
 
-
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/crispymtn/zaiku-directory-gem.
+Bug reports and pull requests are welcome on GitHub at https://github.com/crispymtn/zaiku-gem.
 
 
 ### Release a new version into  GitHub Package Registry
@@ -146,8 +116,8 @@ Follow the setup instructions that can be found [in the GitHub docs](https://hel
 
 To push a new release:
 
-- `gem build zaiku-directory.gemspec`
-- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaiku-directory-0.1.0.gem`
+- `gem build zaiku.gemspec`
+- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaiku-0.1.0.gem`
 *Adjust the version accordingly.*
 
 
