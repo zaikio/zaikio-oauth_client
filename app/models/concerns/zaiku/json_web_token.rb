@@ -5,7 +5,7 @@ module Zaiku::JSONWebToken
   extend ActiveSupport::Concern
 
   included do
-    @@keys = Array.new
+    @@keys = nil
   end
 
   def self.keys
@@ -17,40 +17,36 @@ module Zaiku::JSONWebToken
     @@keys = []
   end
 
-  def json_web_token_data
-    @jwt ||= decode_jwt
+  def token=(token)
+    super
+    token_data = decode_jwt
+
+    self.id = token_data['jti']
+    self.expires_at = DateTime.strptime(token_data['exp'].to_s,'%s')
   end
 
   private
 
-  def retrieve_jwt_keys
-    result = open(Zaiku.directory_url + '/api/v1/jwt_public_keys.json').read
-    data = JSON.parse(result)['keys']
-
-    @@keys = data.collect { |kd| JWT::JWK.import(kd.symbolize_keys!) }
+  def retrieve_jwt_keys(invalidate: false)
+    if @@keys.is_a?(Hash) && !invalidate
+      return @@keys
+    else
+      result = open(Zaiku.directory_url + '/api/v1/jwt_public_keys.json').read
+      @@keys = JSON.parse(result).deep_symbolize_keys
+    end
   end
 
   def decode_jwt
-    jwt_data = Hash.new
-    jwt_decode_error = nil
-
-    # If we have many keys, try to find the one that decodes the JWT
-    Zaiku::JSONWebToken.keys.each do |key|
-      jwt_data = JWT.decode(self.token, key, true, algorithm: 'RS256').first
-
-    rescue JWT::DecodeError => error
-      jwt_decode_error = error
-      next
-    end
-
-    # If we could decode the JWT we will return it, otherwise we will raise
-    # the decoding error and invalidate all ours keys, so on the next attempt
-    # we try to receive new ones
-    if jwt_data.keys.any?
-      return jwt_data
-    else
-      Zaiku::JSONWebToken.invalidate_keys!
-      raise jwt_decode_error
-    end
+    JWT.decode(
+      self.token,
+      nil,
+      true,
+      {
+        # We verify the expiration ourselves
+        exp_leeway: 1000.years.to_i,
+        algorithms: ['RS256'],
+        jwks: -> (options) { retrieve_jwt_keys(invalidate: options[:invalidate]) }
+      }
+    ).first
   end
 end
