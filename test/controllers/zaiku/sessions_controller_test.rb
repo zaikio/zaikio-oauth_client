@@ -4,7 +4,7 @@ module Zaiku
   class SessionsControllerTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
 
-    test "a person is redirect to the ZAIKU directory OAuth flow" do
+    test "an unknown user is redirected to the ZAIKU directory OAuth flow" do
       get new_session_url
 
       params = {

@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rest_jeweler"
 
   spec.add_development_dependency "pg"
+  spec.add_development_dependency "byebug"
 end

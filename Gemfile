@@ -13,4 +13,10 @@ gemspec
 gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 
 # To use a debugger
-# gem 'byebug', group: [:development, :test]
+gem 'byebug', group: [:development, :test]
+
+group :test do
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'puma'
+end
