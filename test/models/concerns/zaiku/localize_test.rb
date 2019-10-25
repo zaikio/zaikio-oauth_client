@@ -8,8 +8,10 @@ module Zaiku
         name: 'Gallikanokus',
         email: 'fgalli@example.com'
       })
-      local_object = remote_object.to_Person
-      assert local_object.is_a? Zaiku::Person
+
+      local_object = remote_object.to_local_person
+      
+      assert_instance_of Zaiku::Person, local_object
       assert_equal remote_object.first_name, local_object.first_name
     end
   end

@@ -1,4 +1,5 @@
 require 'jwt'
+require 'open-uri'
 
 module Zaiku::JSONWebToken
   extend ActiveSupport::Concern
@@ -21,6 +22,13 @@ module Zaiku::JSONWebToken
   end
 
   private
+
+  def retrieve_jwt_keys
+    result = open(Zaiku.directory_url + '/api/v1/jwt_public_keys.json').read
+    data = JSON.parse(result)['keys']
+
+    @@keys = data.collect { |kd| JWT::JWK.import(kd.symbolize_keys!) }
+  end
 
   def decode_jwt
     jwt_data = Hash.new
