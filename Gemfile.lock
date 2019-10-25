@@ -10,6 +10,7 @@ PATH
   remote: .
   specs:
     zaiku (1.0)
+      jwt
       oauth2
       rails (~> 6.0.0)
       rest_jeweler

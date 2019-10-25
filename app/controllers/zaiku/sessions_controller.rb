@@ -13,7 +13,17 @@ module Zaiku
 
       # Get the remote person
       directoy = Zaiku.directoy(token: access_token.token)
-      person = directoy.person
+      remote_person = directoy.person
+      person = remote_person.to_local_person
+
+      # Update the local database with person, organization, membership info
+      person.save!
+
+      # Save the current access token for further requests
+      Zaiku::Remote::AccessToken.new(
+        bearer: person,
+        token: access_token
+      ).to_local_access_token.save!
 
       redirect_to(cookies.encrypted[:origin] || '/')
       cookies.delete :origin
