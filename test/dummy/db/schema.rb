@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_10_17_132048) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "zaiku_access_tokens", force: :cascade do |t|
+  create_table "zaiku_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "bearer_type"
     t.uuid "bearer_id"
     t.string "token", null: false
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 2019_10_17_132048) do
     t.index ["token"], name: "index_zaiku_access_tokens_on_token", unique: true
   end
 
-  create_table "zaiku_organization_memberships", force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.bigint "person_id", null: false
+  create_table "zaiku_organization_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_id", null: false
+    t.uuid "person_id", null: false
     t.string "roles", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -41,15 +41,13 @@ ActiveRecord::Schema.define(version: 2019_10_17_132048) do
     t.index ["person_id"], name: "index_zaiku_organization_memberships_on_person_id"
   end
 
-  create_table "zaiku_organizations", force: :cascade do |t|
-    t.string "type"
+  create_table "zaiku_organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["type"], name: "index_zaiku_organizations_on_type"
   end
 
-  create_table "zaiku_people", force: :cascade do |t|
+  create_table "zaiku_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "name", null: false
     t.string "email", null: false
