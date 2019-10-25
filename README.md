@@ -63,6 +63,35 @@ end
 
 4. How to use the Zaiku models - tbd
 
+## Use Sandbox for testing
+
+With the above described credentials you can connect right away to our Sandbox environment to get access to the demo app with demo users.
+
+The UUID of people and organizations within the Sandbox are the same as within the fixtures of this gem (see `people.yml`and `organizations.yml`).
+
+### OAuth workflow testing
+
+This gem provides a test which will initiate th OAuth process, open the Sandbox Directory within the Chrome browser, enter the credentials of a demo user and check if will be successfully redirected.
+
+To run the test use
+```bash
+rails app:test:system
+```
+
+
+#### Prerequisites
+
+Make sure you have used `bundle install` for the `selenium-webdriver` gem and make sure chromedriver is working:
+
+```bash
+chromedriver -v
+```
+
+You might encounter some version issues with Rbenv and Chromedriver, to resolve [follow these steps](https://medium.com/fusionqa/issues-with-rbenv-and-chromedriver-990bb14aa57a).
+
+#### Manual Testing
+
+To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaiku/sessions_test.rb`.
 
 ## Use Engine in your application
 
@@ -103,6 +132,8 @@ You can use the included dummy app as a showcase for the workflow and to adjust 
 puma-dev link -n 'zaiku-app'
 ```
 This will make the dummy app available at: [http://zaiku-app.test](http://zaiku-app.test/)
+
+If you use the provided OAuth credentials from above and test this against the Sandbox, everything should work as the redirect URLs for [http://zaiku-app.test](http://zaiku-app.test/) are approved within the Sandbox.
 
 
 ## Contributing
