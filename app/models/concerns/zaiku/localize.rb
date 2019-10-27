@@ -6,7 +6,7 @@ module Zaiku::Localize
   # locally known attributes from the remote class. Please note that the local class
   # needs to be an ActiveRecord::Base decendant
   included do |klass|
-    define_method("to_local_#{klass.name.demodulize.downcase}") do
+    define_method("to_local_#{klass.name.demodulize.underscore}") do
       local_klass = "Zaiku::#{klass.name.demodulize}".constantize
       local_attributes = local_klass.column_names
 

@@ -17,14 +17,6 @@ module Zaiku::JSONWebToken
     @@keys = []
   end
 
-  def token=(token)
-    super
-    token_data = decode_jwt
-
-    self.id = token_data['jti']
-    self.expires_at = DateTime.strptime(token_data['exp'].to_s,'%s')
-  end
-
   private
 
   def retrieve_jwt_keys(invalidate: false)

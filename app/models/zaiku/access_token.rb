@@ -1,8 +1,5 @@
 module Zaiku
   class AccessToken < ApplicationRecord
-    # Concerns
-    include Zaiku::JSONWebToken
-
     # Associations
     belongs_to :bearer, polymorphic: true
 

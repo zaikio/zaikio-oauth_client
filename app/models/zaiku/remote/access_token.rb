@@ -2,20 +2,30 @@ module Zaiku
   module Remote
     class AccessToken
       include Zaiku::JSONWebToken
-      attr_accessor :bearer, :token
+      include Zaiku::Localize
 
-      def initialize(bearer:, token: nil)
-        @bearer, @token = bearer, token
+      attr_accessor :id, :bearer, :token, :refresh_token, :expires_at
+
+      class << self
+        def initialize_by_oauth_access_token(access_token:, bearer:)
+          self.new.tap do |object|
+            object.token = access_token.token
+            token_data = object.send(:decode_jwt)
+
+            object.id = token_data['jti']
+            object.refresh_token = access_token.refresh_token
+            object.bearer = bearer
+            object.expires_at = DateTime.strptime(token_data['exp'].to_s,'%s')
+          end
+        end
       end
 
-      def to_local_access_token
-        jwt_token_data = self.json_web_token_data
-
-        bearer.access_tokens.new(
-          token: @token.token,
-          expires_at: DateTime.strptime(token.expires_at.to_s, '%s'),
-          refresh_token: refresh_token
-        )
+      def attributes
+        Hash.new.tap do |attributes|
+          %w( id bearer token refresh_token expires_at ).each do |attribute|
+            attributes[attribute] = send(attribute)
+          end
+        end
       end
     end
   end
