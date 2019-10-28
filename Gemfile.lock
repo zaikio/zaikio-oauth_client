@@ -75,6 +75,7 @@ GEM
       zeitwerk (~> 2.1, >= 2.1.8)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    bindex (0.8.1)
     builder (3.2.3)
     byebug (11.0.1)
     capybara (3.29.0)
@@ -170,6 +171,11 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    web-console (4.0.1)
+      actionview (>= 6.0.0)
+      activemodel (>= 6.0.0)
+      bindex (>= 0.4.0)
+      railties (>= 6.0.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -187,6 +193,7 @@ DEPENDENCIES
   puma
   rest_jeweler!
   selenium-webdriver
+  web-console
   zaiku!
 
 BUNDLED WITH

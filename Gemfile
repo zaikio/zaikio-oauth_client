@@ -15,6 +15,10 @@ gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 # To use a debugger
 gem 'byebug', group: [:development, :test]
 
+group :development do
+  gem 'web-console'
+end
+
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
