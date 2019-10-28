@@ -28,7 +28,8 @@ module Zaiku
       ).to_local_access_token.save!
 
       # Handle the cookies
-      origin = cookies.delete :origin
+      origin = cookies.encrypted[:origin]
+      cookies.delete :origin
       cookies.encrypted[:person_id] = person.id
 
       # Redirect the user back to the start
