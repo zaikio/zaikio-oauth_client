@@ -8,10 +8,11 @@ module Zaiku::Localize
   included do |klass|
     define_method("to_local_#{klass.name.demodulize.underscore}") do
       local_klass = "Zaiku::#{klass.name.demodulize}".constantize
-      local_attributes = local_klass.column_names
 
       local_object = local_klass.find_or_initialize_by(id: self.id)
-      local_object.attributes = attributes.slice(*local_attributes)
+      local_object.attributes.each do |attr_name, attr_value|
+        local_object[attr_name] = send(attr_name) if respond_to? attr_name
+      end
 
       return local_object
     end
