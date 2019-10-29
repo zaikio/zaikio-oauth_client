@@ -18,7 +18,7 @@ module Zaiku
         super(
           host: Zaiku.directory_url,
           token: token,
-          base_uri: '/api/v1'
+          base_uri: '/api/v1/'
         )
       end
 
