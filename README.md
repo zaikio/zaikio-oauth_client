@@ -35,7 +35,7 @@ BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
 
 1. Copy & run Migrations
 ```bash
-rails zaiku_directory:install:migrations
+rails zaiku:install:migrations
 rails db:migrate
 ```
 This will create the tables:
@@ -60,8 +60,89 @@ Zaiku.tap do |config|
 end
 ```
 
+## Use the Engine in your application
 
-4. How to use the Zaiku models - tbd
+### Models and relations
+
+The engine provides you with the following models to use in your application:
++ `Zaiku::Person`
++ `Zaiku::Organization`
++ `Zaiku::OrganizationMembership`
++ `Zaiku::AccessToken` (you should not require to use this one)
+
+A `Zaiku::Person` has many `:memberships` and `:organizations`.
+A `Zaiku::Organization` has many `:memberships` and `:members`.
+
+#### Add references between Zaiku models and your models
+
+If you want to establish a reference between your own models and the Zaiku models:
+
+```ruby
+# add migration
+def change
+  add_reference :items, :person, type: :uuid, foreign_key: { to_table: :zaiku_people }
+end
+
+# in your item.rb model
+belongs_to :person, class_name: 'Zaiku::Person'
+```
+
+Of course you could also reference to `zaiku_organizations`.
+
+#### Add logic to the Zaiku models
+
+You can easily make your own model and let it inherit from one of the Zaiku models do add more behaviour and relations:
+
+```ruby
+# in your customer.rb
+class Customer < Zaiku::Organization
+  # Associations
+  has_many :vehicles
+  has_many :facilities
+
+  def your_own_methods
+  end
+end
+```
+
+### OAuth Flow
+
+From any point in your application you can start using the ZAIKU Directory OAuth2 flow with
+
+```ruby
+redirect_to zaiku.new_session_path
+```
+
+This will redirect the user to the OAuth Authorize endpoint of the ZAIKU Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
+
+#### Create or update Person and Organization data
+
+After the user logged in successfully at the ZAIKU Directory a redirect will happen back to your application to `.../zaiku/sessions/approve` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
+
+Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaiku::SessionsController`.
+
+All Zaiku models (`Zaiku::Person, Zaiku::Organization, Zaiku::OrganizationMembership`) in relation to the signed in user will automatically be created or updated (depending on if already present in your database).
+
+#### Session handling
+
+The Zaiku gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:person_id]`.
+
+In your controllers include the concern `Zaiku::CookieBasedAuthentication` which will set:
+```ruby
+Current.user ||= Person.find_by(id: cookies.encrypted[:person_id])
+````
+
+You can then use `Current.user` anywhere.
+
+As an alternative build your own concern and use the person_id from the encrypted cookie within your application as you like.
+
+
+For **logout** use: `zaiku.session_path, method: :delete` or build your own controller for deleting the cookie.
+
+#### Redirecting
+
+The `zaiku.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
+
 
 ## Use Sandbox for testing
 
@@ -92,36 +173,6 @@ You might encounter some version issues with Rbenv and Chromedriver, to resolve 
 #### Manual Testing
 
 To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaiku/sessions_test.rb`.
-
-## Use Engine in your application
-
-### Redirect to OAuth
-
-From any point in your application you can start using the ZAIKU Directory OAuth2 flow with
-
-```ruby
-redirect_to zaiku.new_session_path
-```
-
-This will redirect the user to the OAuth Authorize endpoint of the ZAIKU Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
-
-### Create or Update User
-
-After the user logged in successfully at the ZAIKU Directory a redirect will happen back to your application to `.../zaiku/sessions/approve` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
-
-Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaiku::SessionsController`.
-
-
-
-
-### Logging in the User
-
-tbd
-
-### Final Redirect
-
-The `zaiku.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin: params[:origin]` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
-
 
 
 ## Use of dummy app
