@@ -1,5 +1,6 @@
 Zaiku::Engine.routes.draw do
-  resources :sessions, only: %w( new destroy ) do
+  resources :sessions, only: [:new] do
     get :approve, on: :collection
   end
+  resource :session, only: [:destroy]
 end
