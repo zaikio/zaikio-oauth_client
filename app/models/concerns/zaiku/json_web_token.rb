@@ -34,6 +34,8 @@ module Zaiku::JSONWebToken
       nil,
       true,
       {
+        # A jitter of 1 second, especially during testing is fine
+        nbf_leeway: 2.seconds.to_i,
         # We verify the expiration ourselves
         exp_leeway: 1000.years.to_i,
         algorithms: ['RS256'],

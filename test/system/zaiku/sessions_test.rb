@@ -9,6 +9,6 @@ class SessionsTest < ApplicationSystemTestCase
 
     click_on "Login"
 
-    assert_text "Welc4343432me"
+    assert_text "Welcome"
   end
 end
