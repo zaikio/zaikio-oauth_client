@@ -17,6 +17,7 @@ gem 'byebug', group: [:development, :test]
 
 group :development do
   gem 'web-console'
+  gem 'pry-rails'
 end
 
 group :test do
