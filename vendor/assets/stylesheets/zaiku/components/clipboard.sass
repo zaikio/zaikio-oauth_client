@@ -1,0 +1,30 @@
+.clipboard
+  position: relative
+
+  input[type=text]
+    @include bold
+    font-family: Courier, "Courier New", monospace
+    background: lighten($lightgray, 10%)
+    color: $mediumgray
+
+    &:focus
+      background: $lightgray
+      border-color: $lightgray
+
+.clipboard__btn
+  @include bold
+  display: flex
+  align-items: center
+  color: $white
+  position: absolute
+  right: 0
+  top: 0
+  bottom: 0
+  background: $blue
+  cursor: pointer
+  padding: 0 20px
+  border-radius: 0 5px 5px 0
+  transition: all 0.5s
+
+.clipboard__btn--copied
+  background: $green

@@ -186,6 +186,43 @@ This will make the dummy app available at: [http://zaiku-app.test](http://zaiku-
 
 If you use the provided OAuth credentials from above and test this against the Sandbox, everything should work as the redirect URLs for [http://zaiku-app.test](http://zaiku-app.test/) are approved within the Sandbox.
 
+## Use Zaiku UI Elements
+
+This gem provides you with a convenient toolbox for building HEI.OS apps easy and fast.
+By providing common styles and scripts, the gem makes sure that all apps look and feel the same.
+
+### CSS
+Import all selected styles to your app by adding the following line to your
+`application.sass` file (recommended!):
+
+```sass
+@import zaiku/all
+```
+
+Alternatively, only single parts can be imported, eg.
+
+```sass
+@import zaiku/common
+@import zaiku/components
+…
+```
+
+Add navigation and main stage by adding the following to your `application.html.erb`:
+```erb
+  <body>
+    <nav>
+      <%= link_to 'Home', '#', class: controller_name == 'pages' && 'is-active' %>
+      <%= link_to 'Foobar', '#', class: controller_name == 'foobar' && 'is-active' %>
+    </nav>
+    <div id="stage">
+      <%= yield %>
+    </div>
+  </body>
+```
+
+All available modules will be documented in this repo's [WIKI](https://github.com/crispymtn/zaiku-gem/wiki) soon.
+
+
 
 ## Contributing
 

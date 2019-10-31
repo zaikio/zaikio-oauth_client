@@ -1,0 +1,33 @@
+// We use a layered z-index approach
+// There are several layers that share a common z-index range
+// Key z-indices are only declared in this file to keep them manageable
+
+// Key layers:
+// ------------
+// Basis:            0
+// Menu:             10
+// Sliding sidebar:  20
+// Top navigation:   30
+// Modal:            40
+// Menu in modal:    50
+// JS alerts:        60
+// Picker:           70
+// Blocker:          100
+
+.menu
+  z-index: 10
+
+navigation
+  z-index: 30
+
+.flash, .u-front
+  z-index: 60
+
+.locked-background
+  z-index: 35
+
+#modal
+  z-index: 40
+
+#loading-fullscreen
+  z-index: 100

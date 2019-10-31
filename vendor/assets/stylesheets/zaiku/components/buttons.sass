@@ -1,0 +1,160 @@
+@mixin button
+  @include not-selectable
+  @include bold
+  letter-spacing: 0.02rem
+  display: inline-block
+  color: $white
+  line-height: 44px
+  padding: 0 30px
+  border: none
+  cursor: pointer
+  border-radius: 3px
+  transition: 0.2s all ease-out
+  outline: 0
+  background: $primary-color
+  font-size: 15px
+  min-width: 200px
+  text-align: center
+
+  &[disabled], &[disabled]:hover, &.disabled, &.disabled:hover, &.is-disabled
+    opacity: 0.2
+    pointer-events: none
+
+  &:hover, &:focus
+    background-color: lighten($primary-color, 7%)
+    color: $white
+
+  &:active
+    background-color: darken($primary-color, 7%)
+    color: $white
+
+  &.no-float
+    float: none
+    display: inline-block
+
+.btn
+  @include button
+
+.btn + .btn
+  margin-left: 20px
+
+input[type=submit] + .btn
+  margin-left: 20px
+
+.btn, button, input[type=submit]
+  &.btn--header
+    line-height: 36px
+    padding: 0 20px
+    border-bottom-width: 2px
+
+  &.btn--add
+    background-image: image-url('plus.svg')
+    background-size: 15px
+    background-repeat: no-repeat
+    background-position: 20px center
+    text-align: left
+    min-width: initial
+    padding-left: 55px
+
+  &.btn--soft
+    color: $mediumgray
+    background: darken($almostwhite, 2%)
+
+    &:hover, &:focus
+      background: lighten($lightgray, 16%)
+
+    &:active
+      background: lighten($lightgray, 14%)
+
+  &.btn--positive
+    background: $green
+
+    &:hover, &:focus
+      background: lighten($green, 7%)
+
+    &:active
+      background: darken($green, 7%)
+
+  &.btn--negative
+    background: $red
+
+    &:hover, &:focus
+      background: lighten($red, 3%)
+
+    &:active
+      background: darken($red, 5%)
+
+  &.btn--outline
+    border: 2px solid $lightgray
+    color: darken($lightgray, 10%)
+    line-height: 43px
+    background: none
+
+    &:active, &:focus, &:hover
+      color: darken($lightgray, 10%)
+      background: none
+
+    &:hover
+      border-color: $mediumgray
+      color: $mediumgray
+
+    &.btn--negative
+      &:hover
+        border-color: $red
+        color: $red
+        background: none
+
+  &.btn--thin
+    line-height: 34px
+    min-width: auto
+    font-size: 0.9em
+
+  &.btn--word
+    background: none
+    color: $mediumgray
+    border: 0
+    padding: 0
+
+    &:hover, &:focus, &:active
+      background: none
+      color: $black
+
+  &.btn--100
+    width: 100%
+    text-align: center
+
+  &.btn--dashed
+    border: 1px dashed $lightgray
+    background: none !important
+    color: $lightgray
+
+    &:hover
+      border-color: $black
+      color: $black
+
+// Small icon buttons
+.icon-button
+  display: inline-block
+  width: 26px
+  line-height: 26px
+  text-align: center
+  border-radius: 3px
+  color: $mediumgray
+
+  &:hover
+    color: $black
+    background-color: rgba(0, 0, 0, .1)
+
+  &.is-selected
+    color: $white
+    background-color: $green
+
+.icon-button--destructive
+  &:hover
+    color: $white
+    background-color: $red
+
+.icon-button--positive
+  &:hover
+    color: $white
+    background-color: $green

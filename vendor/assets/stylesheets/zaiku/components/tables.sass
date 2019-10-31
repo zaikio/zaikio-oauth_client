@@ -1,0 +1,89 @@
+table
+  box-shadow: 0 0px 2px rgba(0, 0, 0, .1), 0 1px 1px rgba(0, 0, 0, .1)
+  width: 100%
+  background: $white
+  border-radius: 5px
+  border-collapse: collapse
+
+  &.with-header-col
+    tr td:first-of-type
+      @include bold
+      color: $mediumgray
+      vertical-align: top
+
+  tr
+    &:first-of-type
+      td
+        &:first-of-type
+          border-top-left-radius: 5px
+
+        &:last-of-type
+          border-top-right-radius: 5px
+
+    &:last-of-type
+      td
+        &:first-of-type
+          border-bottom-left-radius: 5px
+
+        &:last-of-type
+          border-bottom-right-radius: 5px
+      
+    + tr
+      border-top: 1px solid $almostwhite
+
+  th
+    &:first-of-type
+      border-top-left-radius: 5px
+
+    &:last-of-type
+      border-top-right-radius: 5px
+
+.table--plain
+  border-top: 1px solid darken($almostwhite, 5%)
+  border-bottom: 1px solid darken($almostwhite, 5%)
+
+.table--valign-top
+  td
+    vertical-align: top
+
+.table--valign-middle
+  td
+    vertical-align: middle
+
+th, td
+  padding: 10px 15px
+
+.td--wide, .th--wide
+  padding-left: 30px
+  padding-right: 30px
+
+.td--shrink
+  width: 1%
+  white-space: nowrap
+
+.td--tight
+  padding-left: 0
+  padding-right: 0
+
+.td--high
+  padding-top: 30px
+  padding-bottom: 30px
+
+tr
+  &.is-active
+    background-color: $almostwhite
+
+  &.is-highlighted
+    background-color: #f9f9f9
+
+  &.has-border-top
+    border-top: 2px solid rgba(0, 0, 0, .05)
+
+thead
+  tr th
+    background-color: $lightgray
+    text-align: left
+
+tfoot
+  border-top: 1px solid $lightgray
+  background-color: lighten($almostwhite, 2%)

@@ -7,8 +7,8 @@ require "zaiku/version"
 Gem::Specification.new do |spec|
   spec.name        = "zaiku"
   spec.version     = Zaiku::VERSION
-  spec.authors     = ["Steffen Boller", "Christian Weyer"]
-  spec.email       = ["sb@crispymtn.com", "cw@crispymtn.com"]
+  spec.authors     = ["Steffen Boller", "Christian Weyer", "Matthias Prinz"]
+  spec.email       = ["sb@crispymtn.com", "cw@crispymtn.com", "mp@crispymtn.com"]
   spec.homepage    = "https://crispymtn.com"
   spec.summary     = "Zaiku Platform Connectivity"
   spec.description = "This gem provides a mountable Rails engine that provides single sign on, directory access and further ZAIKU platform connectivity."

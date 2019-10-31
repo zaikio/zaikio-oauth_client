@@ -1,0 +1,94 @@
+header
+  position: sticky
+  top: 0
+  left: 0
+  height: 60px
+  width: 100%
+  background: $white
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, .1)
+  display: flex
+  padding: 12px 30px
+  justify-content: space-between
+  z-index: 10
+
+.header__btn
+  display: inline-block
+
+.header__menu
+  @media only screen and (min-width: $break-wide)
+    display: none
+
+.header__menu-btn
+  @include uppercase
+  @include bold
+  display: inline-flex
+  border: 1px solid $lightgray
+  border-radius: 5px
+  padding: 5px 15px
+  font-size: 0.8rem
+  align-items: center
+  padding-left: 45px
+  color: $black
+  height: 100%
+  margin-right: 10px
+
+  background-image: image-url('menu.svg')
+  background-size: 15px
+  background-repeat: no-repeat
+  background-position: 15px center
+
+.header__orga-switch
+  @include uppercase
+  @include bold
+  display: inline-flex
+  border: 1px solid $lightgray
+  border-radius: 5px
+  padding: 5px 15px
+  font-size: 0.8rem
+  align-items: center
+  padding-right: 45px
+  color: $black
+  height: 100%
+  cursor: pointer
+
+  background-image: image-url('caret-down.svg')
+  background-size: 15px
+  background-repeat: no-repeat
+  background-position: right 15px center
+
+  &:hover
+    border-color: $mediumgray
+
+.header__icons
+  align-items: center
+  display: flex
+
+.header__icon
+  border-radius: 50px
+  width: 42px
+  height: 42px
+  background-repeat: no-repeat
+  background-position: center center
+  cursor: pointer
+
+  + .header__icon
+    margin-left: 15px
+
+.header__icon--notifications
+  background-image: image-url('notification.svg')
+  background-size: 17px
+
+  &:hover
+    background-color: $almostwhite
+
+.header__icon--help
+  background-image: image-url('help.svg')
+  background-size: 12px
+
+  &:hover
+    background-color: $almostwhite
+
+.header__icon--profile
+  background-image: image-url('placeholder/person.svg')
+  background-repeat: no-repeat
+  background-size: cover

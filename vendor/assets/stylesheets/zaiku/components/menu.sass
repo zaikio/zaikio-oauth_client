@@ -1,0 +1,155 @@
+.menu
+  @include box-shadow-wide
+  @include animation(show-menu, 0.2s, ease-out, 1)
+  position: absolute
+  background-color: $white
+  margin-top: 5px
+  text-align: left
+  max-width: 500px
+  font-size: $font-size-reg !important
+
+  .divider
+    border-top: 1px solid $almostwhite
+
+  .second-row
+    color: $mediumgray
+
+  a, .link
+    display: block
+    position: relative
+    margin: 5px
+    white-space: nowrap
+    display: block
+    margin: 0
+    font-weight: normal
+    line-height: 24px
+    color: $black
+    padding: 10px 40px 10px 20px
+    float: none
+
+    &:hover
+      background-color: $primary-color
+      color: $white !important
+
+      *
+        color: $white !important
+
+    &.is-disabled
+      opacity: 0.5
+
+  a[data-method='delete'], .is-destructive
+    @include semi-bold
+    color: $red
+
+    &:hover
+      background-color: $red
+
+  > p
+    display: block
+    margin: 0
+    font-weight: normal
+    line-height: 28px
+    color: $mediumgray
+    padding: 10px 40px 10px 20px
+
+  .menu-add
+    background-color: $almostwhite
+
+    a
+      font-weight: 600 !important
+      font-size: 0.9em
+
+  .delete
+    position: absolute
+    top: 0
+    right: 0
+    padding: 10px 20px
+    color: $lightgray
+
+    &:hover
+      background-color: $red
+
+.menu__scrollable-content
+  max-height: 300px
+  overflow-y: scroll
+
+.menu__caption
+  @include semi-bold
+  padding: 5px 25px
+  font-size: 0.8em
+  background-color: $almostwhite
+  color: $mediumgray
+
+.menu__footer
+  background: $almostwhite
+  padding: 10px
+
+.menu--bold
+  a
+    @include bold
+    min-width: 275px
+    padding: 13px 40px 13px 30px
+
+  .divider
+    margin: 10px 0
+
+.menu--right
+  right: 10px
+
+.menu--selection
+  font-size: 0.9em
+
+  a
+    padding: 8px 40px
+    font-size: 0.9em
+
+    &:hover
+      background-color: $almostwhite
+      color: $black !important
+
+    &.is-selected
+      @include bold
+      background-image: image-url('check.svg')
+      background-size: 1.1em
+      background-repeat: no-repeat
+      background-position: 15px center
+
+    + a
+      border-top: 1px solid $almostwhite
+      
+.more-menu
+  display: inline-block
+
+.more-menu__trigger
+  background-image: image-url('more.svg')
+  background-repeat: no-repeat
+  background-position: center
+  background-size: 1.5em
+  height: 30px
+  width: 50px
+  border-radius: 5px
+  opacity: 0.3
+  display: inline-block
+  cursor: pointer
+
+  &:hover
+    opacity: 0.6
+    background-color: rgba(0, 0, 0, .1)
+
+@-webkit-keyframes show-menu
+  from
+    opacity: 0
+    margin-top: 0px
+
+  to
+    opacity: 1
+    margin-top: 5px
+
+@keyframes show-menu
+  from
+    opacity: 0
+    margin-top: 0px
+
+  to
+    opacity: 1
+    margin-top: 5px
