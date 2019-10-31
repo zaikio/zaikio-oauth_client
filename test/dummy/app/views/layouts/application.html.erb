@@ -9,6 +9,11 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav>
+      <%= link_to 'Home', '#', class: controller_name == 'pages' && 'is-active' %>
+    </nav>
+    <div id="stage">
+      <%= yield %>
+    </div>
   </body>
 </html>
