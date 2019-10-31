@@ -15,6 +15,7 @@ module Zaiku
       include Jeweler::Client
 
       def initialize(token:)
+        token = refresh_token_if_expired(token)
         super(
           host: Zaiku.directory_url,
           token: token,
@@ -28,6 +29,15 @@ module Zaiku
           self.perform_request(:get, '/person')
         ).tap do |person|
           person.extend(Jeweler::SingletonResource)
+        end
+      end
+
+      def refresh_token_if_expired(token)
+        access_token = Zaiku::AccessToken.find_by(token: token)
+        if access_token&.expired?
+          access_token.refresh!.token
+        else
+          token
         end
       end
     end
