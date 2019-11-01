@@ -21,7 +21,7 @@ module Zaiku
     )
   end
 
-  def self.directoy(token:)
+  def self.directory(token:)
     Zaiku::Remote::Client.new(token: token)
   end
 end

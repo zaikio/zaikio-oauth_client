@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_17_132048) do
+ActiveRecord::Schema.define(version: 2019_10_31_203820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -58,6 +58,15 @@ ActiveRecord::Schema.define(version: 2019_10_17_132048) do
     t.index ["email"], name: "index_zaiku_people_on_email", unique: true
   end
 
+  create_table "zaiku_sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_zaiku_sites_on_organization_id"
+  end
+
   add_foreign_key "zaiku_organization_memberships", "zaiku_organizations", column: "organization_id"
   add_foreign_key "zaiku_organization_memberships", "zaiku_people", column: "person_id"
+  add_foreign_key "zaiku_sites", "zaiku_organizations", column: "organization_id"
 end

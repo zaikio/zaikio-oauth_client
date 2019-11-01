@@ -14,6 +14,8 @@ module Zaiku
     class Client
       include Jeweler::Client
 
+      base_collections :sites
+
       def initialize(token:)
         token = refresh_token_if_expired(token)
         super(

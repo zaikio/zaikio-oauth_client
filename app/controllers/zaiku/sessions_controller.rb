@@ -12,12 +12,12 @@ module Zaiku
       access_token = Zaiku.oauth_client.auth_code.get_token(params[:code])
 
       # Get the remote person
-      directoy = Zaiku.directoy(token: access_token.token)
-      remote_person = directoy.person
+      directory = Zaiku.directory(token: access_token.token)
+      remote_person = directory.person
 
       # Transform the remote person into a local one, including all required
       # associations such as organization memberships and the organizations
-      Current.user = person = remote_person.to_local_person_with_associations
+      Current.user = person = remote_person.to_local_person_with_associations(directory)
       person.save!
 
       # Save the current access token for further requests, this also saves
