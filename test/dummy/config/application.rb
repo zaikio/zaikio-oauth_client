@@ -1,7 +1,6 @@
 require_relative 'boot'
 
 require 'rails/all'
-require 'sass-rails'
 
 Bundler.require(*Rails.groups)
 

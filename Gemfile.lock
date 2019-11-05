@@ -9,12 +9,11 @@ GIT
 PATH
   remote: .
   specs:
-    zaiku (0.1.6)
+    zaiku (0.1.8)
       jwt
       oauth2
       rails (~> 6.0.0)
       rest_jeweler
-      sass-rails
 
 GEM
   remote: https://rubygems.org/
@@ -212,6 +211,7 @@ DEPENDENCIES
   pry-rails
   puma
   rest_jeweler!
+  sass-rails
   selenium-webdriver
   web-console
   zaiku!

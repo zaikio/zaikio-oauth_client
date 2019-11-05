@@ -30,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "oauth2"
   spec.add_dependency "rest_jeweler"
   spec.add_dependency "jwt"
-  spec.add_dependency "sass-rails"
 
   spec.add_development_dependency "pg"
   spec.add_development_dependency "byebug"
