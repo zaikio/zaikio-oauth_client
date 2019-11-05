@@ -43,7 +43,7 @@ This will create the tables:
 + `zaiku_organizations`
 + `zaiku_organization_memberships`
 + `zaiku_access_tokens`
-
++ `zaiku_sites`
 
 2. Mount routes
 ```ruby
@@ -69,9 +69,10 @@ The engine provides you with the following models to use in your application:
 + `Zaiku::Organization`
 + `Zaiku::OrganizationMembership`
 + `Zaiku::AccessToken` (you should not require to use this one)
++ `Zaiku::Site`
 
 A `Zaiku::Person` has many `:memberships` and `:organizations`.
-A `Zaiku::Organization` has many `:memberships` and `:members`.
+A `Zaiku::Organization` has many `:memberships` and `:members` and and `:sites`.
 
 #### Add references between Zaiku models and your models
 
