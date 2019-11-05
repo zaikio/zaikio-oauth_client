@@ -40,7 +40,7 @@ module Zaiku
       Current.user = nil
       cookies.delete :person_id
 
-      redirect_to root_path
+      redirect_to main_app.root_path
     end
   end
 end
