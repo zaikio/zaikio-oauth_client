@@ -1,3 +1,4 @@
+
 # ZAIKU Directory Gem
 
 This Gem enables you to easily connect to the ZAIKU Directory and use the OAuth2 flow as well as query the API for information about the User and connected Organizations.
@@ -191,6 +192,14 @@ If you use the provided OAuth credentials from above and test this against the S
 
 This gem provides you with a convenient toolbox for building HEI.OS apps easy and fast.
 By providing common styles and scripts, the gem makes sure that all apps look and feel the same.
+
+### Helpers
+To use tools like the FormBuilder or helpful methods like `link_to_modal` include the following in your `application_controller.rb`
+
+```ruby
+default_form_builder Zaiku::FormBuilder
+helper Zaiku::ApplicationHelper
+```
 
 ### CSS
 Import all selected styles to your app by adding the following line to your
