@@ -13,6 +13,7 @@ gemspec
 gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 
 gem 'haml-rails'
+gem 'webpacker'
 
 # To use a debugger
 gem 'byebug', group: [:development, :test]
