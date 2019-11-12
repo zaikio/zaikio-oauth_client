@@ -1,0 +1,9 @@
+%tr
+  %td= person.first_name
+  %td= person.name
+  %td= person.email
+  %td
+    %ul
+      - person.organizations.each do |organization|
+        %li= render organization
+%tr

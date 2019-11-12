@@ -12,6 +12,8 @@ gemspec
 # your gem to rubygems.org.
 gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 
+gem 'haml-rails'
+
 # To use a debugger
 gem 'byebug', group: [:development, :test]
 
