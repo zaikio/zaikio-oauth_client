@@ -8,7 +8,13 @@
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_pack_tag 'application'
   %body
-    %nav
-      = link_to 'Home', '#', class: controller_name == 'pages' && 'is-active'
-    #stage
-      = yield
+    #content
+      %nav
+        = link_to 'OAuth', '/', class: controller_name == 'welcomes' && 'is-active'
+        = link_to 'Elements', elements_path, class: controller_name == 'elements' && 'is-active'
+      #stage
+        = yield
+
+    #modal{ 'data-controller': 'modal', 'data-action': 'click->modal#hide' }
+      #modal__content{ 'data-target': 'modal.content' }
+        = yield :modal

@@ -7,21 +7,3 @@
 - else
   Logged in: #{Current.user.email}
   %p= render Current.user
-
-%h2 UI Elements
-
-.table-list__row
-  .table-list__col.table-list__col--shrink
-    .image.image--small.image--app
-  .table-list__col
-    %strong Lorem ipsum
-    %br
-    Lorem ipsum
-
-  .table-list__col
-    .u-gray Lorem ipsum
-    .u-gray Lorem ipsum
-
-  .table-list__col.table-list__col--right
-    = more_menu do
-      = link_to 'Lorem ipsum', root_path
