@@ -8,29 +8,34 @@ This Gem enables you to easily connect to the ZAIKU Directory and use the OAuth2
 
 ## Installation
 
-This gem is currently hosted privately in the **GitHub Package Registry**.
+To provide all functionality this gem is a **Ruby Gem** as well as a **Node Package**, both are currently hosted privately in the **GitHub Package Registry**.
 
-To fetch this gem from the GitHub Package Registry follow these steps:
+To fetch both from the GitHub Package Registry follow these steps:
 
 1. You must use a personal access token with the `read:packages` and `write:packages` scopes to publish and delete public packages in the GitHub Package Registry with RubyGems. Your personal access token must also have the `repo` scope when the repository is private. For more information, see "[Creating a personal access token for the command line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)."
 
-2. Configure Bundler to use your token.
-
+2. Set an ENV variable that will be used for both gem and npm. *This will also work on Heroku or your CI App if you set the ENV variable there.*
 ```bash
-$ bundle config https://rubygems.pkg.github.com/crispymtn USERNAME:TOKEN
+export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
 ```
 
-3. Include the gem in your Gemfile like this
+3. For the **Ruby Gem**, add in your Gemfile
 
 ```ruby
 source "https://rubygems.pkg.github.com/crispymtn" do
   gem "zaiku"
 end
 ```
-4. To also make this work on Heroku or your CI App you can set an ENV variable like this:
-```bash
-BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
+Then run `bundle install`.
+
+4. For the **Node Package** you have to add a file `.npmrc` to your Rails project, with the following content:
+
 ```
+//npm.pkg.github.com/:_authToken=${BUNDLE_RUBYGEMS__PKG__GITHUB__COM}
+@crispymtn:registry=https://npm.pkg.github.com
+```
+Then run `yarn add @crispymtn/zaiku` - your `package.json` should have `@crispymtn/zaiku` added as a dependency afterwards.
+
 
 ## Setup & Configuration
 
@@ -61,7 +66,7 @@ Zaiku.tap do |config|
 end
 ```
 
-## Use the Engine in your application
+## Use the Rails Engine in your application
 
 ### Models and relations
 
@@ -230,24 +235,54 @@ Add navigation and main stage by adding the following to your `application.html.
   </body>
 ```
 
+### JS
+
+In your Rails project at `/javascript/packs/application.js` import the different JS components:
+
+```javascript
+import '@crispymtn/zaiku/controllers';
+```
+
+
+---
+
 All available modules will be documented in this repo's [WIKI](https://github.com/crispymtn/zaiku-gem/wiki) soon.
 
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/crispymtn/zaiku-gem.
+**Make sure you have the dummy app running locally to validate your changes.**
 
+Depending on if you changed functionality of the **Ruby Gem** components or the UI components from the **Node Package** you have to deploy either one of them to the GitHub Package Registry.
 
-### Release a new version into  GitHub Package Registry
+### Ruby Gem
 
-Follow the setup instructions that can be found [in the GitHub docs](https://help.github.com/en/articles/configuring-rubygems-for-use-with-github-package-registry).
+Follow the setup instructions for gem credentials and bundler that can be found [in the GitHub docs](https://help.github.com/en/articles/configuring-rubygems-for-use-with-github-package-registry#authenticating-to-github-package-registry).
 
-To push a new release:
+Make your changes and adjust `version.rb`.
+
+**To push a new release:**
 
 - `gem build zaiku.gemspec`
 - `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaiku-0.1.0.gem`
 *Adjust the version accordingly.*
+
+### Node Package
+
+Edit your global `~/.npmrc` and add
+```
+//npm.pkg.github.com/:_authToken=YOUR-GITHUB-TOKEN
+```
+If you do not yet have created one from the Installation Guide above, see "[Creating a personal access token for the command line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)."
+
+Within the gem navigate into `test/dummy/app/javascript/zaiku` where the Node Package is situated and your changes will take place.
+
+Adjust the `version` information within `package.json` (**important**: the one `test/dummy/app/javascript/zaiku`).
+
+**To push a new release:**
+
+`npm publish` within the folder of `test/dummy/app/javascript/zaiku`
 
 
 ## License

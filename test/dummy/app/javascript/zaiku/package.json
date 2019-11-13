@@ -1,0 +1,21 @@
+{
+  "name": "@crispymtn/zaiku",
+  "version": "0.2.3",
+  "description": "Includes the ZAIKU Gem JS functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "stimulus": "^1.1.1"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "git://github.com/crispymtn/zaiku-gem.git"
+  }
+}
