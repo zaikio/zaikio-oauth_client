@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    zaiku (0.2.1)
+    zaiku (0.2.4)
       jwt
       oauth2
       rails (~> 6.0.0)
