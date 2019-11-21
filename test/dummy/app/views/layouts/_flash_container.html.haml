@@ -1,0 +1,10 @@
+#flash-container
+  - if flash.any?
+    - if flash[:confetti] || flash.now[:confetti]
+      - flash.delete(:confetti)
+      :javascript
+        window.confetti.start(800)
+
+    - flash.each do |kind, message|
+      .flash{ class: "flash--#{kind}" }
+        = I18n.t("layouts.flash.#{kind.to_s}.#{message.to_s}", default: message)

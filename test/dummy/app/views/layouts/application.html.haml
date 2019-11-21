@@ -9,6 +9,7 @@
     = javascript_pack_tag 'application'
   %body
     #content
+      = render partial: 'layouts/flash_container'
       %nav
         = link_to 'OAuth', '/', class: controller_name == 'welcomes' && 'is-active'
         = link_to 'Elements', elements_path, class: controller_name == 'elements' && 'is-active'
