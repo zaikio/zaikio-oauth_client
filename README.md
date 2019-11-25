@@ -132,16 +132,16 @@ All Zaiku models (`Zaiku::Person, Zaiku::Organization, Zaiku::OrganizationMember
 
 #### Session handling
 
-The Zaiku gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:person_id]`.
+The Zaiku gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaiku_person_id]`.
 
 In your controllers include the concern `Zaiku::CookieBasedAuthentication` which will set:
 ```ruby
-Current.user ||= Person.find_by(id: cookies.encrypted[:person_id])
+Current.user ||= Person.find_by(id: cookies.encrypted[:zaiku_person_id])
 ````
 
 You can then use `Current.user` anywhere.
 
-As an alternative build your own concern and use the person_id from the encrypted cookie within your application as you like.
+As an alternative build your own concern and use the zaiku_person_id from the encrypted cookie within your application as you like.
 
 
 For **logout** use: `zaiku.session_path, method: :delete` or build your own controller for deleting the cookie.

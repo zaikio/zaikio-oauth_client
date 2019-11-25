@@ -30,7 +30,7 @@ module Zaiku
       # Handle the cookies
       origin = cookies.encrypted[:origin]
       cookies.delete :origin
-      cookies.encrypted[:person_id] = person.id
+      cookies.encrypted[:zaiku_zaiku_person_id] = person.id
 
       # Redirect the user back to the start
       redirect_to(origin || '/')
@@ -38,7 +38,7 @@ module Zaiku
 
     def destroy
       Current.user = nil
-      cookies.delete :person_id
+      cookies.delete :zaiku_zaiku_person_id
 
       redirect_to main_app.root_path
     end
