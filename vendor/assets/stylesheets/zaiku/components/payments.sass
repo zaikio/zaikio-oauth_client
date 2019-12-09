@@ -1,0 +1,127 @@
+.add-payment
+  display: flex
+  position: relativ
+  background: $almostwhite
+  border-radius: 10px
+  width: 300px
+  height: 190px
+  align-items: center
+  justify-content: center
+  font-size: 1.5em
+  color: $lightgray
+
+  &:hover
+    color: darken($lightgray, 7%)
+    background: darken($almostwhite, 3%)
+  
+
+.credit-card
+  position: relative
+  background: $blue
+  border-radius: 10px
+  width: 300px
+  height: 190px
+  overflow: hidden
+  border: 1px solid rgba(0, 0, 0, .8)
+  border-bottom-width: 2px
+
+.credit-card__chip
+  position: absolute
+  top: 60px
+  left: 25px
+  width: 50px
+  height: 45px
+  background: $yellow
+  border-radius: 5px
+
+.credit-card__issuer
+  @include bold
+  @include uppercase
+  position: absolute
+  top: 20px
+  right: 25px
+  color: $white
+  font-size: 1.5em
+
+.credit-card__number, .credit-card__expires_at, .credit-card__owner
+  position: absolute
+  font-family: "Courier", monospace
+  color: $white
+
+.credit-card__number
+  top: 117px
+  left: 25px
+  font-size: 1.2em
+
+.credit-card__owner
+  @include truncate
+  @include uppercase
+  bottom: 15px
+  left: 25px
+  width: 150px
+
+.credit-card__expires_at
+  bottom: 15px
+  right: 25px
+
+.credit-card__shine
+  background: rgba(255, 255, 255, 0.03)
+  height: 40px
+  width: 120%
+  position: absolute
+  top: 0
+  left: 0
+  transform: rotate(22deg)
+
+.bank-account
+  position: relative
+  background: $almostwhite
+  border-radius: 5px
+  width: 400px
+  height: 190px
+  border: 1px solid rgba(0, 0, 0, .1)
+  border-bottom-width: 2px
+  padding: 15px 20px
+
+.bank-account__iban
+  @include monospace
+
+.bank-account__title
+  @include uppercase
+  @include bold
+  color: $blue
+  margin-bottom: 10px
+  font-size: 0.9em
+  border-bottom: 1px solid rgba(0, 0, 0, .1)
+
+.payment__activated
+  @include bold
+  letter-spacing: 0.02rem
+  display: inline-block
+  color: rgba(0, 0, 0, .5)
+  line-height: 44px
+  padding: 0 30px
+  border-radius: 3px
+  background: #b0f1c2
+  font-size: 15px
+  text-align: center
+
+.payments
+  display: flex
+
+.payments__col
+  flex: 0
+  padding: 40px
+  border: 2px solid transparent
+
+  &.is-active
+    border-color: #b0f1c2
+    border-radius: 5px
+
+.payments__title
+  @include uppercase
+  @include bold
+  font-size: 1.1em
+  color: $black
+  text-align: center
+  margin-bottom: 40px

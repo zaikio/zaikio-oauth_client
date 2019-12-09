@@ -1,9 +1,6 @@
 table
-  box-shadow: 0 0px 2px rgba(0, 0, 0, .1), 0 1px 1px rgba(0, 0, 0, .1)
+  background-color: $white
   width: 100%
-  background: $white
-  border-radius: 5px
-  border-collapse: collapse
 
   &.with-header-col
     tr td:first-of-type
@@ -11,36 +8,31 @@ table
       color: $mediumgray
       vertical-align: top
 
-  tr
-    &:first-of-type
-      td
-        &:first-of-type
-          border-top-left-radius: 5px
+  tr + tr
+    border-top: 1px solid $almostwhite
 
-        &:last-of-type
-          border-top-right-radius: 5px
+.table--collection
+  @include box-shadow
 
-    &:last-of-type
-      td
-        &:first-of-type
-          border-bottom-left-radius: 5px
-
-        &:last-of-type
-          border-bottom-right-radius: 5px
-      
-    + tr
-      border-top: 1px solid $almostwhite
-
-  th
-    &:first-of-type
-      border-top-left-radius: 5px
-
-    &:last-of-type
-      border-top-right-radius: 5px
+  td
+    padding: 20px
+    vertical-align: top
 
 .table--plain
   border-top: 1px solid darken($almostwhite, 5%)
   border-bottom: 1px solid darken($almostwhite, 5%)
+
+.table--clean
+  thead
+    tr
+      border-bottom: 2px solid darken($almostwhite, 5%)
+      color: $lightgray
+
+    th
+      background: none
+
+.table--bordered
+  border: 1px solid $almostwhite
 
 .table--valign-top
   td
@@ -50,39 +42,112 @@ table
   td
     vertical-align: middle
 
+.table--full-width-boxed
+  td:first-of-type
+    padding-left: 60px
+
+  td:last-of-type
+    padding-right: 60px
+
 th, td
   padding: 10px 15px
 
-.td--wide, .th--wide
-  padding-left: 30px
-  padding-right: 30px
+  &.right
+    float: none
+    text-align: right
 
-.td--shrink
-  width: 1%
-  white-space: nowrap
+  &.no-wrap
+    white-space: nowrap
 
-.td--tight
-  padding-left: 0
-  padding-right: 0
+  &.padding-left
+    padding-left: 30px
 
-.td--high
-  padding-top: 30px
-  padding-bottom: 30px
+  &.double-padding-left
+    padding-left: 60px
+
+  &.td--wide, &.th--wide
+    padding-left: 30px
+    padding-right: 30px
+
+  &.td--shrink
+    width: 1%
+    white-space: nowrap
+
+  &.td--tight
+    padding-left: 0
+    padding-right: 0
+
+  &.td--high
+    padding-top: 30px
+    padding-bottom: 30px
+
+  &.is-pending
+    border-left: 3px solid #f5f5f5
+
+  &.is-won
+    border-left: 3px solid lighten($green, 10%)
+
+  &.is-lost
+    border-left: 3px solid lighten($red, 10%)
 
 tr
-  &.is-active
+  &.active
     background-color: $almostwhite
 
   &.is-highlighted
     background-color: #f9f9f9
 
-  &.has-border-top
-    border-top: 2px solid rgba(0, 0, 0, .05)
+  &.border-top
+    border-top: 2px solid rgba(0,0,0,0.05)
+
+  &.darkened
+    td
+      background-color: darken($white, 3%)
+
+.tr--separated
+  border-top: 2px solid $almostwhite
+
+.tr--dotted + .tr--dotted
+  border-top: 1px dotted $almostwhite
+
+td, th
+  &.darkened
+    background: darken($white, 3%) !important
+
+  &.td--50
+    width: 50%
+
+  &.td--100
+    width: 100%
+
+.td--indented
+  padding-left: 40px
+
+.td--total
+  background: hsl(220, 0, 90%)
 
 thead
   tr th
     background-color: $lightgray
     text-align: left
+
+.thead--sub
+  th
+    @include semi-bold
+    background-color: darken($white, 3%)
+
+tbody
+  .tr--dotted
+    border: 0
+
+    + .tr--dotted
+      border-top: 1px dotted $almostwhite
+
+  .tr--follow
+    border-top: 0
+
+  tr.separated
+    border-top: 2px solid $lightgray
 
 tfoot
   border-top: 1px solid $lightgray

@@ -1,8 +1,3 @@
-@mixin boxed
-  @include box-shadow
-  background: $white
-  position: relative
-
 .box
   @include box-shadow
   background-color: $white
@@ -51,12 +46,14 @@
 
 // Layout-Box
 .boxed
-  @include box-shadow
+  @include boxed
   padding: 40px
-  background-color: $white
-  position: relative
-  border-radius: 5px
-  border: 1px solid rgba(0, 0, 0, .1)
+
+  &.consistent-padding
+    padding: 40px
+
+  &.dark
+    background-color: #58535A
 
   + .boxed
     margin-top: 30px

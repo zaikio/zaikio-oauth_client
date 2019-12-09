@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Launch_Screens---Android-&amp;-iOS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="splash_mdpi" transform="translate(-140.000000, -280.000000)">
+            <g id="Group" transform="translate(140.000000, 280.000000)">
+                <path d="M60,40 L60,40 C48.9544,40 40,31.0456 40,20 C40,8.9544 48.9544,0 60,0 C71.0456,0 80,8.9544 80,20 C80,31.0456 71.0456,40 60,40" id="Fill-2" fill="#000000"></path>
+                <path d="M20,80 L20,80 C8.9544,80 0,71.0456 0,60 C0,48.9544 8.9544,40 20,40 C31.0456,40 40,48.9544 40,60 C40,71.0456 31.0456,80 20,80" id="Fill-4" fill="#000000"></path>
+                <polygon id="Fill-1" fill="#40F1A4" points="0 40 40 40 40 0 0 0"></polygon>
+                <polygon id="Fill-6" fill="#40F1A4" points="40 80 80 80 80 40 40 40"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

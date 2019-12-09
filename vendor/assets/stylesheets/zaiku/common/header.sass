@@ -1,5 +1,5 @@
 header
-  position: sticky
+  position: fixed
   top: 0
   left: 0
   height: 60px
@@ -13,6 +13,8 @@ header
 
 .header__btn
   display: inline-block
+  border-left: 1px solid $almostwhite
+  margin-left: 10px
 
 .header__menu
   @media only screen and (min-width: $break-wide)
@@ -41,18 +43,17 @@ header
   @include uppercase
   @include bold
   display: inline-flex
-  border: 1px solid $lightgray
   border-radius: 5px
   padding: 5px 15px
   font-size: 0.8rem
   align-items: center
-  padding-right: 45px
+  padding-right: 40px
   color: $black
   height: 100%
   cursor: pointer
 
   background-image: image-url('caret-down.svg')
-  background-size: 15px
+  background-size: 13px
   background-repeat: no-repeat
   background-position: right 15px center
 

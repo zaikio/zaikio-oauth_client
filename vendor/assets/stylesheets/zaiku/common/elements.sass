@@ -42,3 +42,17 @@
   &::after
     margin-top: 40px
     margin-bottom: 60px
+
+.e-or
+  @include semi-bold
+  font-size: 0.9em
+  display: flex
+  margin: 1rem -0.5rem
+
+  &::before, &::after
+    content: ''
+    border-top: 1px solid rgba(0, 0, 0, .1)
+    flex: 1
+    transform: translateY(50%)
+    padding: 0 2rem
+    margin: 0 0.5rem

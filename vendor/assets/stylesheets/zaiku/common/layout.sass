@@ -27,6 +27,12 @@
   font-weight: 400
   font-style: italic
 
+@font-face
+  font-family: "Heidelberg"
+  src: font-url("heidelberg/heidelbergantiquaml-webfont.woff") format("woff")
+  font-weight: 600
+  font-style: normal
+
 html, body
   min-height: 100%
 
@@ -43,7 +49,7 @@ body
   &.with-modal
     overflow: hidden
 
-    header, #content
+    #content
       filter: blur(5px)
 
     #modal
@@ -182,6 +188,15 @@ hr
 .row__col--shrink
   flex-grow: initial
   flex-shrink: 1
+
+.row__col--grow
+  flex-shrink: initial
+  flex-grow: 1
+
+.row__col--centered-right
+  display: flex
+  justify-content: flex-end
+  align-items: center
 
 .col
   display: flex

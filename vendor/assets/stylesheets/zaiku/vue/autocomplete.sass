@@ -1,0 +1,20 @@
+.v-autocomplete
+  position: relative
+  z-index: 10
+
+.v-autocomplete__results
+  @include box-shadow-wide
+  position: absolute
+  width: 100%
+  background: $white
+
+.v-autocomplete__result
+  padding: 10px
+  cursor: pointer
+  padding: 10px 40px 10px 20px
+
+  &.is-selected
+    background: $almostwhite
+
+.v-autocomplete__description
+  color: $mediumgray

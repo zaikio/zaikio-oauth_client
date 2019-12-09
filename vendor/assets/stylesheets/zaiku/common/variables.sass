@@ -8,7 +8,7 @@ $white:              #FFFFFF
 
 $gray:               $lightgray
 
-$blue:               #00417D
+$blue:               #42526e
 $darkblue:           darken($blue, 10%)
 $lightblue:          #039FE3
 
@@ -19,7 +19,7 @@ $darkgreen:          darken($green, 10%)
 $red:                #E35003
 
 $yellow:             #FEC700
-$lightyellow:       lighten($yellow, 20%)
+$lightyellow:        lighten($yellow, 20%)
 
 $orange:             #ffa726
 $teal:               #26a69a
@@ -32,6 +32,9 @@ $dark-primary-color:   $darkblue
 $secondary-color:      $green
 $dark-secondary-color: $darkgreen
 $highlight-color:      #FBEBCF
+
+$black-opaque-01: rgba(0, 0, 0, .1)
+$black-opaque-02: rgba(0, 0, 0, .2)
 
 $font-size-reg: 15px
 
@@ -52,6 +55,13 @@ $break-small: 1024px
 
 @mixin box-shadow-wide
   box-shadow: 0 3px 15px -3px rgba(0, 0, 0, .25)
+
+@mixin boxed
+  @include box-shadow
+  background: $white
+  position: relative 
+  border-radius: 5px
+  border: 1px solid rgba(0, 0, 0, .1)
 
 @mixin disabled
   opacity: 0.2
