@@ -2,7 +2,7 @@ module Zaiku
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TextHelper
     include ActionView::Helpers::RenderingHelper
-    # include VueHelper
+    include Zaiku::VueHelper
 
     # Adds a cancel link to the form which closes the modal
     def cancel

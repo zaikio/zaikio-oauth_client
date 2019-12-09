@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  # Concerns
+  concern :autocompleteable do
+    get 'autocomplete', on: :collection
+  end
+  
   root to: 'welcomes#index'
 
-  resources :elements
+  resources :elements, concerns: :autocompleteable
 
   mount Zaiku::Engine => "/zaiku"
 end

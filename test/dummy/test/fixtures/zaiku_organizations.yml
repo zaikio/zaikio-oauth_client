@@ -7,3 +7,11 @@
 bounty_soap:
   id: b1475f65-236c-58b8-96e1-e1778b43beb7
   name: Bounty Soap Inc.
+  updated_at: <%= 5.day.ago %>
+  created_at: <%= 5.day.ago %>
+
+aperture_science:
+  id: 53234607-409b-5a7c-aeb0-8b29883332f8
+  name: Aperture Science Corp.
+  updated_at: <%= 5.day.ago %>
+  created_at: <%= 5.day.ago %>
