@@ -2,7 +2,6 @@ module Zaiku
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TextHelper
     include ActionView::Helpers::RenderingHelper
-    include Zaiku::VueHelper
 
     # Adds a cancel link to the form which closes the modal
     def cancel
@@ -101,6 +100,10 @@ module Zaiku
           [Person.human_attribute_name("locale.#{locale}"), locale]
         end
       )
+    end
+
+    def vue_component(component, props = {})
+      tag.div data: { controller: :vue, component: component, props: props }
     end
 
     def autocomplete(attribute, url:, value_label:, submit: false, placeholder: nil, tabindex: nil, autofocus: false)
