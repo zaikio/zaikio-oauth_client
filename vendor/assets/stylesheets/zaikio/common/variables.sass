@@ -1,20 +1,21 @@
 // VARIABLES
 
-$black:              hsl(237, 24%, 22%)
-$mediumgray:         #787F89
-$lightgray:          #C0C9D5
-$almostwhite:        #F3F4F8
-$white:              #FFFFFF
+$black:              hsl(0, 0, 0%)
+$darkgray:           hsl(0, 0, 50%)
+$mediumgray:         hsl(0, 0, 75%)
+$lightgray:          hsl(0, 0, 90%)
+$almostwhite:        hsl(0, 0, 99%)
+$white:              hsl(0, 0, 100%)
 
-$gray:               $lightgray
+$gray:               $mediumgray
+
+$green:              #46F0B3
+$lightgreen:         lighten($green, 30%)
+$darkgreen:          darken($green, 10%)
 
 $blue:               #42526e
 $darkblue:           darken($blue, 10%)
 $lightblue:          #039FE3
-
-$green:              #009B41
-$lightgreen:         lighten($green, 30%)
-$darkgreen:          darken($green, 10%)
 
 $red:                #E35003
 
@@ -26,7 +27,7 @@ $teal:               #26a69a
 $purple:             #ab47bc
 $brown:              #8d6e63
 
-$primary-color:        $blue
+$primary-color:        $green
 $dark-primary-color:   $darkblue
 
 $secondary-color:      $green
@@ -57,11 +58,9 @@ $break-small: 1024px
   box-shadow: 0 3px 15px -3px rgba(0, 0, 0, .25)
 
 @mixin boxed
-  @include box-shadow
   background: $white
   position: relative 
-  border-radius: 5px
-  border: 1px solid rgba(0, 0, 0, .1)
+  box-shadow: 0px 0 3px 1px rgba(0, 0, 0, .09)
 
 @mixin disabled
   opacity: 0.2

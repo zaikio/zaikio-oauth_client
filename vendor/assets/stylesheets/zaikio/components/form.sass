@@ -124,12 +124,14 @@
 //
 label
   @include not-selectable
-  @include semi-bold
+  @include bold
+  @include uppercase
   display: block
   line-height: 2rem
   height: 2rem
   color: $mediumgray
   float: left
+  font-size: 0.8em
 
   &.for-fields
     float: none
@@ -177,16 +179,15 @@ input[type=text], input[type=email], input[type=password], input[type=number], s
   @include transition
   width: 100%
   padding: 0 10px
-  border: 2px solid lighten($lightgray, 10%)
+  border: 2px solid $lightgray
   line-height: 24px
   height: 40px
-  border-radius: 3px
   -webkit-user-select: text
   outline: 0
   background: $white
 
   &:focus
-    border-color: $lightgray
+    border-color: $primary-color
 
   &:disabled
     color: rgba(0, 0, 0, 0.4)
@@ -207,13 +208,12 @@ input[type=text], input[type=email], input[type=password], input[type=number], s
   // We need to put these special pseudo classes into separate rows, because Chrome
   // ignores the styles if several are put in one row. Browsers are strange ¯\_(ツ)_/¯
   &::-webkit-input-placeholder
-    color: rgba(0, 0, 0, 0.15)
-
-  &::-moz-input-placeholder
-    color: rgba(0, 0, 0, 0.15)
+    color: rgba(0, 0, 0, 0.3)
+    font-style: italic
 
   &::placeholder
-    color: rgba(0, 0, 0, 0.15)
+    color: rgba(0, 0, 0, 0.3)
+    font-style: italic
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
@@ -268,7 +268,7 @@ input[type=checkbox]
       padding-left: 3px
       background-color: $white
       border-radius: 2px
-      border: 2px solid lighten($lightgray, 10%)
+      border: 2px solid $mediumgray
       font-size: 15px
 
   &:checked

@@ -3,7 +3,7 @@
   @include bold
   letter-spacing: 0.02rem
   display: inline-block
-  color: $white
+  color: $black
   line-height: 44px
   padding: 0 30px
   border: none
@@ -21,11 +21,11 @@
     pointer-events: none
 
   &:hover, &:focus
-    background-color: lighten($primary-color, 7%)
-    color: $white
+    background-color: darken($primary-color, 10%)
+    color: $black
 
   &:active
-    background-color: darken($primary-color, 7%)
+    background-color: lighten($primary-color, 7%)
     color: $white
 
   &.no-float

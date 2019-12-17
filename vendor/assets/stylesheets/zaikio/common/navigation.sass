@@ -4,23 +4,39 @@ nav
   left: 0
   width: 230px
   padding: 100px 30px
-  background: darken(#f4f5f7, 5%)
+  background: $black
   height: 100vh
 
   @media only screen and (max-width: $break-wide)
     // display: none
 
   a
+    @include semi-bold
     display: block
-    color: #42526e
-    font-size: 1.1em
+    color: $white
+    font-size: .9rem
+    opacity: .7
+    line-height: 2
+    display: flex
+    clear: both
+    border-bottom: 3px solid $black
+    background-repeat: no-repeat
+    background-position: left center
+    background-size: .9rem
+    background-image: image-url('navigation/users.svg')
+    padding-left: 35px
+    width: max-content
+    border-bottom: 3px solid transparent
 
     &:hover
-      color: inherit
-      opacity: .9
+      color: $white
+      opacity: 1
 
     &.is-active
       @include bold
+      color: $white
+      opacity: 1
+      border-bottom-color: $green
 
     + a
       margin-top: 1.5em
