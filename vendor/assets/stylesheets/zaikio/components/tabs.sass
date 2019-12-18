@@ -1,20 +1,22 @@
 .tabs
-  border-bottom: 2px solid $black
+  border-bottom: 2px solid $lightgray
   margin-bottom: 20px
 
   a
     @include bold
     display: inline-block
     padding: 12px 20px
-    color: $black
+    color: $darkgray
     border: none
+    transform: translateY(2px)
+    border-bottom: 2px solid transparent
 
     &:hover
-      color: $green
+      color: $blue
 
     &.is-active
-      color: $white
-      background: $black
+      color: $black
+      border-bottom: 2px solid $green
   
 .tabs--in-header
   border: none

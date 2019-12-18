@@ -1,14 +1,14 @@
-.inline-separator
+.e-inline-separator
   display: inline-block
 
   &::before
     content: '|'
     color: #ececec
 
-.inline-separator--wide
+.e-inline-separator--wide
   margin: 0 5px
 
-.flying-notice
+.e-flying-notice
   @include semi-bold
   @include box-shadow
   position: absolute
@@ -24,24 +24,6 @@
   &.in-modal
     position: fixed
     top: 32px
-
-.underline
-  display: block
-
-  &::after
-    content: ""
-    display: block
-    border-top: 4.5px solid $primary-color
-    border-bottom: 4.5px solid $primary-color
-    width: 70px
-    border-radius: 12px
-    margin-top: 20px
-    margin-bottom: 30px
-
-.underline--high
-  &::after
-    margin-top: 40px
-    margin-bottom: 60px
 
 .e-or
   @include semi-bold

@@ -1,10 +1,11 @@
 // VARIABLES
 
 $black:              hsl(0, 0, 0%)
+$almostblack:        hsl(0, 0, 10%)
 $darkgray:           hsl(0, 0, 50%)
 $mediumgray:         hsl(0, 0, 75%)
 $lightgray:          hsl(0, 0, 90%)
-$almostwhite:        hsl(0, 0, 99%)
+$almostwhite:        hsl(0, 0, 98%)
 $white:              hsl(0, 0, 100%)
 
 $gray:               $mediumgray
@@ -13,7 +14,7 @@ $green:              #46F0B3
 $lightgreen:         lighten($green, 30%)
 $darkgreen:          darken($green, 10%)
 
-$blue:               #42526e
+$blue:               #003CFF
 $darkblue:           darken($blue, 10%)
 $lightblue:          #039FE3
 
@@ -22,7 +23,7 @@ $red:                #E35003
 $yellow:             #FEC700
 $lightyellow:        lighten($yellow, 20%)
 
-$orange:             #ffa726
+$orange:             #FF5A00
 $teal:               #26a69a
 $purple:             #ab47bc
 $brown:              #8d6e63
@@ -60,7 +61,7 @@ $break-small: 1024px
 @mixin boxed
   background: $white
   position: relative 
-  box-shadow: 0px 0 3px 1px rgba(0, 0, 0, .09)
+  border: 1px solid $lightgray
 
 @mixin disabled
   opacity: 0.2
