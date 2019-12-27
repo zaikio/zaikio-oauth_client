@@ -1,0 +1,10 @@
+%h2 Search & Filter
+
+= render 'layouts/search_form', path: elements_path,
+  filters: Operator.filter_options, sortings: Operator.sorting_options
+
+- if @operators&.any?
+  .table-list
+    = render @operators
+- else
+  = render partial: 'layouts/no_results'
