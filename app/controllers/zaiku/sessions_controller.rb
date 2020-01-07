@@ -4,7 +4,10 @@ module Zaiku
   class SessionsController < ApplicationController
     def new
       cookies.encrypted[:origin] = params[:origin]
-      redirect_to Zaiku.oauth_client.auth_code.authorize_url(redirect_uri: approve_sessions_url)
+      redirect_to Zaiku.oauth_client.auth_code.authorize_url(
+        redirect_uri: approve_sessions_url,
+        scope: 'directory.person.r'
+      )
     end
 
     def approve

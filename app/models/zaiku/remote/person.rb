@@ -21,12 +21,12 @@ module Zaiku
           end
 
           # Add other collections that will be needed in general app context
-          directory.sites.collect do |site|
-            site.to_local_site.tap do |local_site|
-              local_site.organization = site.organization.to_local_organization
-              local_site.save
-            end
-          end
+          # directory.sites.collect do |site|
+          #   site.to_local_site.tap do |local_site|
+          #     local_site.organization = site.organization.to_local_organization
+          #     local_site.save
+          #   end
+          # end
         end
       end
     end

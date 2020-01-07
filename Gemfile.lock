@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    zaiku (0.3.0)
+    zaiku (0.3.1)
       jwt
       oauth2
       rails (~> 6.0.0)
@@ -147,7 +147,7 @@ GEM
     public_suffix (4.0.1)
     puma (4.3.0)
       nio4r (~> 2.0)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -244,4 +244,4 @@ DEPENDENCIES
   zaiku!
 
 BUNDLED WITH
-   2.0.2
+   2.1.2
