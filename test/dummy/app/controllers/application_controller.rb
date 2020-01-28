@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Zaiku::CookieBasedAuthentication
-  default_form_builder Zaiku::FormBuilder
-  helper Zaiku::ApplicationHelper
+  include Zaikio::CookieBasedAuthentication
+  default_form_builder Zaikio::FormBuilder
+  helper Zaikio::ApplicationHelper
 end

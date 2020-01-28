@@ -8,5 +8,5 @@ Rails.application.routes.draw do
 
   resources :elements, concerns: :autocompleteable
 
-  mount Zaiku::Engine => "/zaiku"
+  mount Zaikio::Engine => "/zaikio"
 end

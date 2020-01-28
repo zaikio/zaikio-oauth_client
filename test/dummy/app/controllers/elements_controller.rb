@@ -9,6 +9,6 @@ class ElementsController < ApplicationController
   end
 
   def autocomplete
-    render json: Zaiku::Person.all.map { |e| { id: e.id, name: e.first_name, description: e.email } }
+    render json: Zaikio::Person.all.map { |e| { id: e.id, name: e.first_name, description: e.email } }
   end
 end

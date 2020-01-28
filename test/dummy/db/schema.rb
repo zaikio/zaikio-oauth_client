@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_11_21_092912) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "zaiku_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "zaikio_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "bearer_type"
     t.uuid "bearer_id"
     t.string "token", null: false
@@ -25,29 +25,29 @@ ActiveRecord::Schema.define(version: 2019_11_21_092912) do
     t.string "scopes", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["bearer_type", "bearer_id"], name: "index_zaiku_access_tokens_on_bearer_type_and_bearer_id"
-    t.index ["expires_at"], name: "index_zaiku_access_tokens_on_expires_at"
-    t.index ["refresh_token"], name: "index_zaiku_access_tokens_on_refresh_token", unique: true
-    t.index ["token"], name: "index_zaiku_access_tokens_on_token", unique: true
+    t.index ["bearer_type", "bearer_id"], name: "index_zaikio_access_tokens_on_bearer_type_and_bearer_id"
+    t.index ["expires_at"], name: "index_zaikio_access_tokens_on_expires_at"
+    t.index ["refresh_token"], name: "index_zaikio_access_tokens_on_refresh_token", unique: true
+    t.index ["token"], name: "index_zaikio_access_tokens_on_token", unique: true
   end
 
-  create_table "zaiku_organization_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "zaikio_organization_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_id", null: false
     t.uuid "person_id", null: false
     t.string "roles", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_zaiku_organization_memberships_on_organization_id"
-    t.index ["person_id"], name: "index_zaiku_organization_memberships_on_person_id"
+    t.index ["organization_id"], name: "index_zaikio_organization_memberships_on_organization_id"
+    t.index ["person_id"], name: "index_zaikio_organization_memberships_on_person_id"
   end
 
-  create_table "zaiku_organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "zaikio_organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "zaiku_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "zaikio_people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "name", null: false
     t.string "email", null: false
@@ -55,18 +55,18 @@ ActiveRecord::Schema.define(version: 2019_11_21_092912) do
     t.string "time_zone", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_zaiku_people_on_email", unique: true
+    t.index ["email"], name: "index_zaikio_people_on_email", unique: true
   end
 
-  create_table "zaiku_sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "zaikio_sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_id", null: false
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_zaiku_sites_on_organization_id"
+    t.index ["organization_id"], name: "index_zaikio_sites_on_organization_id"
   end
 
-  add_foreign_key "zaiku_organization_memberships", "zaiku_organizations", column: "organization_id"
-  add_foreign_key "zaiku_organization_memberships", "zaiku_people", column: "person_id"
-  add_foreign_key "zaiku_sites", "zaiku_organizations", column: "organization_id"
+  add_foreign_key "zaikio_organization_memberships", "zaikio_organizations", column: "organization_id"
+  add_foreign_key "zaikio_organization_memberships", "zaikio_people", column: "person_id"
+  add_foreign_key "zaikio_sites", "zaikio_organizations", column: "organization_id"
 end
