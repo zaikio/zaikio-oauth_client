@@ -6,13 +6,16 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all'
+    <script src="https://launchpad.zaikio.com/launchpad.js"></script>
     = javascript_pack_tag 'application'
   %body
+    <div id="zai-launchpad" data-turbolinks-permanent></div>
     #content
       = render partial: 'layouts/flash_container'
-      %nav
-        = link_to 'OAuth', '/', class: controller_name == 'welcomes' && 'is-active'
-        = link_to 'Elements', elements_path, class: controller_name == 'elements' && 'is-active'
+      #header
+      -# %nav
+      -#   = link_to 'OAuth', '/', class: controller_name == 'welcomes' && 'is-active'
+      -#   = link_to 'Elements', elements_path, class: controller_name == 'elements' && 'is-active'
       #stage
         = yield
 
