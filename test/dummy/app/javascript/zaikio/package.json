@@ -1,6 +1,6 @@
 {
   "name": "@crispymtn/zaikio",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Includes the Zaikio Gem JS functions",
   "main": "index.js",
   "scripts": {
