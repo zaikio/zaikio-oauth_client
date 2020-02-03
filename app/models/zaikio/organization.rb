@@ -1,7 +1,7 @@
 module Zaikio
   class Organization < ApplicationRecord
     # Concerns
-    include io::TokenBearer
+    include Zaikio::TokenBearer
 
     # Associations
     has_many :memberships, class_name: 'Zaikio::OrganizationMembership', dependent: :destroy

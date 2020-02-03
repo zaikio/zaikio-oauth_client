@@ -5,7 +5,7 @@ document.addEventListener('turbolinks:load', function () {
   if (window.zaiLaunchpad) {
     window.zaiLaunchpad.setup({
       loadPersonData: async () => {
-        return (await axios.get('/person.json')).data;
+        return (await axios.get('/current_person.json')).data;
       },
       // activeOrganizationId: activeOrganizationId, // The currently active organization or null if the user is selected
       activeOrganizationId: null, // The currently active organization or null if the user is selected

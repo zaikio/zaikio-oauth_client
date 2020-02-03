@@ -2,6 +2,8 @@ require_dependency "zaikio/application_controller"
 
 module Zaikio
   class SessionsController < ApplicationController
+    skip_before_action :redirect_unless_authenticated, only: [:new, :approve]
+
     def new
       cookies.encrypted[:origin] = params[:origin]
       redirect_to Zaikio.oauth_client.auth_code.authorize_url(
