@@ -1,4 +1,4 @@
-class Operator < Zaiku::Organization
-  include Zaiku::Searchable
-  include Zaiku::Filterable
+class Operator < Zaikio::Organization
+  include Zaikio::Searchable
+  include Zaikio::Filterable
 end

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   
   root to: 'welcomes#index'
 
-  resources :elements, concerns: :autocompleteable
+  get "/:scope(/:page)" => "pages#show"
 
-  mount Zaiku::Engine => "/zaiku"
+  mount Zaikio::Engine => "/zaikio"
 end

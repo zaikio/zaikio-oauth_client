@@ -1,0 +1,222 @@
+$tiny-margin:    5px
+$small-margin:   10px
+$regular-margin: 20px
+$big-margin:     40px
+$huge-margin:    80px
+
+$gaps: tiny sma reg big huge
+$sides: top right left bottom
+$gap-values: ( tiny: $tiny-margin, sma: $small-margin, reg: $regular-margin, big: $big-margin, huge: $huge-margin )
+
+// This generates handy margin util classes (e.g .margin-reg-top, .margin-sma-left)
+@each $gap in $gaps
+  @each $side in $sides
+    .u-margin-#{$gap}-#{$side}
+      margin-#{$side}: #{map-get($gap-values, $gap) !important}
+
+@each $side in $sides
+  .u-no-padding-#{$side}
+    padding-#{$side}: 0 !important
+
+  .u-no-margin-#{$side}
+    margin-#{$side}: 0 !important
+
+.u-clearfix
+  @include clearfix
+
+.u-clear-left
+  clear: left
+
+.u-no-margin
+  margin: 0 !important
+
+.u-no-border
+  border: 0 !important
+
+.u-padding-big-left
+  padding-left: $big-margin !important
+
+.u-padding-left
+  padding-left: 30px !important
+
+.u-float-left
+  float: left !important
+
+.u-float-right
+  float: right !important
+
+.u-no-float
+  float: none !important
+
+.u-left
+  text-align: left !important
+
+.u-center
+  text-align: center !important
+
+.u-center-block
+  margin: 0 auto
+
+.u-right
+  text-align: right !important
+
+.u-is-hidden
+  display: none !important
+
+.u-big
+  @include weight-bold
+  font-size: 18px !important
+  line-height: 26px
+
+.u-huge
+  @include weight-bold
+  font-size: 64px !important
+  line-height: 1em
+
+.u-x-huge
+  @include weight-bold
+  font-size: 128px !important
+  line-height: 1em
+
+.u-small
+  font-size: 11px !important
+  line-height: 1.5 !important
+
+.u-smaller
+  font-size: 0.8em !important
+
+.u-bigger
+  font-size: 1.2em !important
+
+.u-uppercase
+  text-transform: uppercase
+  letter-spacing: 0.03em
+
+.u-primary-color
+  color: $primary-color !important
+
+.u-white
+  color: $white !important
+
+.u-lightgray
+  color: $lightgray !important
+
+.u-gray
+  color: $gray !important
+
+.u-mediumgray
+  color: $mediumgray !important
+
+.u-black
+  color: $black !important
+
+.u-green
+  color: $green !important
+
+.u-yellow
+  color: $yellow !important
+
+.u-blue
+  color: $blue !important
+
+.u-teal
+  color: $teal !important
+
+.u-purple
+  color: $purple !important
+
+.u-brown
+  color: $brown !important
+
+.u-red
+  color: $red !important
+
+.u-orange
+  color: $orange !important
+
+.u-bold, strong
+  display: inline-block
+  font-weight: bold !important
+
+.u-no-wrap
+  white-space: nowrap !important
+
+.u-truncate
+  @include truncate
+
+.u-overflow-hidden
+  overflow: hidden
+
+.u-overflow-auto
+  overflow: auto
+
+.u-click-through
+  pointer-events: none
+
+.u-display-block
+  display: block !important
+
+.u-width-10
+  width: 10% !important
+
+.u-width-15
+  width: 15% !important
+
+.u-width-20
+  width: 20% !important
+
+.u-width-25
+  width: 25% !important
+
+.u-width-33
+  width: 33% !important
+
+.u-width-50
+  width: 50% !important
+
+.u-width-66
+  width: 66% !important
+
+.u-width-75
+  width: 75% !important
+
+.u-width-100
+  width: 100% !important
+
+.u-max-width-100
+  max-width: 100px !important
+
+.u-max-width-500
+  max-width: 500px !important
+
+.u-capitalize
+  text-transform: capitalize
+
+.u-position-relative
+  position: relative
+
+.u-is-disabled
+  opacity: 0.5
+  pointer-events: none
+
+.u-no-scrollbars
+  &::-webkit-scrollbar
+    display: none
+
+.u-flex
+  display: flex
+
+.u-inline-flex
+  display: inline-flex
+
+.u-flex--baseline
+  align-items: baseline
+
+.u-flex--vertical-center
+  align-items: center
+
+.u-flex--horizontal-center
+  justify-content: center
+
+.u-flex-item--flex-end
+  align-self: flex-end

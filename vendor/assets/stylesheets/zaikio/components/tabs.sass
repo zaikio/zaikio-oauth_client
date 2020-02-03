@@ -1,0 +1,33 @@
+.tabs
+  border-bottom: 2px solid $lightgray
+  margin-bottom: 20px
+
+  a
+    @include weight-bold
+    display: inline-block
+    padding: 12px 20px
+    color: $darkgray
+    border: none
+    transform: translateY(2px)
+    border-bottom: 2px solid transparent
+
+    &:hover
+      color: $blue
+
+    &.is-active
+      color: $black
+      border-bottom: 2px solid $green
+  
+.tabs--in-header
+  border: none
+  margin: 0
+
+.tabs__counter
+  display: inline-block
+  background: rgba(0, 0, 0, .1)
+  border-radius: 8px
+  font-size: 0.8em
+  line-height: 1.8em
+  color: $mediumgray
+  padding: 0px 7px
+  margin-left: 5px

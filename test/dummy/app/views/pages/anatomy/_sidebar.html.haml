@@ -1,0 +1,9 @@
+= content_for :sidebar do
+  .sidebar-navigation
+    = link_to 'Overview', '/anatomy', class: @page == 'index' && 'is-active'
+    = link_to 'Breadcrumbs', '/anatomy/breadcrumbs', class: @page == 'breadcrumbs' && 'is-active'
+    = link_to 'Stage', '/anatomy/stage', class: @page == 'stage' && 'is-active'
+    = link_to 'Navigation', '/anatomy/navigation', class: @page == 'navigation' && 'is-active'
+    = link_to 'Modals', '/anatomy/modals', class: @page == 'modals' && 'is-active'
+    = link_to 'Rows & Grids', '/anatomy/rows_and_grids', class: @page == 'rows_and_grids' && 'is-active'
+    = link_to 'Menus', '/anatomy/menus', class: @page == 'menus' && 'is-active'

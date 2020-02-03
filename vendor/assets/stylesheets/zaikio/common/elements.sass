@@ -1,0 +1,40 @@
+.e-inline-separator
+  display: inline-block
+
+  &::before
+    content: '|'
+    color: #ececec
+
+.e-inline-separator--wide
+  margin: 0 5px
+
+.e-flying-notice
+  @include weight-bold
+  @include box-shadow
+  position: absolute
+  left: 50%
+  max-width: 50%
+  transform: translateX(-50%)
+  background: $lightyellow
+  color: rgba(0, 0, 0, 0.5)
+  padding: 10px 15px
+  text-align: center
+  z-index: 20
+
+  &.in-modal
+    position: fixed
+    top: 32px
+
+.e-or
+  @include weight-bold
+  font-size: 0.9em
+  display: flex
+  margin: 1rem -0.5rem
+
+  &::before, &::after
+    content: ''
+    border-top: 1px solid rgba(0, 0, 0, .1)
+    flex: 1
+    transform: translateY(50%)
+    padding: 0 2rem
+    margin: 0 0.5rem

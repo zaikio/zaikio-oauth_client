@@ -1,0 +1,20 @@
+.header-box
+  @include boxed
+  margin: 20px 0
+  padding: 20px 20px 0
+
+.header-box__avatar
+  width: 120px
+  height: 120px
+  margin-top: -10px
+  transform: translateY(-30%)
+  background-size: cover
+  border: 3px solid white
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 5px 1px, rgba(0, 0, 0, 0.1) 1px 1px 2px 0px
+  float: left
+  margin-right: 20px
+
+.header-box__caption
+  @include weight-bold
+  font-size: 1.5rem
+  margin-bottom: 0.5em

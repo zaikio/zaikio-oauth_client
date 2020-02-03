@@ -1,0 +1,117 @@
+.menu
+  position: relative
+
+.menu__icon
+  @include icon('more.svg')
+  display: inline-block
+  background-size: 1em
+  height: 30px
+  width: 50px
+  cursor: pointer
+
+  &:hover
+    background-color: rgba(0, 0, 0, .1)
+
+.menu__icon--topbar
+  height: 50px
+  background-size: 20px
+
+  &:hover
+    background-color: $secondary-color
+
+.menu__list
+  @include box-shadow-wide
+  @include animation(show-menu, 0.2s, ease-out, 1)
+  position: absolute
+  background-color: $white
+  margin-top: 5px
+  border-radius: 4px
+  text-align: left
+  max-width: 500px
+  font-size: 14px !important
+  padding: 10px 0
+  display: none
+
+  &.is-visible
+    display: block
+
+  a, .link
+    @include weight-bold
+    display: block
+    position: relative
+    white-space: nowrap
+    line-height: 40px
+    color: $black
+    border-radius: 5px
+    padding: 0 100px 0 15px
+    margin: 0 10px
+
+    &:hover
+      background-color: $primary-color
+
+    &.is-disabled
+      opacity: 0.5
+
+  .is-destructive
+    @include weight-bold
+    color: $red
+
+    &:hover
+      background-color: $red
+      color: $white
+
+  > p
+    display: block
+    margin: 0
+    font-weight: normal
+    line-height: 28px
+    color: $mediumgray
+    padding: 10px 40px 10px 20px
+
+.menu__list--right
+  right: 10px
+
+.menu__hr
+  border-top: 1px solid $lightgray
+  margin: 10px 0
+
+.menu__scrollable-content
+  max-height: 300px
+  overflow-y: scroll
+
+.menu__caption
+  @include weight-bold
+  padding: 5px 25px
+  font-size: 0.8em
+  background-color: $lightgray
+  color: $mediumgray
+
+.menu--selection
+  font-size: 0.9em
+
+  a
+    padding: 8px 40px
+    font-size: 0.9em
+
+    &:hover
+      background-color: $lightgray
+      color: $black !important
+
+    &.is-selected
+      @include weight-bold
+      background-image: image-url('check.svg')
+      background-size: 1.1em
+      background-repeat: no-repeat
+      background-position: 15px center
+
+    + a
+      border-top: 1px solid $lightgray
+      
+@keyframes show-menu
+  from
+    opacity: 0
+    margin-top: 0px
+
+  to
+    opacity: 1
+    margin-top: 5px

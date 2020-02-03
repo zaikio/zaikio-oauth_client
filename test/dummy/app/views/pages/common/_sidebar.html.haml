@@ -1,0 +1,7 @@
+= content_for :sidebar do
+  .sidebar-navigation
+    = link_to 'Overview', '/common', class: @page == 'index' && 'is-active'
+    = link_to 'Buttons', '/common/buttons', class: @page == 'buttons' && 'is-active'
+    = link_to 'Tables', '/common/tables', class: @page == 'tables' && 'is-active'
+    = link_to 'Boxes', '/common/boxes', class: @page == 'boxes' && 'is-active'
+    = link_to 'Tiles', '/common/tiles', class: @page == 'tiles' && 'is-active'

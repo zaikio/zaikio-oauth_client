@@ -1,0 +1,7 @@
+= content_for :sidebar do
+  .sidebar-navigation
+    = link_to 'Overview', '/general', class: @page == 'index' && 'is-active'
+    = link_to 'Introduction', '/general/intro', class: @page == 'intro' && 'is-active'
+    = link_to 'Basic UI patterns', '/general/patterns', class: @page == 'patterns' && 'is-active'
+    = link_to 'Good Flashes', '/general/flashes', class: @page == 'flashes' && 'is-active'
+    = link_to 'When do I use modals?', '/general/modals', class: @page == 'modals' && 'is-active'

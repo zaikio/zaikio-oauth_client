@@ -1,0 +1,105 @@
+*
+  box-sizing: border-box
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+
+@font-face
+  font-family: "PlexSans"
+  src: font-url("zaikio/ibm_plex_sans/IBMPlexSans-Regular.woff2") format("woff2")
+  font-weight: normal
+  font-style: normal
+
+@font-face
+  font-family: "PlexSans"
+  src: font-url("zaikio/ibm_plex_sans/IBMPlexSans-SemiBold.woff2") format("woff2")
+  font-weight: bold
+  font-style: normal
+
+@font-face
+  font-family: "PlexSans"
+  src: font-url("zaikio/ibm_plex_sans/IBMPlexSans-Bold.woff2") format("woff2")
+  font-weight: 900
+  font-style: normal
+
+// @font-face
+//   font-family: "PlexSans"
+//   src: font-url("lato/LatoLatin-Italic.woff2") format("woff2"), font-url("lato/LatoLatin-Italic.woff") format("woff")
+//   font-weight: 400
+//   font-style: italic
+
+html, body
+  min-height: 100%
+
+body, input, select, button, textarea, .btn
+  font: 15px/1.4em 'PlexSans', 'Helvetica Neue', sans-serif
+  color: $black
+  text-rendering: optimizeLegibility
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+body
+  background: $white
+
+  &.with-modal
+    overflow: hidden
+
+    #modal
+      display: block
+
+.body--login
+  background: linear-gradient(45deg, $blue, lighten($blue, 20%))
+
+h1
+  @include weight-bold
+  font-size: 26px
+  margin: 0 0 40px 0
+  letter-spacing: -0.02em
+
+h2
+  @include weight-black
+  font-size: 18px
+  margin: 3em auto 2em auto
+  border-bottom: 1px solid $mediumgray
+  padding: 0.5em 0
+
+h3
+  @include weight-black
+  font-size: 16px
+  margin: 3em auto 2em auto
+
+a, .link
+  display: inline
+  cursor: pointer
+  text-decoration: none
+  border-bottom: 1px solid $green
+  color: $black
+  border: none
+
+em
+  color: rgba(0, 0, 0, .5)
+
+hr
+  border: 0
+  border-top: 1px solid rgba(0, 0, 0, .05)
+  margin: 50px 0
+
+.hr--narrow
+  margin: 25px 0
+
+code
+  background: $lightgray
+  padding: 3px 5px
+  color: $orange
+
+.turbolinks-progress-bar
+  background-color: $lightblue !important
+  height: 2px !important
+
+.locked-background
+  background-color: rgba(0,0,0,0.5)
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  overflow: auto

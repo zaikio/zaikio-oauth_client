@@ -1,0 +1,44 @@
+table
+  background-color: $white
+  border-collapse: collapse
+  border-spacing: 0
+
+  &.with-header-col
+    tr td:first-of-type
+      @include weight-bold
+      color: $mediumgray
+      vertical-align: top
+
+.table--full
+  width: 100%
+
+.table--valign-top
+  td
+    vertical-align: top
+
+th, td
+  padding: 10px 15px
+  min-width: 100px
+  text-align: left
+
+  &.td--shrink
+    width: 1%
+    white-space: nowrap
+
+tr
+  &.is-active
+    background-color: $lightgray
+
+  &.is-highlighted
+    background-color: $yellow
+
+thead
+  border-bottom: 2px solid black
+
+tbody
+  tr
+    border-bottom: 1px solid $mediumgray
+
+tfoot
+  @include weight-bold
+  border-top: 1px solid $black

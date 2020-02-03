@@ -1,7 +1,7 @@
 
-# ZAIKU Directory Gem
+# Zaikio Directory Gem
 
-This Gem enables you to easily connect to the ZAIKU Directory and use the OAuth2 flow as well as query the API for information about the User and connected Organizations.
+This Gem enables you to easily connect to the Zaikio Directory and use the OAuth2 flow as well as query the API for information about the User and connected Organizations.
 
 -- STILL A WORKING DRAFT --
 
@@ -23,7 +23,7 @@ export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
 
 ```ruby
 source "https://rubygems.pkg.github.com/crispymtn" do
-  gem "zaiku"
+  gem "zaikio"
 end
 ```
 Then run `bundle install`.
@@ -34,35 +34,35 @@ Then run `bundle install`.
 //npm.pkg.github.com/:_authToken=${BUNDLE_RUBYGEMS__PKG__GITHUB__COM}
 @crispymtn:registry=https://npm.pkg.github.com
 ```
-Then run `yarn add @crispymtn/zaiku` - your `package.json` should have `@crispymtn/zaiku` added as a dependency afterwards.
+Then run `yarn add @crispymtn/zaikio` - your `package.json` should have `@crispymtn/zaikio` added as a dependency afterwards.
 
 
 ## Setup & Configuration
 
 1. Copy & run Migrations
 ```bash
-rails zaiku:install:migrations
+rails zaikio:install:migrations
 rails db:migrate
 ```
 This will create the tables:
-+ `zaiku_people`
-+ `zaiku_organizations`
-+ `zaiku_organization_memberships`
-+ `zaiku_access_tokens`
-+ `zaiku_sites`
++ `zaikio_people`
++ `zaikio_organizations`
++ `zaikio_organization_memberships`
++ `zaikio_access_tokens`
++ `zaikio_sites`
 
 2. Mount routes
 ```ruby
-mount Zaiku::Engine => "/zaiku"
+mount Zaikio::Engine => "/zaikio"
 ```
 
-3. Setup config in `config/initializers/zaiku_directory.rb`
+3. Setup config in `config/initializers/zaikio_directory.rb`
 ```ruby
-Zaiku.tap do |config|
+Zaikio.tap do |config|
   # App Settings
   config.client_id      = '52022d7a-7ba2-41ed-8890-97d88e6472f6'
   config.client_secret  = 'ShiKTnHqEf3M8nyHQPyZgbz7'
-  config.directory_url  = 'https://directory.sandbox.zaiku.cloud'
+  config.directory_url  = 'https://directory.sandbox.zaikio.com'
 end
 ```
 
@@ -71,38 +71,38 @@ end
 ### Models and relations
 
 The engine provides you with the following models to use in your application:
-+ `Zaiku::Person`
-+ `Zaiku::Organization`
-+ `Zaiku::OrganizationMembership`
-+ `Zaiku::AccessToken` (you should not require to use this one)
-+ `Zaiku::Site`
++ `Zaikio::Person`
++ `Zaikio::Organization`
++ `Zaikio::OrganizationMembership`
++ `Zaikio::AccessToken` (you should not require to use this one)
++ `Zaikio::Site`
 
-A `Zaiku::Person` has many `:memberships` and `:organizations`.
-A `Zaiku::Organization` has many `:memberships` and `:members` and and `:sites`.
+A `Zaikio::Person` has many `:memberships` and `:organizations`.
+A `Zaikio::Organization` has many `:memberships` and `:members` and and `:sites`.
 
-#### Add references between Zaiku models and your models
+#### Add references between Zaikio models and your models
 
-If you want to establish a reference between your own models and the Zaiku models:
+If you want to establish a reference between your own models and the Zaikio models:
 
 ```ruby
 # add migration
 def change
-  add_reference :items, :person, type: :uuid, foreign_key: { to_table: :zaiku_people }
+  add_reference :items, :person, type: :uuid, foreign_key: { to_table: :zaikio_people }
 end
 
 # in your item.rb model
-belongs_to :person, class_name: 'Zaiku::Person'
+belongs_to :person, class_name: 'Zaikio::Person'
 ```
 
-Of course you could also reference to `zaiku_organizations`.
+Of course you could also reference to `zaikio_organizations`.
 
-#### Add logic to the Zaiku models
+#### Add logic to the Zaikio models
 
-You can easily make your own model and let it inherit from one of the Zaiku models do add more behaviour and relations:
+You can easily make your own model and let it inherit from one of the Zaikio models do add more behaviour and relations:
 
 ```ruby
 # in your customer.rb
-class Customer < Zaiku::Organization
+class Customer < Zaikio::Organization
   # Associations
   has_many :vehicles
   has_many :facilities
@@ -114,41 +114,41 @@ end
 
 ### OAuth Flow
 
-From any point in your application you can start using the ZAIKU Directory OAuth2 flow with
+From any point in your application you can start using the Zaikio Directory OAuth2 flow with
 
 ```ruby
-redirect_to zaiku.new_session_path
+redirect_to zaikio.new_session_path
 ```
 
-This will redirect the user to the OAuth Authorize endpoint of the ZAIKU Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
+This will redirect the user to the OAuth Authorize endpoint of the Zaikio Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
 
 #### Create or update Person and Organization data
 
-After the user logged in successfully at the ZAIKU Directory a redirect will happen back to your application to `.../zaiku/sessions/approve` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
+After the user logged in successfully at the Zaikio Directory a redirect will happen back to your application to `.../zaikio/sessions/approve` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
 
-Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaiku::SessionsController`.
+Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaikio::SessionsController`.
 
-All Zaiku models (`Zaiku::Person, Zaiku::Organization, Zaiku::OrganizationMembership`) in relation to the signed in user will automatically be created or updated (depending on if already present in your database).
+All Zaikio models (`Zaikio::Person, Zaikio::Organization, Zaikio::OrganizationMembership`) in relation to the signed in user will automatically be created or updated (depending on if already present in your database).
 
 #### Session handling
 
-The Zaiku gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaiku_person_id]`.
+The Zaikio gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaikio_person_id]`.
 
-In your controllers include the concern `Zaiku::CookieBasedAuthentication` which will set:
+In your controllers include the concern `Zaikio::CookieBasedAuthentication` which will set:
 ```ruby
-Current.user ||= Person.find_by(id: cookies.encrypted[:zaiku_person_id])
+Current.user ||= Person.find_by(id: cookies.encrypted[:zaikio_person_id])
 ````
 
 You can then use `Current.user` anywhere.
 
-As an alternative build your own concern and use the zaiku_person_id from the encrypted cookie within your application as you like.
+As an alternative build your own concern and use the `zaikio_person_id` from the encrypted cookie within your application as you like.
 
 
-For **logout** use: `zaiku.session_path, method: :delete` or build your own controller for deleting the cookie.
+For **logout** use: `zaikio.session_path, method: :delete` or build your own controller for deleting the cookie.
 
 #### Redirecting
 
-The `zaiku.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
+The `zaikio.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
 
 
 ## Use Sandbox for testing
@@ -179,7 +179,7 @@ You might encounter some version issues with Rbenv and Chromedriver, to resolve 
 
 #### Manual Testing
 
-To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaiku/sessions_test.rb`.
+To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaikio/sessions_test.rb`.
 
 
 ## Use of dummy app
@@ -187,13 +187,13 @@ To log in by yourself and test the process manually, use the demo person with th
 You can use the included dummy app as a showcase for the workflow and to adjust your own application. To set up the dummy application properly, go into `test/dummy` and use [puma-dev](https://github.com/puma/puma-dev) like this:
 
 ```shell
-puma-dev link -n 'zaiku-app'
+puma-dev link -n 'zaikio-app'
 ```
-This will make the dummy app available at: [http://zaiku-app.test](http://zaiku-app.test/)
+This will make the dummy app available at: [http://zaikio-app.test](http://zaikio-app.test/)
 
-If you use the provided OAuth credentials from above and test this against the Sandbox, everything should work as the redirect URLs for [http://zaiku-app.test](http://zaiku-app.test/) are approved within the Sandbox.
+If you use the provided OAuth credentials from above and test this against the Sandbox, everything should work as the redirect URLs for [http://zaikio-app.test](http://zaikio-app.test/) are approved within the Sandbox.
 
-## Use Zaiku UI Elements
+## Use Zaikio UI Elements
 
 This gem provides you with a convenient toolbox for building HEI.OS apps easy and fast.
 By providing common styles and scripts, the gem makes sure that all apps look and feel the same.
@@ -202,8 +202,8 @@ By providing common styles and scripts, the gem makes sure that all apps look an
 To use tools like the FormBuilder or helpful methods like `link_to_modal` include the following in your `application_controller.rb`
 
 ```ruby
-default_form_builder Zaiku::FormBuilder
-helper Zaiku::ApplicationHelper
+default_form_builder Zaikio::FormBuilder
+helper Zaikio::ApplicationHelper
 ```
 
 ### CSS
@@ -211,14 +211,14 @@ Import all selected styles to your app by adding the following line to your
 `application.sass` file (recommended!):
 
 ```sass
-@import zaiku/all
+@import zaikio/all
 ```
 
 Alternatively, only single parts can be imported, eg.
 
 ```sass
-@import zaiku/common
-@import zaiku/components
+@import zaikio/common
+@import zaikio/components
 …
 ```
 
@@ -240,13 +240,13 @@ Add navigation and main stage by adding the following to your `application.html.
 In your Rails project at `/javascript/packs/application.js` import the different JS components:
 
 ```javascript
-import '@crispymtn/zaiku/controllers';
+import '@crispymtn/zaikio/controllers';
 ```
 
 
 ---
 
-All available modules will be documented in this repo's [WIKI](https://github.com/crispymtn/zaiku-gem/wiki) soon.
+All available modules will be documented in this repo's [WIKI](https://github.com/crispymtn/zaikio-gem/wiki) soon.
 
 
 
@@ -264,8 +264,8 @@ Make your changes and adjust `version.rb`.
 
 **To push a new release:**
 
-- `gem build zaiku.gemspec`
-- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaiku-0.1.0.gem`
+- `gem build zaikio.gemspec`
+- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaikio-0.1.0.gem`
 *Adjust the version accordingly.*
 
 ### Node Package
@@ -276,13 +276,13 @@ Edit your global `~/.npmrc` and add
 ```
 If you do not yet have created one from the Installation Guide above, see "[Creating a personal access token for the command line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)."
 
-Within the gem navigate into `test/dummy/app/javascript/zaiku` where the Node Package is situated and your changes will take place.
+Within the gem navigate into `test/dummy/app/javascript/zaikio` where the Node Package is situated and your changes will take place.
 
-Adjust the `version` information within `package.json` (**important**: the one `test/dummy/app/javascript/zaiku`).
+Adjust the `version` information within `package.json` (**important**: the one `test/dummy/app/javascript/zaikio`).
 
 **To push a new release:**
 
-`npm publish` within the folder of `test/dummy/app/javascript/zaiku`
+`npm publish` within the folder of `test/dummy/app/javascript/zaikio`
 
 
 ## License

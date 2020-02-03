@@ -1,0 +1,88 @@
+.navigation
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 300 // Launchpad is 200
+  transform: translateX(-100%)
+  transition: opacity 0.2s ease
+  opacity: 0
+
+  &.is-visible
+    transform: translateX(0)
+    background: rgba(0, 0, 0, .2)
+    opacity: 1
+
+    .navigation__menu
+      transform: translateX(0)
+
+    .navigation__dashboard
+      transform: translateX(0)
+
+  @media only screen and (max-width: $break-wide)
+    // display: none
+
+.navigation__menu
+  position: fixed
+  background: $black
+  top: 0
+  left: 0
+  width: 400px
+  height: 100vh
+  z-index: 302
+  transition: transform 0.2s ease 
+  transform: translateX(-100%)
+
+.navigation__links
+  position: absolute
+  top: 120px
+  bottom: 0px
+  width: 100%
+  padding: 20px 40px
+  overflow-y: auto
+ 
+  a
+    @include weight-bold
+    display: block
+    color: $mediumgray
+    font-size: 1.2rem
+    line-height: 3
+    padding-left: 35px
+
+    &:hover
+      color: $white
+
+.navigation__close
+  @include icon('close.svg')
+  position: fixed
+  top: 60px
+  left: 0
+  height: 50px
+  font-size: 14px
+  background-color: $primary-color
+  z-index: 303
+  padding-left: 67px
+  padding-right: 20px
+  display: flex
+  align-items: center
+  font-weight: bold
+  background-size: 19px
+  background-position: 20px
+  cursor: pointer
+
+  &:hover
+    background-color: $secondary-color
+
+.navigation__dashboard
+  position: fixed
+  background: $lightgray
+  top: 0
+  bottom: 0
+  left: 400px
+  width: 400px
+  padding: 20px 40px
+  z-index: 301
+  border-right: 4px solid $primary-color
+  transition: transform 0.2s ease 
+  transform: translateX(-300%)
