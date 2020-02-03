@@ -1,4 +1,5 @@
 import Turbolinks from 'turbolinks';
+import axios from 'axios';
 
 document.addEventListener('turbolinks:load', function () {
   if (window.zaiLaunchpad) {

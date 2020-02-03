@@ -1,0 +1,93 @@
+= render 'pages/common/sidebar'
+
+%h1 Tables
+
+%p
+  Tables shall always follow the following pattern. If there is no <code>thead</code>,
+  then <code>tbody</code> can also be ommited.
+
+%table.table--valign-top
+  %thead
+    %tr
+      %th Element
+      %th Modifier
+      %th Description
+  %tbody
+    %tr
+      %td{ rowspan: 2 }
+        %code table
+      %td
+        %code .table--full
+      %td
+        Spans table across stage
+
+    %tr
+      %td
+        %code .table--valign-top
+      %td
+        All text is vertical aligned at top
+
+    %tr
+      %td{ rowspan: 2 }
+        %code tr
+      %td
+        %code .is-active
+      %td
+        Use, when a row shall be selected
+    %tr
+      %td
+        %code .is-highlighted
+      %td
+        Use, when a row is highlighted (e.g. after it was added)
+
+    %tr
+      %td{ rowspan: 1 }
+        %code td, th
+      %td
+        %code .td--shrink
+      %td
+        Shrinks table cell to match content's width
+
+
+%h2 Example
+
+.row
+  .row__col
+    %pre
+      %code
+        :preserve
+          %table.table--v-align-top
+            %thead
+              %tr
+                %th Foo
+                %th Bar
+                %th.u-right Bazz
+            %tfoot
+              %tr
+                %td Foo
+                %td Bar
+                %td.u-right Bazz
+            %tbody
+              %tr
+                %td Foo
+                %td Bar
+                %td.u-right Bazz
+
+  .row__col
+    %table.table--v-align-top
+      %thead
+        %tr
+          %th Foo
+          %th Bar
+          %th.u-right Bazz
+      %tfoot
+        %tr
+          %td Foo
+          %td Bar
+          %td.u-right Bazz
+      %tbody
+        %tr
+          %td Foo
+          %td Bar
+          %td.u-right Bazz
+

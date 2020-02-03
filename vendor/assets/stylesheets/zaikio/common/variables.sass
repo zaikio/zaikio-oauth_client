@@ -1,14 +1,12 @@
 // VARIABLES
 
 $black:              hsl(0, 0, 0%)
-$almostblack:        hsl(0, 0, 10%)
 $darkgray:           hsl(0, 0, 50%)
-$mediumgray:         hsl(0, 0, 75%)
-$lightgray:          hsl(0, 0, 90%)
-$almostwhite:        hsl(0, 0, 98%)
+$mediumgray:         hsl(0, 0, 90%)
+$lightgray:          hsl(0, 0, 96%)
 $white:              hsl(0, 0, 100%)
 
-$gray:               $mediumgray
+$gray:               $darkgray
 
 $green:              #46F0B3
 $lightgreen:         lighten($green, 30%)
@@ -29,11 +27,10 @@ $purple:             #ab47bc
 $brown:              #8d6e63
 
 $primary-color:        $green
-$dark-primary-color:   $darkblue
 
-$secondary-color:      $green
-$dark-secondary-color: $darkgreen
-$highlight-color:      #FBEBCF
+$secondary-color:      $orange
+$secondary-color-1:    $secondary-color
+$secondary-color-2:    $blue
 
 $black-opaque-01: rgba(0, 0, 0, .1)
 $black-opaque-02: rgba(0, 0, 0, .2)
@@ -56,7 +53,7 @@ $break-small: 1024px
   box-shadow: 0 1px 1px rgba(0, 0, 0, .1)
 
 @mixin box-shadow-wide
-  box-shadow: 0 3px 15px -3px rgba(0, 0, 0, .25)
+  box-shadow: 0 4px 17px 6px rgba(0, 0, 0, .1)
 
 @mixin boxed
   background: $white
@@ -82,13 +79,13 @@ $break-small: 1024px
   white-space: nowrap
   overflow: hidden
 
-@mixin semi-bold
-  font-weight: 700
+@mixin weight-bold
+  font-weight: bold
 
-@mixin bold
+@mixin weight-black
   font-weight: 900
 
-@mixin monospace
+@mixin font-monospace
   font-family: "Courier", monospace
 
 @mixin uppercase
@@ -100,10 +97,10 @@ $break-small: 1024px
     -webkit-appearance: none
     width: 20px
     height: 20px
-    background-color: $almostwhite
+    background-color: $lightgray
 
   &::-webkit-scrollbar-thumb
-    border: 2px solid $almostwhite
+    border: 2px solid $lightgray
     background-color: rgba(0, 0, 0, .1)
 
     &:hover
@@ -131,6 +128,12 @@ $break-small: 1024px
   animation-timing-function: $transition
   animation-iteration-count: $count
   animation-fill-mode: forwards
+
+@mixin icon($file_name)
+  background-image: image-url($file_name)
+  background-repeat: no-repeat
+  background-size: contain
+  background-position: center
 
 // Use it like this: +keyframes(pdf-prochcessing)
 =keyframes($name)

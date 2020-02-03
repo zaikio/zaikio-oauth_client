@@ -71,7 +71,7 @@
   margin-left: 34px
 
 .field__text
-  @include bold
+  @include weight-bold
   @include not-selectable
   line-height: 40px
   color: $lightgray
@@ -102,7 +102,7 @@
   right: 12px
 
 .unit
-  @include semi-bold
+  @include weight-bold
   position: absolute
   bottom: 0
   right: 10px
@@ -124,7 +124,7 @@
 //
 label
   @include not-selectable
-  @include bold
+  @include weight-bold
   @include uppercase
   display: block
   line-height: 2rem
@@ -146,7 +146,7 @@ label
       color: $black
 
   &.label--right
-    @include semi-bold
+    @include weight-bold
     float: right
     color: $lightgray
 
@@ -221,7 +221,7 @@ input[type=number]::-webkit-outer-spin-button
   margin: 0
 
 .textfield-placeholder
-  @include bold
+  @include weight-bold
   line-height: 40px
 
 textarea
@@ -413,7 +413,7 @@ input.search-field
   clear: left
 
   &:hover
-    background: $almostwhite
+    background: $lightgray
 
   input
     position: absolute
@@ -486,12 +486,12 @@ input[type=file][data-direct-upload-url][disabled]
 
   .custom-radio-box__label
     padding: 15px 20px
-    border: 2px solid $almostwhite
+    border: 2px solid $lightgray
     border-radius: 5px
 
   input[type=radio]:checked + .custom-radio-box__label
     border-color: $primary-color
-    background: $almostwhite
+    background: $lightgray
 
   input[type=radio]:active .custom-radio-box__label
     background: lighten($lightgray, 5%)
@@ -510,7 +510,7 @@ input[type=file][data-direct-upload-url][disabled]
   font-weight: 600
 
   p
-    @include bold
+    @include weight-bold
     margin: 0 0 10px 0
 
   ul

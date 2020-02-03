@@ -1,0 +1,7 @@
+= content_for :sidebar do
+  .sidebar-navigation
+    = link_to 'Overview', '/custom', class: @page == 'index' && 'is-active'
+    = link_to 'Zaikio flavoured BEM', '/custom/bem', class: @page == 'bem' && 'is-active'
+    = link_to 'Rulebook', '/custom/rulebook', class: @page == 'rulebook' && 'is-active'
+    = link_to 'Variables', '/custom/variables', class: @page == 'variables' && 'is-active'
+    = link_to 'Z-Indices', '/custom/z_indices', class: @page == 'z_indices' && 'is-active'

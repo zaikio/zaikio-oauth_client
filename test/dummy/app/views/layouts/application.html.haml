@@ -10,15 +10,55 @@
     = javascript_pack_tag 'application'
   %body
     <div id="zai-launchpad" data-turbolinks-permanent></div>
-    #content
+    .wrapper
       = render partial: 'layouts/flash_container'
-      #header
-      -# %nav
-      -#   = link_to 'OAuth', '/', class: controller_name == 'welcomes' && 'is-active'
-      -#   = link_to 'Elements', elements_path, class: controller_name == 'elements' && 'is-active'
-      #stage
-        = yield
+      .navigation{ id: 'navigation' }
+        .navigation__menu
+          .navigation__close{ 'data-behavior': 'close_navigation_menu' } Close
+          .navigation__links
+            = link_to 'General', '/general'
+            = link_to 'Custom Styles', '/custom'
+            = link_to 'Anatomy of a page', '/anatomy'
+            = link_to 'Common elements', '/common'
+            = link_to 'Forms', '/forms'
+            = link_to 'Icons', '/icons'
+            = link_to 'Components', '/components'
+            = link_to 'Utilities', '/utils'
+            = link_to 'Helpers', '/helpers'
+                    
+        .navigation__dashboard
+          %h2 Recent stuff
+          %p Look how awesome this is
 
-    #modal{ 'data-controller': 'modal', 'data-action': 'click->modal#hide' }
-      #modal__content{ 'data-target': 'modal.content' }
+          %h2 Recent stuff
+          %p Look how awesome this is
+
+      .topbar
+        .topbar__nav-btn{ 'data-behavior': 'open_navigation_menu' }
+        .topbar__breadcrumbs
+          .topbar__breadcrumb.is-active General
+          .topbar__breadcrumb-separator /
+          .topbar__breadcrumb Introduction
+        .topbar__more
+          .menu
+            .menu__icon.menu__icon--topbar{ 'data-behavior': 'open_menu' }
+            .menu__list.menu__list--right
+              = link_to 'Learn how to build menus', '/anatomy/menus'
+              = link_to 'More about menus', '/anatomy/menus'
+              = link_to 'I ❤︎ menus', '/anatomy/menus'
+              .menu__hr
+              = link_to 'Reset coffee machine', '#', class: 'is-destructive'
+
+      .stage
+        - if content_for?(:sidebar)
+          .stage__sidebar
+            = yield :sidebar
+
+        .stage__content
+          = yield
+
+      .actionbar
+
+    .modal{ 'data-controller': 'modal', 'data-action': 'click->modal#hide' }
+      .modal__content{ 'data-target': 'modal.content' }
         = yield :modal

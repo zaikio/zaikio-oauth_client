@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ['content'];
 
   connect() {
-    document.querySelector('#content').classList.remove('with-modal');
+    // document.querySelector('#content').classList.remove('with-modal');
   }
 
   hide(event) {

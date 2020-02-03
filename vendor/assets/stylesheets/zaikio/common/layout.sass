@@ -1,198 +1,72 @@
-*
-  box-sizing: border-box
-  -webkit-box-sizing: border-box
-  -moz-box-sizing: border-box
-
-@font-face
-  font-family: "PlexSans"
-  src: font-url("zaikio/ibm_plex_sans/IBMPlexSans-Regular.woff2") format("woff2")
-  font-weight: 400
-  font-style: normal
-
-@font-face
-  font-family: "PlexSans"
-  src: font-url("zaikio/ibm_plex_sans/ibm_plex_sans/IBMPlexSans-Medium.woff2") format("woff2")
-  font-weight: 700
-  font-style: normal
-
-@font-face
-  font-family: "PlexSans"
-  src: font-url("zaikio/ibm_plex_sans/ibm_plex_sans/IBMPlexSans-Bold.woff2") format("woff2")
-  font-weight: 900
-  font-style: normal
-
-// @font-face
-//   font-family: "PlexSans"
-//   src: font-url("lato/LatoLatin-Italic.woff2") format("woff2"), font-url("lato/LatoLatin-Italic.woff") format("woff")
-//   font-weight: 400
-//   font-style: italic
-
-html, body
-  min-height: 100%
-
-body, input, select, button, textarea, .btn
-  font: 15px/1.5em 'PlexSans', 'Helvetica Neue', sans-serif
-  color: $black
-  text-rendering: optimizeLegibility
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-
-body
-  background: $almostwhite
-
-  &.with-modal
-    overflow: hidden
-
-    #content
-      filter: blur(5px)
-
-    #modal
-      display: block
-
-.body--login
-  background: linear-gradient(45deg, $blue, lighten($blue, 20%))
-
-#content
-  &.is-blurred
-    filter: blur(5px)
-    pointer-events: none
-
-h1
-  @include bold
-  font-size: 26px
-  line-height: 1.3em
-  margin: 0 0 40px 0
-  overflow: hidden
-  letter-spacing: -0.02em
-
-  a
-    border: 0
-
-    &:hover
-      color: $blue
-
-.h1--big
-  font-size: 28px
-
-.h1__thin
-  font-weight: normal
-  display: inline
-
-.h1__crumb-arrow
-  background-image: image-url('caret-right.svg')
-  background-repeat: no-repeat
-  background-size: contain
-  background-position: center
-  opacity: 0.2
-  width: 1.5rem
-  height: 0.5em
-  display: inline-block
-
-h2
-  font-size: 20px
-  font-weight: 800
-  margin: 20px 0
-  line-height: 1.5
-
-  &.centered
-    text-align: center
-    border-bottom: 1px solid $almostwhite
-    padding-bottom: 20px
-
-.h2--underlined
-  margin-top: 60px
-  border-bottom: 2px solid darken($almostwhite, 10%)
-  line-height: 2
-  padding-left: 5px
-
-h3
-  color: $mediumgray
-  margin: 0 0 20px 0
-
-a, .link
-  display: inline
-  cursor: pointer
-  text-decoration: none
-  border-bottom: 1px solid $green
-  color: $black
-  border: none
-
-em
-  color: rgba(0, 0, 0, .5)
-
-hr
-  border: 0
-  border-top: 1px solid rgba(0, 0, 0, .05)
-  margin: 50px 0
-
-.hr--narrow
-  margin: 25px 0
-
-.turbolinks-progress-bar
-  background-color: $lightblue !important
-  height: 2px !important
-
-// Row Layout
-.row
+.topbar
+  width: 100%
   display: flex
-  margin: 0 -10px
-
-.row__col
-  flex: 1 0px
-  padding: 0px 10px
-
-.row__col--15
-  flex: 0 15%
-
-.row__col--20
-  flex: 0 20%
-
-.row__col--25
-  flex: 0 25%
-
-.row__col--33
-  flex: 0 33.3333333%
-
-.row__col--40
-  flex: 0 40%
-
-.row__col--50
-  flex: 0 50%
-
-.row__col--66
-  flex: 0 66.6666667%
-
-.row__col--75
-  flex: 0 75%
-
-.row__col--shrink
-  flex-grow: initial
-  flex-shrink: 1
-
-.row__col--grow
-  flex-shrink: initial
-  flex-grow: 1
-
-.row__col--centered-right
-  display: flex
-  justify-content: flex-end
+  height: 50px
+  border-bottom: 1px solid $mediumgray
   align-items: center
+  font-size: 14px
 
-.col
+.topbar__nav-btn
+  @include icon('menu.svg')
+  cursor: pointer
+  flex: 0 0 57px
+  height: 50px
+  margin-right: 10px
+  background-size: 17px
+  background-position-x: 20px
+
+  &:hover
+    background-color: $primary-color
+
+.topbar__breadcrumb
+  display: inline
+
+  &.is-active
+    @include weight-bold
+    color: $black
+
+.topbar__breadcrumb-separator
+  display: inline
+  color: $darkgray
+  margin: 0 5px
+
+.topbar__more
+  margin-left: auto
+  height: 100%
+
+.stage
   display: flex
-  flex-direction: column
-  margin: -10px 0
-  height: calc(100% + 20px)
 
-.col__row
-  flex: 1 0
-  padding: 10px 0
+  @media only screen and (max-width: $break-middle)
+    width: 100%
 
-.locked-background
-  background-color: rgba(0,0,0,0.5)
-  position: fixed
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  overflow: auto
+.stage__sidebar
+  flex: 0 0 250px
+  padding: 20px 0 20px 20px
+
+.sidebar-navigation
+  a
+    display: flex
+    align-items: center
+    border-radius: 5px
+    color: $darkgray
+    height: 40px
+    padding: 0 20px
+    font-size: 15px
+    border: 1px solid transparent
+
+    + a
+      margin-top: 10px
+
+    &.is-active
+      @include weight-bold
+      color: $black
+      border: 1px solid $mediumgray
+
+.stage__content
+  padding: 40px
+  flex: 1
+
+// TODO: Delete me
+#zai-launchpad
+  background: black !important

@@ -1,154 +1,44 @@
 table
   background-color: $white
-  width: 100%
+  border-collapse: collapse
+  border-spacing: 0
 
   &.with-header-col
     tr td:first-of-type
-      @include bold
+      @include weight-bold
       color: $mediumgray
       vertical-align: top
 
-  tr + tr
-    border-top: 1px solid $almostwhite
-
-.table--collection
-  @include box-shadow
-
-  td
-    padding: 20px
-    vertical-align: top
-
-.table--plain
-  border-top: 1px solid darken($almostwhite, 5%)
-  border-bottom: 1px solid darken($almostwhite, 5%)
-
-.table--clean
-  thead
-    tr
-      border-bottom: 2px solid darken($almostwhite, 5%)
-      color: $lightgray
-
-    th
-      background: none
-
-.table--bordered
-  border: 1px solid $almostwhite
+.table--full
+  width: 100%
 
 .table--valign-top
   td
     vertical-align: top
 
-.table--valign-middle
-  td
-    vertical-align: middle
-
-.table--full-width-boxed
-  td:first-of-type
-    padding-left: 60px
-
-  td:last-of-type
-    padding-right: 60px
-
 th, td
   padding: 10px 15px
-
-  &.right
-    float: none
-    text-align: right
-
-  &.no-wrap
-    white-space: nowrap
-
-  &.padding-left
-    padding-left: 30px
-
-  &.double-padding-left
-    padding-left: 60px
-
-  &.td--wide, &.th--wide
-    padding-left: 30px
-    padding-right: 30px
+  min-width: 100px
+  text-align: left
 
   &.td--shrink
     width: 1%
     white-space: nowrap
 
-  &.td--tight
-    padding-left: 0
-    padding-right: 0
-
-  &.td--high
-    padding-top: 30px
-    padding-bottom: 30px
-
-  &.is-pending
-    border-left: 3px solid #f5f5f5
-
-  &.is-won
-    border-left: 3px solid lighten($green, 10%)
-
-  &.is-lost
-    border-left: 3px solid lighten($red, 10%)
-
 tr
-  &.active
-    background-color: $almostwhite
+  &.is-active
+    background-color: $lightgray
 
   &.is-highlighted
-    background-color: #f9f9f9
-
-  &.border-top
-    border-top: 2px solid rgba(0,0,0,0.05)
-
-  &.darkened
-    td
-      background-color: darken($white, 3%)
-
-.tr--separated
-  border-top: 2px solid $almostwhite
-
-.tr--dotted + .tr--dotted
-  border-top: 1px dotted $almostwhite
-
-td, th
-  &.darkened
-    background: darken($white, 3%) !important
-
-  &.td--50
-    width: 50%
-
-  &.td--100
-    width: 100%
-
-.td--indented
-  padding-left: 40px
-
-.td--total
-  background: hsl(220, 0, 90%)
+    background-color: $yellow
 
 thead
-  tr th
-    background-color: $lightgray
-    text-align: left
-
-.thead--sub
-  th
-    @include semi-bold
-    background-color: darken($white, 3%)
+  border-bottom: 2px solid black
 
 tbody
-  .tr--dotted
-    border: 0
-
-    + .tr--dotted
-      border-top: 1px dotted $almostwhite
-
-  .tr--follow
-    border-top: 0
-
-  tr.separated
-    border-top: 2px solid $lightgray
+  tr
+    border-bottom: 1px solid $mediumgray
 
 tfoot
-  border-top: 1px solid $lightgray
-  background-color: lighten($almostwhite, 2%)
+  @include weight-bold
+  border-top: 1px solid $black

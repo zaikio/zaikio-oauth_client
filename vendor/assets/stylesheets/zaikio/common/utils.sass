@@ -64,17 +64,17 @@ $gap-values: ( tiny: $tiny-margin, sma: $small-margin, reg: $regular-margin, big
   display: none !important
 
 .u-big
-  @include semi-bold
+  @include weight-bold
   font-size: 18px !important
   line-height: 26px
 
 .u-huge
-  @include bold
+  @include weight-bold
   font-size: 64px !important
   line-height: 1em
 
 .u-x-huge
-  @include bold
+  @include weight-bold
   font-size: 128px !important
   line-height: 1em
 
@@ -98,8 +98,8 @@ $gap-values: ( tiny: $tiny-margin, sma: $small-margin, reg: $regular-margin, big
 .u-white
   color: $white !important
 
-.u-almostwhite
-  color: $almostwhite !important
+.u-lightgray
+  color: $lightgray !important
 
 .u-gray
   color: $gray !important
@@ -134,18 +134,9 @@ $gap-values: ( tiny: $tiny-margin, sma: $small-margin, reg: $regular-margin, big
 .u-orange
   color: $orange !important
 
-.u-bold
-  @include bold
-  display: inline-block
-
-.u-semi-bold
-  font-weight: 700 !important
-
 .u-bold, strong
-  font-weight: 800 !important
-
-.u-thin
-  font-weight: normal !important
+  display: inline-block
+  font-weight: bold !important
 
 .u-no-wrap
   white-space: nowrap !important
