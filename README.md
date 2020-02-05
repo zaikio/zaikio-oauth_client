@@ -155,7 +155,7 @@ The `zaikio.new_session_path` which was used for the first initiation of the OAu
 
 With the above described credentials you can connect right away to our Sandbox environment to get access to the demo app with demo users.
 
-The UUID of people and organizations within the Sandbox are the same as within the fixtures of this gem (see `people.yml`and `organizations.yml`).
+The UUID of people and organizations within the Sandbox are the same as within the fixtures of this gem (see `zaikio_people.yml`and `zaikio_organizations.yml`).
 
 ### OAuth workflow testing
 
