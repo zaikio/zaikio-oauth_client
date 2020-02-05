@@ -6,10 +6,13 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all'
-    <script src="https://launchpad.zaikio.com/launchpad.js"></script>
     = javascript_pack_tag 'application'
+
+    - if Current.user.present?
+      %script{ src: 'https://launchpad.zaikio.com/launchpad.js' }
+
   %body
-    <div id="zai-launchpad" data-turbolinks-permanent></div>
+    #zai-launchpad{ 'data-turbolinks-permanent' => true }
     .wrapper
       = render partial: 'layouts/flash_container'
       .navigation{ id: 'navigation' }
@@ -25,7 +28,7 @@
             = link_to 'Components', '/components'
             = link_to 'Utilities', '/utils'
             = link_to 'Helpers', '/helpers'
-                    
+
         .navigation__dashboard
           %h2 Recent stuff
           %p Look how awesome this is

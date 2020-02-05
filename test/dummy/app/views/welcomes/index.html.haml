@@ -3,7 +3,7 @@
 %h2 OAuth Flow
 - unless Current.user
   To process, please
-  = link_to 'Login via Zaikio Directory OAuth', zaikio.new_session_path
+  %h3= link_to 'Login via Zaikio Directory OAuth', zaikio.new_session_path
 - else
   Logged in: #{Current.user.email}
   %p= render Current.user
