@@ -12,5 +12,6 @@ test/dummy/tmp/
 test/dummy/public/packs
 test/dummy/public/packs-test
 test/dummy/node_modules
+test/dummy/db/migrate
 
 test/dummy/app/javascript/zaikio/node_modules
