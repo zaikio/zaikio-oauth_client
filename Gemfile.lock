@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    zaikio (0.3.3)
+    zaikio (0.3.4)
       jwt
       oauth2
       rails (~> 6.0.0)
@@ -132,7 +132,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
-    oauth2 (1.4.2)
+    oauth2 (1.4.3)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)

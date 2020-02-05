@@ -22,8 +22,8 @@ module Zaikio
       end
 
       test 'fills own attributes with data from token upon token assignment' do
-        assert_equal '0aa4ae0a-ede4-45c7-b5d9-bf2e072b2fd7', @token.id
-        assert_equal DateTime.parse('Fri, 25 Oct 2019 17:51:57'), @token.expires_at
+        assert_equal '57ab5e51-3b20-4900-8a14-6420dabfcddb', @token.id
+        assert_equal DateTime.parse('Sat, 5 Feb 3020 13:14:40'), @token.expires_at
       end
     end
   end

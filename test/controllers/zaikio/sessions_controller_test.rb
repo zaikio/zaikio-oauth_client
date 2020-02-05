@@ -10,7 +10,8 @@ module Zaikio
       params = {
         client_id: Zaikio.client_id,
         redirect_uri: approve_sessions_url,
-        response_type: 'code'
+        response_type: 'code',
+        scope: 'directory.person.r'
       }
 
       assert_redirected_to "#{Zaikio.directory_url}/oauth/authorize?#{params.to_query}"
