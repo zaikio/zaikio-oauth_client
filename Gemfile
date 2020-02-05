@@ -14,6 +14,7 @@ gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 
 gem 'haml-rails'
 gem 'webpacker'
+gem 'sass-rails'
 
 # To use a debugger
 gem 'byebug', group: [:development, :test]
@@ -21,7 +22,6 @@ gem 'byebug', group: [:development, :test]
 group :development do
   gem 'web-console'
   gem 'pry-rails'
-  gem 'sass-rails'
 end
 
 group :test do
