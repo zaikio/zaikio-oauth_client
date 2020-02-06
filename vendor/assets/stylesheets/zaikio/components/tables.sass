@@ -3,11 +3,11 @@ table
   border-collapse: collapse
   border-spacing: 0
 
-  &.with-header-col
-    tr td:first-of-type
-      @include weight-bold
-      color: $mediumgray
-      vertical-align: top
+.table--header-col
+  tr td:first-of-type
+    @include weight-bold
+    vertical-align: top
+    background: $lightgray
 
 .table--full
   width: 100%
@@ -17,13 +17,22 @@ table
     vertical-align: top
 
 th, td
-  padding: 10px 15px
+  padding: 14px 16px
   min-width: 100px
   text-align: left
 
   &.td--shrink
     width: 1%
     white-space: nowrap
+
+  &.td--highlight-positive
+    background: lighten($red, 20%)
+
+  &.td--highlight-negative
+    background: lighten($green, 20%)
+
+th
+  padding-bottom: 7px
 
 tr
   &.is-active
@@ -39,6 +48,10 @@ tbody
   tr
     border-bottom: 1px solid $mediumgray
 
+  tr:last-of-type
+    border-bottom: none
+  
+
 tfoot
   @include weight-bold
-  border-top: 1px solid $black
+  background: $lightgray

@@ -1,11 +1,11 @@
-.tt-tooltip
+.tooltip
   @include weight-bold
   padding: 8px 15px
-  position: fixed
-  top: 200px
-  left: 20px
+  position: absolute
+  bottom: 20px
+  left: 0
   background-color: $black
-  color: white
+  color: $white
   border-radius: 3px
   opacity: 0
   pointer-events: none
@@ -14,36 +14,23 @@
   line-height: 18px
   transition: opacity 0.2s ease-out, transform 0.2s linear
   max-width: 350px
+  width: max-content
   white-space: normal
-  margin: 10px
   text-align: left !important
 
-  &.is-visible
-    opacity: 1
-    transform: translateY(-20px)
+  &::before
+    content: ''
+    position: absolute
+    bottom: -11px
+    left: 10px
+    width: 14px
+    height: 14px
+    background: linear-gradient(135deg, $black, $black 50%, transparent, transparent 60%)
 
-.tt-tooltip__arrow
-  position: absolute
-  border-top: 7px solid $black
-  border-left: 7px solid transparent
-  border-right: 7px solid transparent
-  width: 0
-  height: 0
-  transform: translateX(-50%)
-  bottom: -7px
-  left: 50%
-
-  &.is-at-top
-    top: -7px
-    bottom: auto
-    border-bottom: 7px solid $black
-    border-top: none
-
-.tt-label
-  line-height: 39px
-  float: left
-  margin-left: 10px
-  color: $lightgray
-
-  &:hover
-    color: $blue
+*[data-behavior=tooltip]
+  position: relative
+  
+  &:hover  
+    .tooltip
+      opacity: 1
+      transform: translateY(-10px)

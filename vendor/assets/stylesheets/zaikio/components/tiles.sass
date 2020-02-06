@@ -1,21 +1,38 @@
 .tiles
   display: flex
-  margin: 0 -20px
+  flex-wrap: wrap
+  margin: 12px -20px
   
 .tile
   border: 1px solid $mediumgray
-  margin: 0 20px
+  margin: 12px
   padding: 20px
   flex: 1
+  border-radius: 1px
+  min-width: 200px
 
-  h2
-    margin-top: 0
+.tile__caption
+  @include weight-black
+  font-size: 1.5em
+  margin: .5em 0
+
+  + p
+    color: $darkgray
 
 .tile--gray
   border: 0
-  background: $mediumgray
+  background: $lightgray
 
 .tile--black
   border: 0
   background: $black
-  color: $white
+  color: $white !important
+
+a.tile
+  color: inherit
+  transition: box-shadow 0.2s ease, transform 0.2s ease
+
+  &:hover
+    border-color: transparent
+    box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.2)
+    transform: translate3d(0, -4px, 0)
