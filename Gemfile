@@ -15,6 +15,7 @@ gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 gem 'haml-rails'
 gem 'webpacker'
 gem 'sass-rails'
+gem "breadcrumbs_on_rails"
 
 # To use a debugger
 gem 'byebug', group: [:development, :test]

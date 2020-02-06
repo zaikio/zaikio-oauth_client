@@ -10,6 +10,7 @@ PATH
   remote: .
   specs:
     zaikio (0.3.4)
+      breadcrumbs_on_rails
       jwt
       oauth2
       rails (~> 6.0.0)
@@ -76,6 +77,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     bindex (0.8.1)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     byebug (11.0.1)
     capybara (3.29.0)
@@ -230,6 +232,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  breadcrumbs_on_rails
   byebug
   capybara
   haml-rails
