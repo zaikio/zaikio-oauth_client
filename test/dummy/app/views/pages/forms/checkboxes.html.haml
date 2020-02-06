@@ -1,3 +1,39 @@
 = render 'pages/forms/sidebar'
 
-%h1 Checkboxes
+%h1 Check- and Radioboxes
+
+%h2 Checkboxes
+%p Use whenever something needs to be checked.
+
+.field-set
+  .field
+    = check_box_tag 'check_foo', checked: true
+    = label_tag 'check_foo', 'Always keep smiling'
+    .label-info
+      Use this setting and tell your user more about what to expect.
+      You can even link to further information in a knowledge base.
+      = link_to "Learn more", '#'
+
+  .field
+    = check_box_tag 'check_bar'
+    = label_tag 'check_bar', 'Automatically post cat videos to Slack'
+    .label-info
+      Use this setting and tell your user more about what to expect.
+
+
+%h2 Radioboxes
+%p Use whenever something needs to be checked.
+%p Use whenever something needs to be checked.
+
+.field-set
+  .field
+    = radio_button_tag 'foo', 'bar'
+    = label_tag 'foo_bar', "Make it cheap"
+    .label-info
+      Use this setting and tell your user more about what to expect.
+
+  .field
+    = radio_button_tag 'foo', 'baz'
+    = label_tag 'foo_baz', "Make it fast"
+    .label-info
+      Use this setting and tell your user more about what to expect.

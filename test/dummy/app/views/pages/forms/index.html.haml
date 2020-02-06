@@ -1,3 +1,15 @@
-= render 'pages/forms/sidebar'
+%h1 Forms
 
-%h1 Index
+.tiles
+  = link_to 'forms/inputs', class: 'tile tile--gray' do
+    .tile__caption Inputs
+    %p Enter text, numbers and other things.
+
+  = link_to 'forms/checkboxes', class: 'tile tile--gray' do
+    .tile__caption Check- & Radioboxes
+    %p When in doubt, choose an option.
+
+  = link_to 'forms/selects', class: 'tile tile--gray' do
+    .tile__caption Selects
+    %p How many ways to select something could there possibly be?
+

@@ -69,6 +69,12 @@ module Zaikio
       end
     end
 
+    def label_tag(method, options = {}, html_options = {})
+      @template.content_tag(:div, class: 'foobar-label') do
+        super
+      end
+    end
+
     def error_messages_for(*attributes_to_show)
       return unless object.respond_to?(:errors) && object.errors.any?
 

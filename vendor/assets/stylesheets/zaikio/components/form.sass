@@ -1,123 +1,47 @@
+$input-background:   hsl(0, 0, 98%)
+$input-border-color: hsl(0, 0, 80%)
+  
 //
 // Fieldset and fields
 //
 .field-set
-  &.is-disabled
-    opacity: 0.5
-    pointer-events: none
+  width: 500px
 
-.field-set--50
-  padding-right: 50%
-
-.field-set--100
-  padding-right: 0
-
-.fields
-  display: flex
-  margin: 0 -10px 20px -10px
-
-.fields--no-margin
-  margin: 0 -20px
-
-.fields__field
-  position: relative
-  flex: 1 0px
-  padding: 0px 10px
-
-.fields__field--10
-  flex: 0 10%
-
-.fields__field--20
-  flex: 0 20%
-
-.fields__field--25
-  flex: 0 25%
-
-.fields__field--33
-  flex: 0 33.333333%
-
-.fields__field--40
-  flex: 0 40%
-
-.fields__field--50
-  flex: 0 50%
-
-.fields__field--66
-  flex: 0 66.666667%
-
-.fields__field--75
-  flex: 0 75%
+.field-set--full
+  width: 100%
 
 .field
   @include clearfix
   position: relative
   margin: 0 0 20px 0
 
-  &.bottom
-    border-top: 1px solid $lightgray
-    background-color: $white
-    padding: 20px 0
-
-    button
-      @include button
-
-      + a.button, + button
-        margin-left: 10px
-
-  &.is-disabled
-    @include disabled
-
-.field--indented
-  margin-left: 34px
-
-.field__text
-  @include weight-bold
-  @include not-selectable
-  line-height: 40px
-  color: $lightgray
-
-  &.is-clickable
-    cursor: pointer
-
-    &:hover
-      color: $primary-color
-
-.fields--no-margin
-  margin: 0
-
 //
 // Icons inside of text fields, eg units, locks
 //
-.field__icon
+.input__icon
   position: absolute
   bottom: 0
   line-height: 40px
   font-size: 22px
   color: $lightgray
 
-.field__icon--before
+.input__icon--before
   left: 12px
 
-.field__icon--after
+.input__icon--after
   right: 12px
 
-.unit
+.input__icon--text
   @include weight-bold
+  display: flex
   position: absolute
   bottom: 0
   right: 10px
   color: $lightgray
-  display: flex
   align-items: center
   height: 36px
   font-size: 13px
 
-.fields__field
-  .unit
-    right: 20px
-
-.thin-form
-  width: 430px
 
 //
 // Labels and everything similar
@@ -125,85 +49,71 @@
 label
   @include not-selectable
   @include weight-bold
-  @include uppercase
-  display: block
-  line-height: 2rem
+  display: flex
   height: 2rem
-  color: $mediumgray
   float: left
-  font-size: 0.8em
+  font-size: 14px
+  align-items: center
 
-  &.for-fields
-    float: none
-
-  &.with-tooltip
-    float: right
-    color: $lightgray
-    padding: 0 10px
-    transform: translate(10px)
-
-    &:hover
-      color: $black
-
-  &.label--right
-    @include weight-bold
-    float: right
-    color: $lightgray
-
-    a
-      padding: 20px
-      margin-right: -20px
-      line-height: 2rem
-      color: $lightgray
-
-  &.optional
-    &:after
-      font-size: 0.7rem
-      color: #CCC
-      margin-left: 10px
-      line-height: 2rem
-      content: 'optional'
-
-.label--100
+.label--full
   width: 100%
 
-.additional-text-for-radio
-  color: $mediumgray
-  margin-left: 34px
+.label-info
   clear: left
+  font-size: 13px
+  color: $darkgray
+  margin-top: 5px
+
+.label-wrapper
+  display: flex
+
+.label-option
+  float: right
+  line-height: 2rem
+  height: 2rem
+  font-size: 13px
+  margin-left: auto
+
+  + .label-option
+    margin-left: 10px
+
+.label-option--optional
+  color: $darkgray
+
+.label-option--tooltip
+  @include icon('form/tooltip.svg')
+  color: $darkgray
+  width: 20px
+  height: 1em
+  align-self: center
 
 button, input[type=submit]
   @include button
 
 input[type=text], input[type=email], input[type=password], input[type=number], select, textarea
-  @include transition
+  -webkit-user-select: text
   width: 100%
-  padding: 0 10px
-  border: 2px solid $lightgray
+  padding: 0 13px
   line-height: 24px
   height: 40px
-  -webkit-user-select: text
   outline: 0
-  background: $white
+  background-color: $input-background
+  box-shadow: inset 1px 1px 2px 0 rgba(0, 0, 0, .05)
+  border-radius: 3px
+  border: 1px solid $input-border-color
+  font-size: 14px
 
   &:focus
-    border-color: $primary-color
+    border-color: $blue
+    box-shadow: 0 0 0 3px rgba(0, 60, 255, .25);
 
   &:disabled
+    @include icon('form/disabled.svg')
+    background-position: center right 10px
+    background-size: 16px
+    background-color: hsl(0, 0, 96%)
     color: rgba(0, 0, 0, 0.4)
-
-  &.right
-    float: none
-    text-align: right
-
-  &.short
-    width: 100px
-
-  &.long
-    width: 500px
-
-  &.upcase
-    text-transform: uppercase
+    box-shadow: none
 
   // We need to put these special pseudo classes into separate rows, because Chrome
   // ignores the styles if several are put in one row. Browsers are strange ¯\_(ツ)_/¯
@@ -215,22 +125,26 @@ input[type=text], input[type=email], input[type=password], input[type=number], s
     color: rgba(0, 0, 0, 0.3)
     font-style: italic
 
+select
+  @include icon('form/select.svg')
+  -webkit-appearance: none
+  -moz-appearance: none
+  background-position: center right 15px
+  background-size: 13px
+  border-radius: 30px
+
+  &:-moz-focusring
+    color: transparent
+    text-shadow: 0 0 0 #000
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
   -webkit-appearance: none
   margin: 0
 
-.textfield-placeholder
-  @include weight-bold
-  line-height: 40px
-
 textarea
   height: 100px
   padding: 8px 10px
-
-  &.textarea--as-field
-    height: 94px
-    resize: none
 
   &.textarea--large
     max-width: 100%
@@ -240,79 +154,84 @@ textarea
 input[type=checkbox], input[type=radio]
   width: 16px
   height: 16px
-  margin: 12px 0
   margin-right: 12px
   float: left
   clear: left
 
-  + label, + .field_with_errors label
+  + label, + .field_with_errors label, + .label-wrapper
     line-height: 39px
+
+    + .label-info
+      padding-left: 35px
+      margin-top: 0
 
 input[type=checkbox]
   opacity: 0
   position: absolute
   left: -9999px
 
-  + label, + .field_with_errors label
+  + label, + .field_with_errors label, + .label-wrapper label
     cursor: pointer
 
     &:before
       content: ''
       display: block
       float: left
-      margin-right: 10px
-      margin-top: 7px
+      margin-right: 15px
       width: 17px
       height: 20px
       line-height: 20px
       padding-left: 3px
-      background-color: $white
-      border-radius: 2px
-      border: 2px solid $mediumgray
+      background-color: $input-background
+      box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, .30)
       font-size: 15px
 
   &:checked
-    + label, + .field_with_errors label
+    + label, + .field_with_errors label, + .label-wrapper label
       &:before
         background: image-url('form/check.svg')
         background-position: center
         background-repeat: no-repeat
-        background-size: 80%
+        background-size: 64%
+        background-color: $primary-color
 
 input[type=radio]
   opacity: 0
   position: absolute
   left: -9999px
 
-  + label, + .field_with_errors label
+  + label, + .field_with_errors label, + .label-wrapper label
     cursor: pointer
 
     &:before
       content: ''
       display: block
       float: left
-      margin-right: 10px
-      margin-top: 7px
+      margin-right: 15px
       width: 17px
       height: 20px
       line-height: 20px
       padding-left: 3px
-      background-color: $white
+      background-color: $input-background
       border-radius: 20px
-      border: 2px solid lighten($lightgray, 10%)
       font-size: 15px
+      box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, .3)
 
-  &:checked
-    + label, + .field_with_errors label
+  &:checked, &:active
+    + label, + .field_with_errors label, + .label-wrapper label
       &:before
-        background-color: $green
-        box-shadow: 0px 0px 0px 4px white inset
+        background-color: $black
+        box-shadow: 0px 0px 0px 5px $primary-color, 0px 0px 0px 5px rgba(0, 0, 0, .2)
+        width: 7px
+        height: 10px
+        margin-right: 20px
+        margin-left: 5px
 
   &:active
-    + label, + .field_with_errors label
+    + label, + .field_with_errors label, + .label-wrapper label
       &:before
-        background-color: lighten($green, 20%)
-        box-shadow: 0px 0px 0px 4px white inset
+        background-color: $darkgray
+
 
 input.search-field
   padding-left: 40px
@@ -529,11 +448,3 @@ input[type=file][data-direct-upload-url][disabled]
 
   + .input--currency
     border-color: $red
-
-.iban-field
-  border: 2px solid lighten($lightgray, 10%) !important
-  box-shadow: none !important
-  clear: both
-  height: 40px !important
-  border-radius: 3px !important
-  outline: 0 !important

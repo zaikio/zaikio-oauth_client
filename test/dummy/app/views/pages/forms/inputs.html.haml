@@ -1,3 +1,23 @@
 = render 'pages/forms/sidebar'
 
 %h1 Inputs
+
+%h2 Text
+.field-set
+  .field
+    = label_tag 'First name'
+    = text_field_tag 'foobar', nil, placeholder: 'Frank'
+
+  .field
+    = label_tag 'foobar', 'Middle name', optional: true, more_link: 'http://www.spiegel.de', tooltip: 'This is a tooltip, what did you expect?'
+    = text_field_tag 'foobar', nil, placeholder: 'Frank'
+    .label-info
+      Your middle name is most likely the name of your grandma.
+
+  .field
+    = label_tag 'Last name'
+    = text_field_tag 'foobar', 'Gallikanokus', placeholder: 'Gallikanokus', disabled: true
+
+  .field
+    = label_tag 'Biography'
+    = text_area_tag 'foobar'
