@@ -2,13 +2,40 @@
 
 %h1 Tiles
 
+%h2 Usage for semantic order
 .tiles
   .tile
-    %h2 Standard
-    This is a standard <code>.tile</code>
+    .tile__caption Standard
+    %p This is a standard <code>.tile</code>
   .tile.tile--gray
-    %h2 Gray
-    With <code>.tile--gray</code>
+    .tile__caption Gray
+    %p With <code>.tile--gray</code>
   .tile.tile--black
-    %h2 Black
-    With <code>.tile--black</code>
+    .tile__caption Black
+    %p With <code>.tile--black</code>
+
+%h2 Usage as links
+.tiles
+  = link_to '#', class: 'tile' do
+    .tile__caption Standard
+    %p This is a standard <code>.tile</code>
+  = link_to '#', class: 'tile tile--gray' do
+    .tile__caption Gray
+    %p With <code>.tile--gray</code>
+  = link_to '#', class: 'tile tile--black' do
+    .tile__caption Black
+    %p With <code>.tile--black</code>
+
+%pre
+  %code
+    :preserve
+      .tiles  
+        = link_to '#', class: 'tile' do
+          .tile__caption Standard
+          %p This is a standard <code>.tile</code>
+        = link_to '#', class: 'tile tile--gray' do
+          .tile__caption Gray
+          %p With <code>.tile--gray</code>
+        = link_to '#', class: 'tile tile--black' do
+          .tile__caption Black
+          %p With <code>.tile--black</code>   

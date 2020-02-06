@@ -1,0 +1,21 @@
+= render 'pages/helpers/sidebar'
+
+%h1 Tooltips
+%p
+  Tooltips give contextual information about a UI element.
+
+.box.box--info
+  %strong Use it sparingly.
+  In most cases it's better to write information directly on screen.
+
+%h2 Example
+%span{ 'data-behavior': 'tooltip' }
+  %strong Hover me
+  .tooltip Hey there
+
+%pre
+  %code
+    :preserve
+      %span{ 'data-behavior': 'tooltip' }
+        Hover me
+        .tooltip Hey there

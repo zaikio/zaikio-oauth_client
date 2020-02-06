@@ -1,3 +1,147 @@
 = render 'pages/anatomy/sidebar'
 
 %h1 Rows & Grids
+
+%h2 Flexible columns
+%p Use as many columns as you wish and it automatically fits!
+
+.cols
+  .col
+    .col-fill.col-fill--highlight Hello
+  .col
+    .col-fill Auto 
+  .col
+    .col-fill Auto
+
+.cols
+  .col
+    .col-fill.col-fill--highlight Hello
+  .col
+    .col-fill Auto 
+  .col
+    .col-fill Auto
+  .col
+    .col-fill Auto 
+  .col
+    .col-fill Auto
+
+%pre
+  %code
+    :preserve
+      .cols
+        .col Hello
+        .col Auto
+        .col Auto
+
+      .cols
+        .col Hello
+        .col Auto
+        .col Auto
+        .col Auto
+        .col Auto
+
+%h2 Fixed size columns
+%p Add <code>.col--x</code> where x is any number between 1 and 12, to fix that col's width.
+%p 
+  %strong Remember:
+  We use a 12 col grid. So <code>.col--6</code> equals the half of a row.
+
+%h3 Examples
+.cols
+  .col.col--3
+    .col-fill.col-fill--highlight <code>.col--3</code>
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--6
+    .col-fill.col-fill--highlight <code>.col--6</code>
+  .col.col--3
+    .col-fill.col-fill--highlight <code>.col--3</code>
+  .col
+    .col-fill Auto 
+  .col
+    .col-fill Auto 
+
+%pre
+  %code
+    :preserve
+      .cols
+        .col.col--3 .col--3
+        .col Auto
+
+      .cols
+        .col.col--6 .col--6
+        .col.col--3 .col--3
+        .col Auto 
+        .col Auto 
+
+%h2 Aliases
+%p
+  You can also use some handy helpers for the most common use cases:
+
+  %ul
+    %li <code>.col--one-quarter</code> is alias for <code>.col--3</code>
+    %li <code>.col--one-third</code> is alias for <code>.col--3</code>
+    %li <code>.col--half</code> is alias for <code>.col--6</code>
+    %li <code>.col--two-thirds</code> is alias for <code>.col--8</code>
+    %li <code>.col--three-quarters</code> is alias for <code>.col--9</code>
+    %li <code>.col--full</code> is alias for <code>.col--12</code>
+
+%h3 Examples
+.cols
+  .col.col--one-quarter
+    .col-fill.col-fill--highlight I'm a quarter
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--one-third
+    .col-fill.col-fill--highlight I'm a third
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--half
+    .col-fill.col-fill--highlight I'm a half
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--two-thirds
+    .col-fill.col-fill--highlight I'm two thirds
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--three-quarters
+    .col-fill.col-fill--highlight I'm three quarters
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--full
+    .col-fill.col-fill--highlight I'm full (actually you don't need me at all)
+
+%h2 Modifiers
+%table
+  %tr
+    %td <code>.col--shrink</code>
+    %td Shrinks column to the size of it's content.
+  %tr
+    %td <code>.col--grow</code>
+    %td Grows column to the maximum possible width.
+
+%h3 Examples
+.cols
+  .col.col--shrink
+    .col-fill.col-fill--highlight
+      .u-no-wrap Shrink to fit
+  .col
+    .col-fill Auto 
+
+.cols
+  .col.col--grow
+    .col-fill.col-fill--highlight Grow to the max!
+  .col
+    .col-fill Auto 
