@@ -1,54 +1,53 @@
-.row
+$grid-width: 60px
+$grid-gap: 12px
+  
+.cols
   display: flex
-  margin: 0 -10px
+  margin: 2*$grid-gap (-$grid-gap)
 
-.row__col
+.col
   flex: 1 0px
-  padding: 0px 10px
+  margin: 0 $grid-gap
 
-.row__col--15
-  flex: 0 15%
+.col--1
+  flex: 0 8.3333%
 
-.row__col--20
-  flex: 0 20%
+.col--2
+  flex: 0 16.6666%
 
-.row__col--25
+.col--3, .col--one-quarter
   flex: 0 25%
 
-.row__col--33
-  flex: 0 33.3333333%
+.col--4, .col--one-third
+  flex: 0 33.3333%
 
-.row__col--40
-  flex: 0 40%
+.col--5
+  flex: 0 41.6666%
 
-.row__col--50
+.col--6, .col--half
   flex: 0 50%
 
-.row__col--66
-  flex: 0 66.6666667%
+.col--7
+  flex: 0 58.3333%
 
-.row__col--75
+.col--8, .col--two-thirds
+  flex: 0 66.6666%
+
+.col--9, .col--three-quarters
   flex: 0 75%
 
-.row__col--shrink
+.col--10
+  flex: 0 83.3333%
+
+.col--11
+  flex: 0 91.6666%
+
+.col--12, .col--full
+  flex: 0 100%
+
+.col--shrink
   flex-grow: initial
   flex-shrink: 1
 
-.row__col--grow
-  flex-shrink: initial
-  flex-grow: 1
-
-.row__col--centered-right
-  display: flex
-  justify-content: flex-end
-  align-items: center
-
-.col
-  display: flex
-  flex-direction: column
-  margin: -10px 0
-  height: calc(100% + 20px)
-
-.col__row
-  flex: 1 0
-  padding: 10px 0
+.col--grow
+  flex: 1 1 100%

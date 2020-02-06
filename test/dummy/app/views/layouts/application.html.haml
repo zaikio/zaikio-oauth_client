@@ -39,9 +39,7 @@
       .topbar
         .topbar__nav-btn{ 'data-behavior': 'open_navigation_menu' }
         .topbar__breadcrumbs
-          .topbar__breadcrumb.is-active General
-          .topbar__breadcrumb-separator /
-          .topbar__breadcrumb Introduction
+          = render_breadcrumbs tag: 'span', separator: "/"
         .topbar__more
           .menu
             .menu__icon.menu__icon--topbar{ 'data-behavior': 'open_menu' }

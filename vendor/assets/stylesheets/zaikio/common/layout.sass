@@ -18,17 +18,16 @@
   &:hover
     background-color: $primary-color
 
-.topbar__breadcrumb
-  display: inline
+.topbar__breadcrumbs
+  span
+    padding: 5px
 
-  &.is-active
-    @include weight-bold
-    color: $black
+    a
+      @include weight-bold
+      color: $black
 
-.topbar__breadcrumb-separator
-  display: inline
-  color: $darkgray
-  margin: 0 5px
+      &:hover
+        color: $secondary-color
 
 .topbar__more
   margin-left: auto
@@ -55,13 +54,16 @@
     font-size: 15px
     border: 1px solid transparent
 
-    + a
-      margin-top: 10px
+    &:hover
+      color: $black
 
     &.is-active
       @include weight-bold
       color: $black
       border: 1px solid $mediumgray
+
+    + a
+      margin-top: 10px
 
 .stage__content
   padding: 40px

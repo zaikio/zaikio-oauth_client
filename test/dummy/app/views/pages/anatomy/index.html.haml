@@ -1,3 +1,27 @@
-= render 'pages/anatomy/sidebar'
+%h1 Anatomy of a page
 
-Index of anatomy
+.tiles
+  = link_to 'anatomy/breadcrumbs', class: 'tile tile--gray' do
+    .tile__caption Introduction
+    %p Who do I build great apps for Zaikio?
+
+  = link_to 'anatomy/stage', class: 'tile tile--gray' do
+    .tile__caption Stage
+    %p This is where all the action happens. Open the curtains!
+
+  = link_to 'anatomy/navigation', class: 'tile tile--gray' do
+    .tile__caption Good Flashes
+    %p Wtf? Three different kinds of navigation? Enlighten me!
+
+.tiles
+  = link_to 'anatomy/modals', class: 'tile tile--gray' do
+    .tile__caption Modals
+    %p When to use what kind of modal?
+
+  = link_to 'anatomy/rows_and_grids', class: 'tile tile--gray' do
+    .tile__caption Rows and Grids
+    %p How to layout content on a stage, for dummies.
+
+  = link_to 'anatomy/menus', class: 'tile tile--gray' do
+    .tile__caption Menus
+    %p Hide additional actions in handy popup menus.
