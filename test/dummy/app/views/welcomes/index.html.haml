@@ -7,3 +7,4 @@
 - else
   Logged in: #{Current.user.email}
   %p= render Current.user
+  = link_to 'Logout', zaikio.session_path, method: :delete

@@ -232,7 +232,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  breadcrumbs_on_rails
   byebug
   capybara
   haml-rails
