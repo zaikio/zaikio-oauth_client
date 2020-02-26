@@ -8,9 +8,9 @@ This Gem enables you to easily connect to the Zaikio Directory and use the OAuth
 
 ## Installation
 
-To provide all functionality this gem is a **Ruby Gem** as well as a **Node Package**, both are currently hosted privately in the **GitHub Package Registry**.
+This gem is a **Ruby Gem** and is hosted privately in the **GitHub Package Registry**.
 
-To fetch both from the GitHub Package Registry follow these steps:
+To fetch it from the GitHub Package Registry follow these steps:
 
 1. You must use a personal access token with the `read:packages` and `write:packages` scopes to publish and delete public packages in the GitHub Package Registry with RubyGems. Your personal access token must also have the `repo` scope when the repository is private. For more information, see "[Creating a personal access token for the command line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)."
 
@@ -19,22 +19,14 @@ To fetch both from the GitHub Package Registry follow these steps:
 export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
 ```
 
-3. For the **Ruby Gem**, add in your Gemfile
+3. Add the following in your Gemfile
 
 ```ruby
 source "https://rubygems.pkg.github.com/crispymtn" do
-  gem "zaikio"
+  gem "zaikio-oauth_client", require: "zaikio"
 end
 ```
 Then run `bundle install`.
-
-4. For the **Node Package** you have to add a file `.npmrc` to your Rails project, with the following content:
-
-```
-//npm.pkg.github.com/:_authToken=${BUNDLE_RUBYGEMS__PKG__GITHUB__COM}
-@crispymtn:registry=https://npm.pkg.github.com
-```
-Then run `yarn add @crispymtn/zaikio` - your `package.json` should have `@crispymtn/zaikio` added as a dependency afterwards.
 
 
 ## Setup & Configuration
@@ -187,76 +179,16 @@ To log in by yourself and test the process manually, use the demo person with th
 You can use the included dummy app as a showcase for the workflow and to adjust your own application. To set up the dummy application properly, go into `test/dummy` and use [puma-dev](https://github.com/puma/puma-dev) like this:
 
 ```shell
-puma-dev link -n 'zaikio-app'
+puma-dev link -n 'zaikio-oauth-client'
 ```
-This will make the dummy app available at: [http://zaikio-app.test](http://zaikio-app.test/)
+This will make the dummy app available at: [http://zaikio-oauth-client.test](http://zaikio-oauth-client.test/)
 
-If you use the provided OAuth credentials from above and test this against the Sandbox, everything should work as the redirect URLs for [http://zaikio-app.test](http://zaikio-app.test/) are approved within the Sandbox.
-
-## Use Zaikio UI Elements
-
-This gem provides you with a convenient toolbox for building HEI.OS apps easy and fast.
-By providing common styles and scripts, the gem makes sure that all apps look and feel the same.
-
-### Helpers
-To use tools like the FormBuilder or helpful methods like `link_to_modal` include the following in your `application_controller.rb`
-
-```ruby
-default_form_builder Zaikio::FormBuilder
-helper Zaikio::ApplicationHelper
-```
-
-### CSS
-Import all selected styles to your app by adding the following line to your
-`application.sass` file (recommended!):
-
-```sass
-@import zaikio/all
-```
-
-Alternatively, only single parts can be imported, eg.
-
-```sass
-@import zaikio/common
-@import zaikio/components
-…
-```
-
-Add navigation and main stage by adding the following to your `application.html.erb`:
-```erb
-  <body>
-    <nav>
-      <%= link_to 'Home', '#', class: controller_name == 'pages' && 'is-active' %>
-      <%= link_to 'Foobar', '#', class: controller_name == 'foobar' && 'is-active' %>
-    </nav>
-    <div id="stage">
-      <%= yield %>
-    </div>
-  </body>
-```
-
-### JS
-
-In your Rails project at `/javascript/packs/application.js` import the different JS components:
-
-```javascript
-import '@crispymtn/zaikio/controllers';
-```
-
-
----
-
-All available modules will be documented in this repo's [WIKI](https://github.com/crispymtn/zaikio-gem/wiki) soon.
-
+If you use the provided OAuth credentials from above and test this against the Sandbox, everything should work as the redirect URLs for [http://zaikio-oauth-client.test](http://zaikio-oauth-client.test/) are approved within the Sandbox.
 
 
 ## Contributing
 
 **Make sure you have the dummy app running locally to validate your changes.**
-
-Depending on if you changed functionality of the **Ruby Gem** components or the UI components from the **Node Package** you have to deploy either one of them to the GitHub Package Registry.
-
-### Ruby Gem
 
 Follow the setup instructions for gem credentials and bundler that can be found [in the GitHub docs](https://help.github.com/en/articles/configuring-rubygems-for-use-with-github-package-registry#authenticating-to-github-package-registry).
 
@@ -265,24 +197,8 @@ Make your changes and adjust `version.rb`.
 **To push a new release:**
 
 - `gem build zaikio.gemspec`
-- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaikio-0.1.0.gem`
+- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaikio-oauth_client-0.1.0.gem`
 *Adjust the version accordingly.*
-
-### Node Package
-
-Edit your global `~/.npmrc` and add
-```
-//npm.pkg.github.com/:_authToken=YOUR-GITHUB-TOKEN
-```
-If you do not yet have created one from the Installation Guide above, see "[Creating a personal access token for the command line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)."
-
-Within the gem navigate into `test/dummy/app/javascript/zaikio` where the Node Package is situated and your changes will take place.
-
-Adjust the `version` information within `package.json` (**important**: the one `test/dummy/app/javascript/zaikio`).
-
-**To push a new release:**
-
-`npm publish` within the folder of `test/dummy/app/javascript/zaikio`
 
 
 ## License
