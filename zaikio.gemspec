@@ -5,7 +5,7 @@ require "zaikio/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
-  spec.name        = "zaikio"
+  spec.name        = "zaikio-oauth_client"
   spec.version     = Zaikio::VERSION
   spec.authors     = ["Steffen Boller", "Christian Weyer", "Matthias Prinz"]
   spec.email       = ["sb@crispymtn.com", "cw@crispymtn.com", "mp@crispymtn.com"]
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "https://rubygems.pkg.github.com/"
-    spec.metadata["github_repo"] = "ssh://github.com/crispymtn/zaikio-gem"
+    spec.metadata["github_repo"] = "ssh://github.com/crispymtn/zaikio-oauth_client"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
@@ -30,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "oauth2"
   spec.add_dependency "rest_jeweler"
   spec.add_dependency "jwt"
-  spec.add_dependency "breadcrumbs_on_rails"
 
   spec.add_development_dependency "pg"
   spec.add_development_dependency "byebug"

@@ -4,7 +4,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Declare your gem's dependencies in zaikio.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
-gemspec
+
+# gemspec # this will not work as spec.name == 'zaikio-oauth_client' but Engine name is Zaikio
+gem 'zaikio-oauth_client', path: "../zaikio-oauth_client", require: 'zaikio'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -15,6 +17,7 @@ gem 'rest_jeweler', github: 'crispymtn/rest_jeweler'
 gem 'haml-rails'
 gem 'webpacker'
 gem 'sass-rails'
+gem 'pg'
 
 # To use a debugger
 gem 'byebug', group: [:development, :test]
