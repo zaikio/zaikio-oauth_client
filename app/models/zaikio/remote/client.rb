@@ -19,7 +19,7 @@ module Zaikio
       def initialize(token:)
         token = refresh_token_if_expired(token)
         super(
-          host: Zaikio.directory_url,
+          host: Zaikio::OAuthClient.directory_url,
           token: token,
           base_uri: '/api/v1/'
         )

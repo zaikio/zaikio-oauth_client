@@ -1,4 +1,4 @@
-Zaikio::Engine.routes.draw do
+Zaikio::OAuthClient::Engine.routes.draw do
   resources :sessions, only: [:new] do
     get :approve, on: :collection
   end

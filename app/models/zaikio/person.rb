@@ -1,5 +1,7 @@
 module Zaikio
   class Person < ApplicationRecord
+    self.table_name = "zaikio_people"
+    
     # Concerns
     include Zaikio::TokenBearer
 

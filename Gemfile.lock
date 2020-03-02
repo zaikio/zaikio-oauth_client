@@ -6,15 +6,6 @@ GIT
       activesupport
       faraday
 
-PATH
-  remote: .
-  specs:
-    zaikio-oauth_client (0.3.4)
-      jwt
-      oauth2
-      rails (~> 6.0.0)
-      rest_jeweler
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -224,6 +215,11 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    zaikio-oauth_client (0.1.0)
+      jwt
+      oauth2
+      rails (~> 6.0.0)
+      rest_jeweler
     zeitwerk (2.2.0)
 
 PLATFORMS
@@ -241,7 +237,7 @@ DEPENDENCIES
   selenium-webdriver
   web-console
   webpacker
-  zaikio-oauth_client!
+  zaikio-oauth_client
 
 BUNDLED WITH
    2.1.4

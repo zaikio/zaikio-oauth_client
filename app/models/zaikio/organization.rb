@@ -1,5 +1,7 @@
 module Zaikio
   class Organization < ApplicationRecord
+    self.table_name = "zaikio_organizations"
+
     # Concerns
     include Zaikio::TokenBearer
 

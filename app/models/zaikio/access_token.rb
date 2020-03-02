@@ -1,5 +1,7 @@
 module Zaikio
   class AccessToken < ApplicationRecord
+    self.table_name = "zaikio_access_tokens"
+
     # Associations
     belongs_to :bearer, polymorphic: true
 
@@ -16,7 +18,7 @@ module Zaikio
 
     def refresh!
       refreshed_token = OAuth2::AccessToken.from_hash(
-        Zaikio.oauth_client({auth_scheme: :basic_auth}),
+        ZaikioOAuthClient.oauth_client({auth_scheme: :basic_auth}),
         attributes
       ).refresh!
 

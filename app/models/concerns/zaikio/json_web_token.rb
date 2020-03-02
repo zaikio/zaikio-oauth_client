@@ -23,7 +23,7 @@ module Zaikio::JSONWebToken
     if @@keys.is_a?(Hash) && !invalidate
       return @@keys
     else
-      result = open(Zaikio.directory_url + '/api/v1/jwt_public_keys.json').read
+      result = open(Zaikio::OAuthClient.directory_url + '/api/v1/jwt_public_keys.json').read
       @@keys = JSON.parse(result).deep_symbolize_keys
     end
   end

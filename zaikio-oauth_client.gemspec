@@ -1,12 +1,12 @@
 $:.push File.expand_path("lib", __dir__)
 
 # Maintain your gem's version:
-require "zaikio/version"
+require "zaikio/oauth_client/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "zaikio-oauth_client"
-  spec.version     = Zaikio::VERSION
+  spec.version     = Zaikio::OAuthClient::VERSION
   spec.authors     = ["Steffen Boller", "Christian Weyer", "Matthias Prinz"]
   spec.email       = ["sb@crispymtn.com", "cw@crispymtn.com", "mp@crispymtn.com"]
   spec.homepage    = "https://crispymtn.com"
