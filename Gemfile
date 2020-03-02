@@ -5,8 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 
-# gemspec # this will not work as spec.name == 'zaikio-oauth_client' but Engine name is Zaikio
-gem 'zaikio-oauth_client'
+gemspec
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
