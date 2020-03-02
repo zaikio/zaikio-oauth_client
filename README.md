@@ -23,7 +23,7 @@ export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
 
 ```ruby
 source "https://rubygems.pkg.github.com/crispymtn" do
-  gem "zaikio-oauth_client", require: "zaikio"
+  gem "zaikio-oauth_client"
 end
 ```
 Then run `bundle install`.
@@ -33,7 +33,7 @@ Then run `bundle install`.
 
 1. Copy & run Migrations
 ```bash
-rails zaikio:install:migrations
+rails zaikio_oauth_client:install:migrations
 rails db:migrate
 ```
 This will create the tables:
@@ -45,12 +45,12 @@ This will create the tables:
 
 2. Mount routes
 ```ruby
-mount Zaikio::Engine => "/zaikio"
+mount Zaikio::OAuthClient::Engine => "/zaikio"
 ```
 
 3. Setup config in `config/initializers/zaikio_directory.rb`
 ```ruby
-Zaikio.tap do |config|
+Zaikio::OAuthClient.tap do |config|
   # App Settings
   config.client_id      = '52022d7a-7ba2-41ed-8890-97d88e6472f6'
   config.client_secret  = 'ShiKTnHqEf3M8nyHQPyZgbz7'
@@ -109,7 +109,7 @@ end
 From any point in your application you can start using the Zaikio Directory OAuth2 flow with
 
 ```ruby
-redirect_to zaikio.new_session_path
+redirect_to zaikio_oauth_client.new_session_path
 ```
 
 This will redirect the user to the OAuth Authorize endpoint of the Zaikio Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
@@ -136,11 +136,11 @@ You can then use `Current.user` anywhere.
 As an alternative build your own concern and use the `zaikio_person_id` from the encrypted cookie within your application as you like.
 
 
-For **logout** use: `zaikio.session_path, method: :delete` or build your own controller for deleting the cookie.
+For **logout** use: `zaikio_oauth_client.session_path, method: :delete` or build your own controller for deleting the cookie.
 
 #### Redirecting
 
-The `zaikio.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
+The `zaikio_oauth_client.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
 
 
 ## Use Sandbox for testing
@@ -171,7 +171,7 @@ You might encounter some version issues with Rbenv and Chromedriver, to resolve 
 
 #### Manual Testing
 
-To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaikio/sessions_test.rb`.
+To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaikio/oauth_client/sessions_test.rb`.
 
 
 ## Use of dummy app
@@ -196,7 +196,7 @@ Make your changes and adjust `version.rb`.
 
 **To push a new release:**
 
-- `gem build zaikio.gemspec`
+- `gem build zaikio-oauth_client.gemspec`
 - `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaikio-oauth_client-0.1.0.gem`
 *Adjust the version accordingly.*
 
