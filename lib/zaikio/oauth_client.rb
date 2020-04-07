@@ -1,29 +1,81 @@
+require "oauth2"
+
 require "zaikio/oauth_client/engine"
-require "zaikio/jeweler"
-require 'oauth2'
+require "zaikio/oauth_client/configuration"
+require "zaikio/oauth_client/authenticatable"
 
 module Zaikio
   module OAuthClient
-    # OAuth2 Settings
-    mattr_accessor :client_id
-    mattr_accessor :client_secret
-    mattr_accessor :directory_url
+    class << self
+      attr_accessor :configuration
 
-    def self.oauth_client(options = {})
-      OAuth2::Client.new(
-        Zaikio::OAuthClient.client_id,
-        Zaikio::OAuthClient.client_secret,
-        {
-          site: Zaikio::OAuthClient.directory_url,
-          authorize_url: 'oauth/authorize',
-          token_url: 'oauth/access_token',
-          connection_opts: { headers: { 'Accept': 'application/json' } }
-        }.merge(options)
-      )
-    end
+      def configure
+        self.configuration ||= Configuration.new
+        yield(configuration)
+      end
 
-    def self.directory(token:)
-      Zaikio::Remote::Client.new(token: token)
+      def for(client_name = nil)
+        client_config_for(client_name).oauth_client
+      end
+
+      def oauth_scheme
+        @oauth_scheme ||= :request_body
+      end
+
+      def with_oauth_scheme(scheme = :request_body)
+        @oauth_scheme = scheme
+        yield
+      ensure
+        @oauth_scheme = :request_body
+      end
+
+      def with_auth(options_or_access_token, &block)
+        access_token = if options_or_access_token.is_a?(Zaikio::OAuthClient::AccessToken)
+                         options_or_access_token
+                       else
+                         get_access_token(options_or_access_token)
+                       end
+
+        return unless block_given?
+
+        if configuration.around_auth_block
+          configuration.around_auth_block.call(access_token, block)
+        else
+          yield(access_token)
+        end
+      end
+
+      def get_access_token(client_name: nil, bearer_type: "Person", bearer_id: nil, scopes: nil) # rubocop:disable Metrics/MethodLength
+        client_config = client_config_for(client_name)
+        scopes ||= client_config.default_scopes_for(bearer_type)
+
+        access_token = AccessToken.where(audience: client_config.client_name)
+                                  .usable(bearer_type: bearer_type, bearer_id: bearer_id, scopes: scopes)
+                                  .first
+
+        if access_token.blank?
+          access_token = AccessToken.build_from_access_token(
+            client_config.token_by_client_credentials(
+              bearer_type: bearer_type,
+              bearer_id: bearer_id,
+              scopes: scopes
+            )
+          )
+          access_token.save!
+        elsif access_token&.expired?
+          access_token = access_token.refresh!
+        end
+
+        access_token
+      end
+
+      private
+
+      def client_config_for(client_name = nil)
+        raise StandardError.new, "Zaikio::OAuthClient was not configured" unless configuration
+
+        configuration.find!(client_name || configuration.all_client_names.first)
+      end
     end
   end
 end

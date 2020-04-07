@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+fgalli:
+  bearer_type: Person
+  bearer_id: "383663bc-149a-5b76-b50d-ee039046c12e"
+  audience: warehouse
+  refresh_token: "ABC"
+  expires_at: <%= 1.hour.from_now %>
+  scopes:
+    - directory.person.r
+    - directory.sites.rw
+  token:
+    eyJraWQiOiIwYTlhNmZkMjRlMjIyZmU5NjgwMTNkOWQyOWY2N2U0ZGJlYTE2NzIzNTk3NzY3M2FiNDZhZmYxNjE2NjI3NzliIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJaQUkiLCJzdWIiOiJQZXJzb24vMzgzNjYzYmMtMTQ5YS01Yjc2LWI1MGQtZWUwMzkwNDZjMTJlIiwiYXVkIjpbIlBlcnNvbi8zODM2NjNiYy0xNDlhLTViNzYtYjUwZC1lZTAzOTA0NmMxMmUiXSwianRpIjoiNTdhYjVlNTEtM2IyMC00OTAwLThhMTQtNjQyMGRhYmZjZGRiIiwibmJmIjoxNTgwOTA4NDgwLCJleHAiOjMzMTM3ODE3MjgwLCJqa3UiOiJodHRwczovL2RpcmVjdG9yeS5zYW5kYm94LnphaWtpby5jb20vYXBpL3YxL2p3dF9wdWJsaWNfa2V5cyIsInNjb3BlIjpbImRpcmVjdG9yeS5wZXJzb24uciJdfQ.Dwu8fn-CUtZW_r0u3maVIvaurUETIYAUH65-tPORw3Q7T0F9AY3cZWC5MKt6jLbkNr3xVwGodExqccVY93-Q-_bGm6sQdcuPFjw8U7PAVg9GxWJ4Fp63Y_AdEVTmRXjAZQwYx3_EQj1kdvtCxTJMCSzYbAMjoRTDibt6W4dDI3aP1oeos3hOqVnKiYNcGZZvOYK9WgB03tgzn_sucM9AjH0PhabAMiEOORq80RU3gJCwk8PiCw8Pp6Xrlskx2EjZ5PJz8VcEyAWUOhEonb3gsg6rfA0zZEyGXOFvC7dhqkCAe7rYz5Zai8FlpMIE8TvE4paXsm7Q3qvC3U-fC-DEXaYl9XQC3GtCw9GZ1QPmEZyNaLn9h6iX7FlWPtLutADXklU6HML1RYMHK1EpGtlCpNm42hhc5TALEQCC-UIx0ILUpeUYnNOLo1v1Xg6VotwzsVH89mlKyd1SJ-eXPamq6ZhITQWkJY-g4DQBCkBInoZcdXybsySw9oye7rR0qkDrxgTeKRSDfFDHks2KxFAcn7XUn4UCECVGiRTCDkRcrLjgiB5svfMm2sGSdJdQQPxgdZTohGzPtvMsslZZ2T36MYA0E2YKj_a_K2xTBh_HBL0ofh1dTrKDPiVimiSkkHnwjghbthrjNAw4F2tLupZCCZCjZT7IOIqKHZ6osHnluWQ

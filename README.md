@@ -1,9 +1,6 @@
+# Zaikio::OAuthClient
 
-# Zaikio Directory Gem
-
-This Gem enables you to easily connect to the Zaikio Directory and use the OAuth2 flow as well as query the API for information about the User and connected Organizations.
-
--- STILL A WORKING DRAFT --
+This Gem enables you to easily connect to the Zaikio Directory and use the OAuth2 flow and easily lookup matching Access Tokens.
 
 
 ## Installation
@@ -31,110 +28,84 @@ Then run `bundle install`.
 
 ## Setup & Configuration
 
-1. Copy & run Migrations
+### 1. Copy & run Migrations
+
 ```bash
 rails zaikio_oauth_client:install:migrations
 rails db:migrate
 ```
-This will create the tables:
-+ `zaikio_people`
-+ `zaikio_organizations`
-+ `zaikio_organization_memberships`
-+ `zaikio_access_tokens`
-+ `zaikio_sites`
 
-2. Mount routes
-```ruby
+This will create the tables:
++ `zaikio_access_tokens`
+
+### 2. Mount routes
+
+```rb
 mount Zaikio::OAuthClient::Engine => "/zaikio"
 ```
 
-3. Setup config in `config/initializers/zaikio_directory.rb`
-```ruby
-Zaikio::OAuthClient.tap do |config|
-  # App Settings
-  config.client_id      = '52022d7a-7ba2-41ed-8890-97d88e6472f6'
-  config.client_secret  = 'ShiKTnHqEf3M8nyHQPyZgbz7'
-  config.directory_url  = 'https://directory.sandbox.zaikio.com'
-end
-```
+### 3. Configure Gem
 
-## Use the Rails Engine in your application
+```rb
+# config/initializers/zaikio_oauth_client.rb
+Zaikio::OAuthClient.configure do |config|
+  config.environment = :test
 
-### Models and relations
+  config.register_client :warehouse do |warehouse|
+    warehouse.client_id       = "52022d7a-7ba2-41ed-8890-97d88e6472f6"
+    warehouse.client_secret   = "ShiKTnHqEf3M8nyHQPyZgbz7"
+    warehouse.default_scopes  = %w[directory.person.r]
 
-The engine provides you with the following models to use in your application:
-+ `Zaikio::Person`
-+ `Zaikio::Organization`
-+ `Zaikio::OrganizationMembership`
-+ `Zaikio::AccessToken` (you should not require to use this one)
-+ `Zaikio::Site`
+    warehouse.register_organization_connection do |org|
+      org.default_scopes = %w[directory.organization.r]
+    end
+  end
 
-A `Zaikio::Person` has many `:memberships` and `:organizations`.
-A `Zaikio::Organization` has many `:memberships` and `:members` and and `:sites`.
+  config.register_client :warehouse_goods_call_of do |warehouse_goods_call_of|
+    warehouse_goods_call_of.client_id       = "12345-7ba2-41ed-8890-97d88e6472f6"
+    warehouse_goods_call_of.client_secret   = "secret"
+    warehouse_goods_call_of.default_scopes  = %w[directory.person.r]
 
-#### Add references between Zaikio models and your models
+    warehouse_goods_call_of.register_organization_connection do |org|
+      org.default_scopes = %w[directory.organization.r]
+    end
+  end
 
-If you want to establish a reference between your own models and the Zaikio models:
-
-```ruby
-# add migration
-def change
-  add_reference :items, :person, type: :uuid, foreign_key: { to_table: :zaikio_people }
-end
-
-# in your item.rb model
-belongs_to :person, class_name: 'Zaikio::Person'
-```
-
-Of course you could also reference to `zaikio_organizations`.
-
-#### Add logic to the Zaikio models
-
-You can easily make your own model and let it inherit from one of the Zaikio models do add more behaviour and relations:
-
-```ruby
-# in your customer.rb
-class Customer < Zaikio::Organization
-  # Associations
-  has_many :vehicles
-  has_many :facilities
-
-  def your_own_methods
+  config.around_auth do |access_token, block|
+    Zaikio::Directory.with_token(access_token.token) do
+      block.call(access_token)
+    end
   end
 end
 ```
+
+## Usage
 
 ### OAuth Flow
 
 From any point in your application you can start using the Zaikio Directory OAuth2 flow with
 
-```ruby
+```rb
 redirect_to zaikio_oauth_client.new_session_path
+# or
+redirect_to zaikio_oauth_client.new_session_path(client_name: 'my_other_client')
+# or install as organization
+redirect_to zaikio_oauth_client.new_connection_path(client_name: 'my_other_client')
 ```
 
 This will redirect the user to the OAuth Authorize endpoint of the Zaikio Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
-
-#### Create or update Person and Organization data
-
-After the user logged in successfully at the Zaikio Directory a redirect will happen back to your application to `.../zaikio/sessions/approve` (or whatever you mounted the Engine to) - including the Authorization Grant Code.
-
-Exchanging the Code for an AccessToken and querying user data from the API will happen automatically in the `Zaikio::SessionsController`.
-
-All Zaikio models (`Zaikio::Person, Zaikio::Organization, Zaikio::OrganizationMembership`) in relation to the signed in user will automatically be created or updated (depending on if already present in your database).
 
 #### Session handling
 
 The Zaikio gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaikio_person_id]`.
 
-In your controllers include the concern `Zaikio::CookieBasedAuthentication` which will set:
+If you are using for example `Zaikio::Directory::Models`, you can use this snippet to set the current user:
+
 ```ruby
-Current.user ||= Person.find_by(id: cookies.encrypted[:zaikio_person_id])
+Current.user ||= Zaikio::Directory::Models::Person.find_by(id: cookies.encrypted[:zaikio_person_id])
 ````
 
 You can then use `Current.user` anywhere.
-
-As an alternative build your own concern and use the `zaikio_person_id` from the encrypted cookie within your application as you like.
-
 
 For **logout** use: `zaikio_oauth_client.session_path, method: :delete` or build your own controller for deleting the cookie.
 
@@ -142,37 +113,35 @@ For **logout** use: `zaikio_oauth_client.session_path, method: :delete` or build
 
 The `zaikio_oauth_client.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
 
+Additionally you can also specify your own redirect handlers in your `ApplicationController`:
 
-## Use Sandbox for testing
+```rb
+class ApplicationController < ActionController::Base
+  def after_approve_path_for(access_token, origin)
+    cookies.encrypted[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
 
-With the above described credentials you can connect right away to our Sandbox environment to get access to the demo app with demo users.
+    # Maybe to some data syncing here
 
-The UUID of people and organizations within the Sandbox are the same as within the fixtures of this gem (see `zaikio_people.yml`and `zaikio_organizations.yml`).
+    origin || main_app.root_path
+  end
 
-### OAuth workflow testing
+  def after_destroy_path_for(access_token_id)
+    cookies.delete :zaikio_person_id
 
-This gem provides a test which will initiate th OAuth process, open the Sandbox Directory within the Chrome browser, enter the credentials of a demo user and check if will be successfully redirected.
-
-To run the test use
-```bash
-rails app:test:system
+    main_app.root_path
+  end
+end
 ```
 
+#### Authenticated requests
 
-#### Prerequisites
+Now further requests to the Directory API or to other Zaikio APIs should be made. For this purpose the OAuthClient provides a helper method `with_auth` that automatically fetches an access token from the database, requests a refresh token or creates a new access token via client credentials flow.
 
-Make sure you have used `bundle install` for the `selenium-webdriver` gem and make sure chromedriver is working:
-
-```bash
-chromedriver -v
+```rb
+Zaikio::OAuthClient.with_auth(bearer_type: "Organization", bearer_id: "fd61f5f5-038b-44cf-b554-dfe9555f1e29", scopes: %w[directory.organization.r directory.organization_members.r]) do |access_token|
+  # call config.around_auth with given access token
+end
 ```
-
-You might encounter some version issues with Rbenv and Chromedriver, to resolve [follow these steps](https://medium.com/fusionqa/issues-with-rbenv-and-chromedriver-990bb14aa57a).
-
-#### Manual Testing
-
-To log in by yourself and test the process manually, use the demo person with the credentials you can find in `test/system/zaikio/oauth_client/sessions_test.rb`.
-
 
 ## Use of dummy app
 
