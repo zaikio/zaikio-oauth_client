@@ -47,6 +47,12 @@ module Zaikio
         (expires_at - Time.current).to_i
       end
 
+      def bearer_klass
+        return unless Zaikio.const_defined?("Directory::Models")
+
+        "Zaikio::Directory::Models::#{bearer_type}".constantize
+      end
+
       def refresh!
         Zaikio::OAuthClient.with_oauth_scheme(:basic_auth) do
           refreshed_token = OAuth2::AccessToken.from_hash(

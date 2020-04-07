@@ -120,7 +120,10 @@ class ApplicationController < ActionController::Base
   def after_approve_path_for(access_token, origin)
     cookies.encrypted[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
 
-    # Maybe to some data syncing here
+    # Sync data on login
+    Zaikio::Directory.with_token(access_token.token) do
+      access_token.bearer_klass.find_and_reload!(access_token.bearer_id, includes: :all)
+    end
 
     origin || main_app.root_path
   end
