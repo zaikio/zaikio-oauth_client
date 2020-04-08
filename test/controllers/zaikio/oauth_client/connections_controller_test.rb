@@ -20,7 +20,7 @@ module Zaikio
         end
       end
 
-      test "an unknown user is redirected to the Zaikio OAuth flow" do
+      test "an unknown org is redirected to the Zaikio OAuth flow" do
         get new_connection_path
 
         params = {
@@ -28,6 +28,19 @@ module Zaikio
           redirect_uri: approve_connection_url,
           response_type: "code",
           scope: "Org.directory.organization.r"
+        }
+
+        assert_redirected_to "http://directory.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "an known org is redirected to the Zaikio OAuth flow" do
+        get new_connection_path(organization_id: "123")
+
+        params = {
+          client_id: "abc",
+          redirect_uri: approve_connection_url,
+          response_type: "code",
+          scope: "Org/123.directory.organization.r"
         }
 
         assert_redirected_to "http://directory.zaikio.test/oauth/authorize?#{params.to_query}"

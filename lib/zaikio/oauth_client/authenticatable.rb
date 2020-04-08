@@ -8,7 +8,7 @@ module Zaikio
 
         redirect_to oauth_client.auth_code.authorize_url(
           redirect_uri: approve_url(params[:client_name]),
-          scope: client_config.scopes_for_auth.join(",")
+          scope: oauth_scope
         )
       end
 
@@ -68,6 +68,10 @@ module Zaikio
 
       def oauth_client
         Zaikio::OAuthClient.for(client_name)
+      end
+
+      def oauth_scope
+        client_config.scopes_for_auth(params[:organization_id]).join(",")
       end
 
       def default_after_approve_path_for(access_token, origin)

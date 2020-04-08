@@ -29,7 +29,7 @@ module Zaikio
         @oauth_client
       end
 
-      def scopes_for_auth
+      def scopes_for_auth(_id = nil)
         default_scopes
       end
 
@@ -38,10 +38,9 @@ module Zaikio
       end
 
       def token_by_client_credentials(bearer_id: nil, bearer_type: "Person", scopes: [])
-        regex = /^((Org|Per)\.)?(.*)$/
-        scopes_with_prefix = scopes.map do |scope|
-          plain_scope = (regex.match(scope) || [])[3]
-          "#{bearer_type[0..2]}/#{bearer_id}.#{plain_scope}"
+        plain_scopes = Zaikio::OAuthClient.get_plain_scopes(scopes)
+        scopes_with_prefix = plain_scopes.map do |scope|
+          "#{bearer_type[0..2]}/#{bearer_id}.#{scope}"
         end
 
         Zaikio::OAuthClient.with_oauth_scheme(:basic_auth) do
@@ -56,9 +55,11 @@ module Zaikio
           @default_scopes = []
         end
 
-        def scopes_for_auth
-          default_scopes.map do |scope|
-            scope.start_with?("Org") ? scope : "Org.#{scope}"
+        def scopes_for_auth(id = nil)
+          plain_scopes = Zaikio::OAuthClient.get_plain_scopes(default_scopes)
+
+          plain_scopes.map do |scope|
+            id ? "Org/#{id}.#{scope}" : "Org.#{scope}"
           end
         end
       end

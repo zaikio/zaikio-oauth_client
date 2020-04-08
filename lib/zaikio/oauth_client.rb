@@ -69,6 +69,13 @@ module Zaikio
         access_token
       end
 
+      def get_plain_scopes(scopes)
+        regex = /^((Org|Per)\.)?(.*)$/
+        scopes.map do |scope|
+          (regex.match(scope) || [])[3]
+        end.compact
+      end
+
       private
 
       def client_config_for(client_name = nil)
