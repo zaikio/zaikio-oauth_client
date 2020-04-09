@@ -1,10 +1,14 @@
+require "jwt"
+
 module Zaikio
   module OAuthClient
     class AccessToken < ApplicationRecord
       self.table_name = "zaikio_access_tokens"
 
       def self.build_from_access_token(access_token) # rubocop:disable Metrics/AbcSize
+        payload = JWT.decode(access_token.token, nil, false).first rescue {} # rubocop:disable Style/RescueModifier
         new(
+          id: payload["jti"],
           bearer_type: access_token.params["bearer"]["type"],
           bearer_id: access_token.params["bearer"]["id"],
           audience: access_token.params["audiences"].first,

@@ -30,6 +30,10 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     end
   end
 
+  def org_token
+    "eyJraWQiOiJhNmE1MzFjMGZhZTVlNWE1MDAzZDI2ZTRhMTIwMmIwNjg2ZDFkNTRjNGZhYTViZDlkZTBjMzdkY2JkY2RkYzdlIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJaQUkiLCJzdWIiOiJPcmdhbml6YXRpb24vYjE0NzVmNjUtMjM2Yy01OGI4LTk2ZTEtZTE3NzhiNDNiZWI3IiwiYXVkIjpbIk9yZ2FuaXphdGlvbi9iMTQ3NWY2NS0yMzZjLTU4YjgtOTZlMS1lMTc3OGI0M2JlYjciXSwianRpIjoiNWRmNDU5MGUtNzM4Mi00YTMxLWE1N2YtYWUwZTBjZTkwMmYyIiwibmJmIjoxNTg1ODM5NDQ0LCJleHAiOjMzMTQyNzUxODQ0LCJqa3UiOiJodHRwczovL2RpcmVjdG9yeS5oYy50ZXN0L2FwaS92MS9qd3RfcHVibGljX2tleXMiLCJzY29wZSI6WyJkaXJlY3RvcnkuYnVzaW5lc3NfcmVsYXRpb25zaGlwcy5ydyIsImRpcmVjdG9yeS5tYWNoaW5lcy5ydyIsImRpcmVjdG9yeS5vcmdhbml6YXRpb24uciIsImRpcmVjdG9yeS5vcmdhbml6YXRpb25fbWVtYmVycy5yIiwiZGlyZWN0b3J5LnNpdGVzLnJ3IiwiZGlyZWN0b3J5LnNvZnR3YXJlLnJ3Il19.NXUx3WUdcnUHlNG6s_fpEt2aH8xa-NFwNVF8vtk15P1DhJdP2e-vsFtOgRpwMrQc6MwDpaBG0L4PYV-NSLIU0Zqm1SLlWTodoAGWr31uwFUji0_8aBNsiIXVEhr5xfWYckUlw44xkcLAoD1Jo5t3BJvXdlQlGtgWg7jTj8rBRnafN5gm_ebbB17_TDohTnpMZQxOi8iKdl-hCAMHs3CjbN_TxHAblQbnhxvx01OhDrMOVNqsQpH3hGcr-rSihO85UpoAwDfqidiiGtnCgUsE5p8QHIqO8wgGAGqUHutg7W4GRH_T_OAfS7VbH9G60mazWYIhWW-JAxh-KRkg0wcP5g" # rubocop:disable Layout/LineLength
+  end
+
   def setup
     configure
   end
@@ -141,7 +145,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         }
       )
       .to_return(status: 200, body: {
-        "access_token" => "my-token",
+        "access_token" => org_token,
         "refresh_token" => "refresh_token",
         "token_type" => "bearer",
         "scope" => "directory.something.r",
@@ -162,7 +166,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_equal %w[directory.something.r], access_token.scopes
     assert_equal "123", access_token.bearer_id
     assert_equal "Organization", access_token.bearer_type
-    assert_equal "my-token", access_token.token
+    assert_equal org_token, access_token.token
+    assert_equal "5df4590e-7382-4a31-a57f-ae0e0ce902f2", access_token.id
     assert_nil access_token.refresh_token # not set in client credentials
   end
 
