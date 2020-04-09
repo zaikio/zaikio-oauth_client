@@ -4,6 +4,7 @@ PATH
     zaikio-oauth_client (0.2.1)
       oauth2
       rails (~> 6.0.0)
+      zaikio-jwt_auth (~> 0.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -125,6 +126,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    oj (3.10.6)
     parallel (1.19.1)
     parser (2.7.0.5)
       ast (~> 2.4.0)
@@ -230,6 +232,10 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    zaikio-jwt_auth (0.2.1)
+      jwt (>= 2.2.1)
+      oj (>= 3.0.0)
+      rails (>= 6.0.2.2)
     zeitwerk (2.3.0)
 
 PLATFORMS

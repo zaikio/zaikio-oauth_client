@@ -1,4 +1,5 @@
 require "jwt"
+require "zaikio/jwt_auth"
 
 module Zaikio
   module OAuthClient
@@ -24,11 +25,15 @@ module Zaikio
       end
 
       # Scopes
-      scope :valid, -> { where("expires_at > :now", now: Time.current) }
+      scope :valid, lambda {
+        where("expires_at > :now", now: Time.current)
+          .where.not(id: Zaikio::JWTAuth.blacklisted_token_ids)
+      }
       scope :valid_refresh, lambda {
         where("expires_at <= :now AND created_at > :created_at_max",
               now: Time.current,
               created_at_max: Time.current - refresh_token_valid_for)
+          .where.not(id: Zaikio::JWTAuth.blacklisted_token_ids)
       }
       scope :by_bearer, lambda { |bearer_type: "Person", bearer_id:, scopes: []|
         where(bearer_type: bearer_type, bearer_id: bearer_id)
