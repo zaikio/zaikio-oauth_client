@@ -59,7 +59,7 @@ module Zaikio
       def bearer_klass
         return unless Zaikio.const_defined?("Directory::Models")
 
-        "Zaikio::Directory::Models::#{bearer_type}".constantize
+        "Zaikio::#{bearer_type}".constantize
       end
 
       def refresh!
