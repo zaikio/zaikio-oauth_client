@@ -36,6 +36,23 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      - restore_cache:
+          keys:
+            - yarn-{{ checksum "yarn.lock" }}
+      - run: echo "//npm.pkg.github.com/:_authToken=$BUNDLE_RUBYGEMS__PKG__GITHUB__COM" >> ~/.npmrc
+      - run: echo "@crispymtn:registry=https://npm.pkg.github.com" >> ~/.npmrc
+      - run: yarn install --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run: bundle exec rake webpacker:compile
+      - save_cache:
+          key: webpack-{{ .Revision }}
+          paths:
+            - /home/circleci/project/public/packs-test/
+
       - run: sudo apt install postgresql-client
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run: bundle exec rake db:create
