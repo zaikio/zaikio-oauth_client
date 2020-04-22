@@ -64,7 +64,7 @@ module Zaikio
           }.to_json, headers: { "Content-Type" => "application/json" })
 
         get approve_session_path(code: "mycode")
-        access_token = Zaikio::OAuthClient::AccessToken.order(:created_at).last
+        access_token = Zaikio::AccessToken.order(:created_at).last
         jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
         assert_nil jar.encrypted["origin"]
         assert_equal "29b276b7-c0fa-4514-a5b1-c0fb4ee40fa7", jar.encrypted["zaikio_person_id"]

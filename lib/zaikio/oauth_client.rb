@@ -30,7 +30,7 @@ module Zaikio
       end
 
       def with_auth(options_or_access_token, &block)
-        access_token = if options_or_access_token.is_a?(Zaikio::OAuthClient::AccessToken)
+        access_token = if options_or_access_token.is_a?(Zaikio::AccessToken)
                          options_or_access_token
                        else
                          get_access_token(options_or_access_token)
@@ -49,12 +49,12 @@ module Zaikio
         client_config = client_config_for(client_name)
         scopes ||= client_config.default_scopes_for(bearer_type)
 
-        access_token = AccessToken.where(audience: client_config.client_name)
-                                  .usable(bearer_type: bearer_type, bearer_id: bearer_id, scopes: scopes)
-                                  .first
+        access_token = Zaikio::AccessToken.where(audience: client_config.client_name)
+                                          .usable(bearer_type: bearer_type, bearer_id: bearer_id, scopes: scopes)
+                                          .first
 
         if access_token.blank?
-          access_token = AccessToken.build_from_access_token(
+          access_token = Zaikio::AccessToken.build_from_access_token(
             client_config.token_by_client_credentials(
               bearer_type: bearer_type,
               bearer_id: bearer_id,
