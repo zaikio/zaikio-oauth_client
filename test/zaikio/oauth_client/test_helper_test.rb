@@ -2,8 +2,6 @@ require "test_helper"
 require "zaikio/oauth_client/test_helper"
 
 class Zaikio::OAuthClient::TestHelperTest < ActionDispatch::IntegrationTest
-  include Zaikio::OAuthClient::Engine.routes.url_helpers
-
   include Zaikio::OAuthClient::TestHelper
 
   test "sets cookie correctly" do
