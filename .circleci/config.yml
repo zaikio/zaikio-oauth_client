@@ -47,11 +47,11 @@ jobs:
           paths:
             - ~/.cache/yarn
 
-      - run: bundle exec rake webpacker:compile
+      - run: cd test/dummy && bundle exec rake webpacker:compile
       - save_cache:
           key: webpack-{{ .Revision }}
           paths:
-            - /home/circleci/project/public/packs-test/
+            - /home/circleci/project/test/dummy/public/packs-test/
 
       - run: sudo apt install postgresql-client
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
