@@ -38,12 +38,12 @@ jobs:
 
       - restore_cache:
           keys:
-            - yarn-{{ checksum "yarn.lock" }}
+            - yarn-{{ checksum "test/dummy/yarn.lock" }}
       - run: echo "//npm.pkg.github.com/:_authToken=$BUNDLE_RUBYGEMS__PKG__GITHUB__COM" >> ~/.npmrc
-      - run: echo "@crispymtn:registry=https://npm.pkg.github.com" >> ~/.npmrc
-      - run: yarn install --cache-folder ~/.cache/yarn
+      - run: echo "@crispymtn:registry=https://npm.pkg.github.com" >> ~/test/dummy/.npmrc
+      - run: yarn install --cache-folder ~/test/dummy/.cache/yarn
       - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
+          key: yarn-{{ checksum "test/dummy/yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
