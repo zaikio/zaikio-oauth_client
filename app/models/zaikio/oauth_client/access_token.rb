@@ -59,7 +59,11 @@ module Zaikio
       def bearer_klass
         return unless Zaikio.const_defined?("Directory::Models")
 
-        "Zaikio::#{bearer_type}".constantize
+        if Zaikio::Directory::Models.configuration.respond_to?(:"#{bearer_type.underscore}_class_name")
+          Zaikio::Directory::Models.configuration.public_send?(:"#{bearer_type.underscore}_class_name").constantize
+        else
+          "Zaikio::#{bearer_type}".constantize
+        end
       end
 
       def refresh!
