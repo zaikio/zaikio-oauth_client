@@ -41,7 +41,7 @@ jobs:
             - yarn-{{ checksum "test/dummy/yarn.lock" }}
       - run: echo "//npm.pkg.github.com/:_authToken=$BUNDLE_RUBYGEMS__PKG__GITHUB__COM" >> ~/.npmrc
       - run: echo "@crispymtn:registry=https://npm.pkg.github.com" >> ~/.npmrc
-      - run: yarn install --cache-folder ~/.cache/yarn
+      - run: cd test/dummy && yarn install --cache-folder ~/.cache/yarn
       - save_cache:
           key: yarn-{{ checksum "test/dummy/yarn.lock" }}
           paths:
