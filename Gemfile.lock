@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zaikio-oauth_client (0.2.3)
+    zaikio-oauth_client (0.3.0)
       oauth2
       rails (~> 6.0.0)
       zaikio-jwt_auth (~> 0.2.1)
