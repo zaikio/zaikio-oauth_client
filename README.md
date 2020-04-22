@@ -136,6 +136,29 @@ class ApplicationController < ActionController::Base
 end
 ```
 
+#### Testing
+
+You can use our test helper to login different users:
+
+```rb
+# test_helper.rb
+class ActiveSupport::TestCase
+  # ...
+  include Zaikio::OAuthClient::TestHelper
+  # ...
+end
+
+# my_controller_test.rb
+class MyControllerTest < ActionDispatch::IntegrationTest
+  test "does request" do
+    person = people(:my_person)
+    logged_in_as(person)
+
+    # ... make the request
+  end
+end
+```
+
 #### Authenticated requests
 
 Now further requests to the Directory API or to other Zaikio APIs should be made. For this purpose the OAuthClient provides a helper method `with_auth` that automatically fetches an access token from the database, requests a refresh token or creates a new access token via client credentials flow.
