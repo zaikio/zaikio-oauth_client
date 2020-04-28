@@ -7,8 +7,8 @@ require "zaikio/oauth_client/version"
 Gem::Specification.new do |spec|
   spec.name        = "zaikio-oauth_client"
   spec.version     = Zaikio::OAuthClient::VERSION
-  spec.authors     = ["Steffen Boller", "Christian Weyer", "Matthias Prinz"]
-  spec.email       = ["sb@crispymtn.com", "cw@crispymtn.com", "mp@crispymtn.com"]
+  spec.authors     = ["Zaikio GmbH"]
+  spec.email       = ["sb@zaikio.com", "cw@zaikio.com", "mp@zaikio.com", "js@zaikio.com"]
   spec.homepage    = "https://crispymtn.com"
   spec.summary     = "Zaikio Platform Connectivity"
   spec.description = "This gem provides a mountable Rails engine that provides single sign on, directory access and further Zaikio platform connectivity."
