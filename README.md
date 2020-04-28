@@ -136,6 +136,27 @@ class ApplicationController < ActionController::Base
 end
 ```
 
+#### Custom behavior
+
+Since the built in `SessionsController` and `ConnectionsController` are inheriting from the main app's `ApplicationController` all behaviour will be added there, too. In some cases you might want to explicitly skip a `before_action` or add custom `before_action` callbacks.
+
+You can achieve this by adding a custom controller name to your configuration:
+
+```rb
+# app/controllers/sessions_controller.rb
+class SessionsController < Zaikio::OAuthClient::SessionsController
+  skip_before_action :redirect_unless_authenticated
+end
+
+# config/initializers/zaikio_oauth_client.rb
+Zaikio::OAuthClient.configure do |config|
+  # ...
+  config.sessions_controller_name = "sessions"
+  # config.connections_controller_name = "connections"
+  # ...
+end
+```
+
 #### Testing
 
 You can use our test helper to login different users:

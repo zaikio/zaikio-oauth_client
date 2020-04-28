@@ -14,11 +14,14 @@ module Zaikio
 
       attr_accessor :host
       attr_writer :logger
-      attr_reader :client_configurations, :environment, :around_auth_block
+      attr_reader :client_configurations, :environment, :around_auth_block,
+                  :sessions_controller_name, :connections_controller_name
 
       def initialize
         @client_configurations = {}
         @around_auth_block = nil
+        @sessions_controller_name = "sessions"
+        @connections_controller_name = "connections"
       end
 
       def logger
@@ -45,6 +48,14 @@ module Zaikio
 
       def around_auth(&block)
         @around_auth_block = block
+      end
+
+      def sessions_controller_name=(name)
+        @sessions_controller_name = "/#{name}"
+      end
+
+      def connections_controller_name=(name)
+        @connections_controller_name = "/#{name}"
       end
 
       private

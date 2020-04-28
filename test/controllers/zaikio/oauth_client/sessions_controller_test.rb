@@ -21,11 +21,11 @@ module Zaikio
       end
 
       test "an unknown user is redirected to the Zaikio OAuth flow" do
-        get new_session_path
+        get zaikio_oauth_client.new_session_path
 
         params = {
           client_id: "abc",
-          redirect_uri: approve_session_url,
+          redirect_uri: zaikio_oauth_client.approve_session_url,
           response_type: "code",
           scope: "directory.person.r"
         }
@@ -78,7 +78,7 @@ module Zaikio
         assert_equal "be4ae927cf49466293049c993ad911b2", access_token.refresh_token
         assert_equal %w[directory.person.r], access_token.scopes
 
-        delete session_path(client_name: "warehouse")
+        delete zaikio_oauth_client.session_path(client_name: "warehouse")
         jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
         assert_nil jar.encrypted["zaikio_person_id"]
         assert_nil jar.encrypted["zaikio_access_token_id"]
