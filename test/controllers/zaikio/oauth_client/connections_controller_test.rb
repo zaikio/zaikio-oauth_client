@@ -21,11 +21,11 @@ module Zaikio
       end
 
       test "an unknown org is redirected to the Zaikio OAuth flow" do
-        get new_connection_path
+        get zaikio_oauth_client.new_connection_path
 
         params = {
           client_id: "abc",
-          redirect_uri: approve_connection_url,
+          redirect_uri: zaikio_oauth_client.approve_connection_url,
           response_type: "code",
           scope: "Org.directory.organization.r"
         }
@@ -34,7 +34,7 @@ module Zaikio
       end
 
       test "an known org is redirected to the Zaikio OAuth flow" do
-        get new_connection_path(organization_id: "123")
+        get zaikio_oauth_client.new_connection_path(organization_id: "123")
 
         params = {
           client_id: "abc",
@@ -76,7 +76,7 @@ module Zaikio
             }
           }.to_json, headers: { "Content-Type" => "application/json" })
 
-        get approve_connection_path(code: "mycode")
+        get zaikio_oauth_client.approve_connection_path(code: "mycode")
         access_token = Zaikio::AccessToken.order(:created_at).last
         jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
         assert_nil jar.encrypted["origin"]

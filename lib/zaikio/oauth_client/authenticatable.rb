@@ -39,7 +39,7 @@ module Zaikio
       private
 
       def approve_url(client_name = nil)
-        approve_session_url(client_name)
+        zaikio_oauth_client.approve_session_url(client_name)
       end
 
       def use_org_config?
