@@ -5,26 +5,12 @@ This Gem enables you to easily connect to the Zaikio Directory and use the OAuth
 
 ## Installation
 
-This gem is a **Ruby Gem** and is hosted privately in the **GitHub Package Registry**.
-
-To fetch it from the GitHub Package Registry follow these steps:
-
-1. You must use a personal access token with the `read:packages` and `write:packages` scopes to publish and delete public packages in the GitHub Package Registry with RubyGems. Your personal access token must also have the `repo` scope when the repository is private. For more information, see "[Creating a personal access token for the command line](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)."
-
-2. Set an ENV variable that will be used for both gem and npm. *This will also work on Heroku or your CI App if you set the ENV variable there.*
-```bash
-export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=#Your-Token-Here#
-```
-
-3. Add the following in your Gemfile
+Simply add the following in your Gemfile:
 
 ```ruby
-source "https://rubygems.pkg.github.com/crispymtn" do
-  gem "zaikio-oauth_client"
-end
+gem "zaikio-oauth_client"
 ```
 Then run `bundle install`.
-
 
 ## Setup & Configuration
 
