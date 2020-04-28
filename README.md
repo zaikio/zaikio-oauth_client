@@ -185,14 +185,12 @@ If you use the provided OAuth credentials from above and test this against the S
 
 **Make sure you have the dummy app running locally to validate your changes.**
 
-Follow the setup instructions for gem credentials and bundler that can be found [in the GitHub docs](https://help.github.com/en/articles/configuring-rubygems-for-use-with-github-package-registry#authenticating-to-github-package-registry).
-
 Make your changes and adjust `version.rb`.
 
 **To push a new release:**
 
 - `gem build zaikio-oauth_client.gemspec`
-- `gem push --key github --host https://rubygems.pkg.github.com/crispymtn zaikio-oauth_client-0.1.0.gem`
+- `gem push zaikio-oauth_client-0.1.0.gem`
 *Adjust the version accordingly.*
 
 
