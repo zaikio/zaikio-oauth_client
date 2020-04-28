@@ -232,7 +232,7 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    zaikio-jwt_auth (0.2.1)
+    zaikio-jwt_auth (0.2.2)
       jwt (>= 2.2.1)
       oj (>= 3.0.0)
       rails (>= 6.0.2.2)
