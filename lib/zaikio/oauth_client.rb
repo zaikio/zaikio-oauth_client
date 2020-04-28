@@ -8,6 +8,7 @@ module Zaikio
   module OAuthClient
     class << self
       attr_accessor :configuration
+      attr_reader :client_name
 
       def configure
         self.configuration ||= Configuration.new
@@ -29,6 +30,13 @@ module Zaikio
         @oauth_scheme = :request_body
       end
 
+      def with_client(client_name)
+        @client_name = client_name
+        yield
+      ensure
+        @client_name = nil
+      end
+
       def with_auth(options_or_access_token, &block)
         access_token = if options_or_access_token.is_a?(Zaikio::AccessToken)
                          options_or_access_token
@@ -46,6 +54,7 @@ module Zaikio
       end
 
       def get_access_token(client_name: nil, bearer_type: "Person", bearer_id: nil, scopes: nil) # rubocop:disable Metrics/MethodLength
+        client_name ||= self.client_name
         client_config = client_config_for(client_name)
         scopes ||= client_config.default_scopes_for(bearer_type)
 
