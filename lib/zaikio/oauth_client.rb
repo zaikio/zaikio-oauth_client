@@ -31,10 +31,11 @@ module Zaikio
       end
 
       def with_client(client_name)
+        original_client_name = @client_name || nil
         @client_name = client_name
         yield
       ensure
-        @client_name = nil
+        @client_name = original_client_name
       end
 
       def with_auth(options_or_access_token, &block)
