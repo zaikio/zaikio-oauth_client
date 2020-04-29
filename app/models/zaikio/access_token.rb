@@ -32,6 +32,7 @@ module Zaikio
       where("expires_at <= :now AND created_at > :created_at_max",
             now: Time.current,
             created_at_max: Time.current - refresh_token_valid_for)
+        .where("refresh_token IS NOT NULL")
         .where.not(id: Zaikio::JWTAuth.blacklisted_token_ids)
     }
     scope :by_bearer, lambda { |bearer_type: "Person", bearer_id:, scopes: []|

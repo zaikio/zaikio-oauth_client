@@ -202,6 +202,56 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_not_equal access_token, refreshed_token
   end
 
+  test "gets token via client credentials if refresh token is not present" do
+    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::AccessToken.create!(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      audience: "warehouse",
+      token: "abc",
+      refresh_token: nil,
+      expires_at: 1.hour.ago,
+      scopes: %w[directory.organization.r directory.something.r]
+    )
+
+    stub_request(:post, "http://directory.zaikio.test/oauth/access_token")
+      .with(
+        basic_auth: %w[abc secret],
+        body: {
+          "grant_type" => "client_credentials",
+          "scope" => "Org/123.directory.something.r"
+        },
+        headers: {
+          "Accept" => "application/json"
+        }
+      )
+      .to_return(status: 200, body: {
+        "access_token" => org_token,
+        "refresh_token" => "refresh_token",
+        "token_type" => "bearer",
+        "scope" => "directory.something.r",
+        "audiences" => ["warehouse"],
+        "expires_in" => 600,
+        "bearer" => {
+          "id": "123",
+          "type": "Organization"
+        }
+      }.to_json, headers: { "Content-Type" => "application/json" })
+
+    access_token2 = Zaikio::OAuthClient.get_access_token(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      scopes: %w[directory.something.r]
+    )
+    assert_not access_token2.expired?
+    assert_equal %w[directory.something.r], access_token2.scopes
+    assert_equal "123", access_token2.bearer_id
+    assert_equal "Organization", access_token2.bearer_type
+    assert_equal org_token, access_token2.token
+    assert_equal "5df4590e-7382-4a31-a57f-ae0e0ce902f2", access_token2.id
+    assert_nil access_token2.refresh_token # not set in client credentials
+  end
+
   test "gets token via client credentials" do
     Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
     Zaikio::AccessToken.delete_all
