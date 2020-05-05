@@ -95,6 +95,24 @@ You can then use `Current.user` anywhere.
 
 For **logout** use: `zaikio_oauth_client.session_path, method: :delete` or build your own controller for deleting the cookie.
 
+#### Multiple clients
+
+When performing requests against directory APIs, it is important to always provide the correct client in order to use the client credentials flow correctly. Otherwise always the first client will be used. It is recommended to specify an `around_action`:
+
+```rb
+class ApplicationController < ActionController::Base
+  around_action :with_client
+
+  private
+
+  def with_client
+    Zaikio::OAuthClient.with_client Current.client_name do
+      yield
+    end
+  end
+end
+```
+
 #### Redirecting
 
 The `zaikio_oauth_client.new_session_path` which was used for the first initiation of the OAuth flow, accepts an optional parameter `origin` which will then be used to redirect the user at the end of a completed & successful OAuth flow.
