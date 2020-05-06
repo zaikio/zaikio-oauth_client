@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rails/ujs": "^6.0.2",
+    "@rails/ujs": "^6.0.3",
     "@rails/webpacker": "^5.1.1",
     "axios": "^0.19.2",
     "turbolinks": "^5.2.0"
