@@ -35,7 +35,7 @@ mount Zaikio::OAuthClient::Engine => "/zaikio"
 ```rb
 # config/initializers/zaikio_oauth_client.rb
 Zaikio::OAuthClient.configure do |config|
-  config.environment = :test
+  config.environment = :sandbox
 
   config.register_client :warehouse do |warehouse|
     warehouse.client_id       = "52022d7a-7ba2-41ed-8890-97d88e6472f6"
