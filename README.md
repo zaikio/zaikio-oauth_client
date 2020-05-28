@@ -26,6 +26,8 @@ This will create the tables:
 
 ### 2. Mount routes
 
+Add this to `config/routes.rb`:
+
 ```rb
 mount Zaikio::OAuthClient::Engine => "/zaikio"
 ```
