@@ -7,12 +7,15 @@ require "zaikio/oauth_client/authenticatable"
 module Zaikio
   module OAuthClient
     class << self
-      attr_accessor :configuration
       attr_reader :client_name
 
       def configure
-        self.configuration ||= Configuration.new
+        @configuration ||= Configuration.new
         yield(configuration)
+      end
+
+      def configuration
+        @configuration ||= Configuration.new
       end
 
       def for(client_name = nil)
