@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 5.0.0"
   spec.add_dependency "oauth2"
-  spec.add_dependency "zaikio-jwt_auth", "~> 0.2.1"
+  spec.add_dependency "zaikio-jwt_auth", ">= 0.2.1", "< 0.4.0"
 
   spec.add_development_dependency "pg"
   spec.add_development_dependency "byebug"
