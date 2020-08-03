@@ -29,7 +29,7 @@ module Zaikio
         .where.not(id: Zaikio::JWTAuth.blacklisted_token_ids)
     }
     scope :with_invalid_refresh_token, lambda {
-      where("created_at <= ?", Time.current - AccessToken.refresh_token_valid_for)
+      where("created_at <= ?", Time.current - Zaikio::AccessToken.refresh_token_valid_for)
     }
     scope :valid_refresh, lambda {
       where("expires_at <= :now AND created_at > :created_at_max",

@@ -67,6 +67,29 @@ Zaikio::OAuthClient.configure do |config|
 end
 ```
 
+
+### 4. Clean up outdated access tokens (recommended)
+
+To avoid keeping all expired oath and refresh tokens in your database, we recommend to implement their scheduled deletion. We recommend therefore to use a schedule gems such as [sidekiq](https://github.com/mperham/sidekiq) and [sidekiq-scheduler](https://github.com/moove-it/sidekiq-scheduler).
+
+Simply add the following to your Gemfile:
+
+```rb
+gem "sidekiq"
+gem "sidekiq-scheduler"
+```
+Then run `bundle install`.
+
+Add your preferred specifications, see example below:
+```rb
+# config/sidekiq.yml
+:schedule:
+  cleanup_acces_tokens_job:
+    cron: ‘0 3 * * * ‘               # This will delete all expired tokens every day at 3am.
+    class:’Zaikio::CleanupAccessTokensJob’
+```
+
+
 ## Usage
 
 ### OAuth Flow
@@ -194,28 +217,6 @@ Now further requests to the Directory API or to other Zaikio APIs should be made
 Zaikio::OAuthClient.with_auth(bearer_type: "Organization", bearer_id: "fd61f5f5-038b-44cf-b554-dfe9555f1e29", scopes: %w[directory.organization.r directory.organization_members.r]) do |access_token|
   # call config.around_auth with given access token
 end
-```
-
-### Recommendation
-
-To avoid keeping all expired oath and refresh tokens in your database, we recommend to implement their scheduled deletion. We recommend therefore to use a schedule gems such as [sidekiq](https://github.com/mperham/sidekiq) and [sidekiq-scheduler](https://github.com/moove-it/sidekiq-scheduler).
-
-Simply add the following to your Gemfile:
-
-```
-ruby
-gem "sidekiq"
-gem "sidekiq-scheduler"
-```
-Then run `bundle install`.
-
-Add your preferred specifications, see example below:
-```rb
-# config/sidekiq.yml
-:schedule:
-  cleanup_acces_tokens_job:
-    cron: ‘0 3 * * *                # This will delete all expired tokens every day at 3am.
-    class:’CleanupAccessTokensJob’
 ```
 
 ## Use of dummy app
