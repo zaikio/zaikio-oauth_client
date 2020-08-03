@@ -85,8 +85,8 @@ Add your preferred specifications, see example below:
 # config/sidekiq.yml
 :schedule:
   cleanup_acces_tokens_job:
-    cron: ‘0 3 * * * ‘               # This will delete all expired tokens every day at 3am.
-    class:’Zaikio::CleanupAccessTokensJob’
+    cron: '0 3 * * *'               # This will delete all expired tokens every day at 3am.
+    class: 'Zaikio::CleanupAccessTokensJob'
 ```
 
 
