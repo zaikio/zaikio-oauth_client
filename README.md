@@ -80,9 +80,8 @@ gem "sidekiq-scheduler"
 ```
 Then run `bundle install`.
 
-Add your preferred specifications, see example below:
-```rb
-# config/sidekiq.yml
+Configure sidekiq scheduler in `config/sidekiq.yml`:
+```yaml
 :schedule:
   cleanup_acces_tokens_job:
     cron: '0 3 * * *'               # This will delete all expired tokens every day at 3am.
