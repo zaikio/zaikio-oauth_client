@@ -196,6 +196,28 @@ Zaikio::OAuthClient.with_auth(bearer_type: "Organization", bearer_id: "fd61f5f5-
 end
 ```
 
+### Recommendation
+
+To avoid keeping all expired oath and refresh tokens in your database, we recommend to implement their scheduled deletion. We recommend therefore to use a schedule gems such as [sidekiq](https://github.com/mperham/sidekiq) and [sidekiq-scheduler](https://github.com/moove-it/sidekiq-scheduler).
+
+Simply add the following to your Gemfile:
+
+```
+ruby
+gem "sidekiq"
+gem "sidekiq-scheduler"
+```
+Then run `bundle install`.
+
+Add your preferred specifications, see example below:
+```rb
+# config/sidekiq.yml
+:schedule:
+  cleanup_acces_tokens_job:
+    cron: ‘0 3 * * *                # This will delete all expired tokens every day at 3am.
+    class:’CleanupAccessTokensJob’
+```
+
 ## Use of dummy app
 
 You can use the included dummy app as a showcase for the workflow and to adjust your own application. To set up the dummy application properly, go into `test/dummy` and use [puma-dev](https://github.com/puma/puma-dev) like this:
