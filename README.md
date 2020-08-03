@@ -67,6 +67,28 @@ Zaikio::OAuthClient.configure do |config|
 end
 ```
 
+
+### 4. Clean up outdated access tokens (recommended)
+
+To avoid keeping all expired oath and refresh tokens in your database, we recommend to implement their scheduled deletion. We recommend therefore to use a schedule gems such as [sidekiq](https://github.com/mperham/sidekiq) and [sidekiq-scheduler](https://github.com/moove-it/sidekiq-scheduler).
+
+Simply add the following to your Gemfile:
+
+```rb
+gem "sidekiq"
+gem "sidekiq-scheduler"
+```
+Then run `bundle install`.
+
+Configure sidekiq scheduler in `config/sidekiq.yml`:
+```yaml
+:schedule:
+  cleanup_acces_tokens_job:
+    cron: '0 3 * * *'               # This will delete all expired tokens every day at 3am.
+    class: 'Zaikio::CleanupAccessTokensJob'
+```
+
+
 ## Usage
 
 ### OAuth Flow
