@@ -7,8 +7,8 @@ module Zaikio
       HOSTS = {
         development: "http://hub.zaikio.test",
         test: "http://hub.zaikio.test",
-        staging: "https://directory.staging.zaikio.com",
-        sandbox: "https://directory.sandbox.zaikio.com",
+        staging: "https://hub.staging.zaikio.com",
+        sandbox: "https://hub.sandbox.zaikio.com",
         production: "https://hub.zaikio.com"
       }.freeze
 
