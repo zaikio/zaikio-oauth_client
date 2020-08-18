@@ -58,7 +58,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
 
   test "it is configurable" do
     assert_equal :test,                   Zaikio::OAuthClient.configuration.environment
-    assert_match "hub.zaikio.test", Zaikio::OAuthClient.configuration.host
+    assert_match "hub.zaikio.test",       Zaikio::OAuthClient.configuration.host
     client_config = Zaikio::OAuthClient.configuration.find!("warehouse")
     assert_equal "abc", client_config.client_id
     assert_equal "secret", client_config.client_secret
