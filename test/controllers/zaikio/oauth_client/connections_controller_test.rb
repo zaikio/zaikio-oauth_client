@@ -30,7 +30,7 @@ module Zaikio
           scope: "Org.directory.organization.r"
         }
 
-        assert_redirected_to "http://directory.zaikio.test/oauth/authorize?#{params.to_query}"
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
       test "an known org is redirected to the Zaikio OAuth flow" do
@@ -43,7 +43,7 @@ module Zaikio
           scope: "Org/123.directory.organization.r"
         }
 
-        assert_redirected_to "http://directory.zaikio.test/oauth/authorize?#{params.to_query}"
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
       test "Does code grant flow" do
@@ -51,7 +51,7 @@ module Zaikio
         my_cookies.encrypted[:origin] = "/my-redirect"
         cookies[:origin] = my_cookies[:origin]
 
-        stub_request(:post, "http://directory.zaikio.test/oauth/access_token")
+        stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
           .with(
             body: {
               "client_id" => "abc",

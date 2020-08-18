@@ -5,11 +5,11 @@ module Zaikio
   module OAuthClient
     class Configuration
       HOSTS = {
-        development: "http://directory.zaikio.test",
-        test: "http://directory.zaikio.test",
+        development: "http://hub.zaikio.test",
+        test: "http://hub.zaikio.test",
         staging: "https://directory.staging.zaikio.com",
         sandbox: "https://directory.sandbox.zaikio.com",
-        production: "https://directory.zaikio.com"
+        production: "https://hub.zaikio.com"
       }.freeze
 
       attr_accessor :host

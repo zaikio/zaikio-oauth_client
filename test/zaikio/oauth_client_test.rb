@@ -58,7 +58,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
 
   test "it is configurable" do
     assert_equal :test,                   Zaikio::OAuthClient.configuration.environment
-    assert_match "directory.zaikio.test", Zaikio::OAuthClient.configuration.host
+    assert_match "hub.zaikio.test", Zaikio::OAuthClient.configuration.host
     client_config = Zaikio::OAuthClient.configuration.find!("warehouse")
     assert_equal "abc", client_config.client_id
     assert_equal "secret", client_config.client_secret
@@ -164,7 +164,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       scopes: %w[directory.organization.r directory.something.r]
     )
 
-    stub_request(:post, "http://directory.zaikio.test/oauth/access_token")
+    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
       .with(
         basic_auth: %w[abc secret],
         body: {
@@ -214,7 +214,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       scopes: %w[directory.organization.r directory.something.r]
     )
 
-    stub_request(:post, "http://directory.zaikio.test/oauth/access_token")
+    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
       .with(
         basic_auth: %w[abc secret],
         body: {
@@ -256,7 +256,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
     Zaikio::AccessToken.delete_all
 
-    stub_request(:post, "http://directory.zaikio.test/oauth/access_token")
+    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
       .with(
         basic_auth: %w[abc secret],
         body: {
