@@ -26,7 +26,7 @@ module Zaikio
     # Scopes
     scope :valid, lambda {
       where("expires_at > :now", now: Time.current)
-        .where.not(id: Zaikio::JWTAuth.blacklisted_token_ids)
+        .where.not(id: Zaikio::JWTAuth.revoked_token_ids)
     }
     scope :with_invalid_refresh_token, lambda {
       where("created_at <= ?", Time.current - Zaikio::AccessToken.refresh_token_valid_for)
@@ -36,7 +36,7 @@ module Zaikio
             now: Time.current,
             created_at_max: Time.current - refresh_token_valid_for)
         .where("refresh_token IS NOT NULL")
-        .where.not(id: Zaikio::JWTAuth.blacklisted_token_ids)
+        .where.not(id: Zaikio::JWTAuth.revoked_token_ids)
     }
     scope :by_bearer, lambda { |bearer_type: "Person", bearer_id:, scopes: []|
       where(bearer_type: bearer_type, bearer_id: bearer_id)

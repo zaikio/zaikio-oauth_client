@@ -74,7 +74,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "gets valid access token" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(
       bearer_type: "Organization",
       bearer_id: "123",
@@ -93,7 +93,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "removes blacklisted tokens" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns(["23d5b639-7d7b-4583-829b-159a08d0c099"])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns(["23d5b639-7d7b-4583-829b-159a08d0c099"])
     Zaikio::AccessToken.create!(
       id: "23d5b639-7d7b-4583-829b-159a08d0c099",
       bearer_type: "Organization",
@@ -122,7 +122,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "uses token from correct client" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     Zaikio::AccessToken.create!(
       id: "23d5b639-7d7b-4583-829b-159a08d0c099",
       bearer_type: "Organization",
@@ -153,7 +153,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "generates refresh token" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(
       bearer_type: "Organization",
       bearer_id: "123",
@@ -203,7 +203,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "gets token via client credentials if refresh token is not present" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     Zaikio::AccessToken.create!(
       bearer_type: "Organization",
       bearer_id: "123",
@@ -253,7 +253,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "gets token via client credentials" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     Zaikio::AccessToken.delete_all
 
     stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
@@ -295,7 +295,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
   end
 
   test "use with auth helper" do
-    Zaikio::JWTAuth.stubs(:blacklisted_token_ids).returns([])
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(
       bearer_type: "Organization",
       bearer_id: "123",
