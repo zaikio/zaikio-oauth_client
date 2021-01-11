@@ -234,7 +234,7 @@ If you use the provided OAuth credentials from above and test this against the S
 
 **Make sure you have the dummy app running locally to validate your changes.**
 
-Make your changes and adjust `version.rb`.
+Make your changes and adjust `version.rb`. Please make sure to update `CHANGELOG.md`.
 
 **To push a new release:**
 
