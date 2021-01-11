@@ -43,7 +43,7 @@ module Zaikio
         .where("scopes @> ARRAY[?]::varchar[]", scopes)
     }
     scope :usable, lambda { |options|
-      by_bearer(options).valid.or(by_bearer(options).valid_refresh)
+      by_bearer(**options).valid.or(by_bearer(**options).valid_refresh)
                         .order(expires_at: :desc)
     }
 
