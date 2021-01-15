@@ -234,14 +234,15 @@ If you use the provided OAuth credentials from above and test this against the S
 
 **Make sure you have the dummy app running locally to validate your changes.**
 
-Make your changes and adjust `version.rb`. Please make sure to update `CHANGELOG.md`.
+- Make your changes and submit a pull request for them
+- Make sure to update `CHANGELOG.md`
 
-**To push a new release:**
-
-- `gem build zaikio-oauth_client.gemspec`
-- `gem push zaikio-oauth_client-0.1.0.gem`
-*Adjust the version accordingly.*
-
+To release a new version of the gem:
+- Update the version in `lib/zaikio/oauth_client/version.rb`
+- Update `CHANGELOG.md` to include the new version and its release date
+- Commit and push your changes
+- Create a [new release on GitHub](https://github.com/zaikio/zaikio-directory-models/releases/new)
+- CircleCI will build the Gem package and push it Rubygems for you
 
 ## License
 

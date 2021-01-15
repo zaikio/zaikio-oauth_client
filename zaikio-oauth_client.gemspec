@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version     = Zaikio::OAuthClient::VERSION
   spec.authors     = ["Zaikio GmbH"]
   spec.email       = ["sb@zaikio.com", "cw@zaikio.com", "mp@zaikio.com", "js@zaikio.com"]
-  spec.homepage    = "https://www.zaikio.com"
+  spec.homepage    = "https://github.com/zaikio/zaikio-oauth_client"
   spec.summary     = "Zaikio Platform Connectivity"
   spec.description = "This gem provides a mountable Rails engine that provides single sign on, directory access and further Zaikio platform connectivity."
   spec.license     = "MIT"
