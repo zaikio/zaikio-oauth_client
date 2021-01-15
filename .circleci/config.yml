@@ -1,6 +1,7 @@
-version: 2
+version: 2.1
+
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/ruby:3.0.0-node
         environment:
@@ -62,3 +63,37 @@ jobs:
           name: run tests
           command: |
             bundle exec rake test
+
+  publish:
+    docker:
+      - image: circleci/ruby:3.0.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Build package
+          command: gem build zaikio-oauth_client.gemspec
+      - run:
+          name: Push package
+          command: |
+            VERSION=$(ruby -r "./lib/zaikio/oauth_client/version.rb" -e "print Zaikio::OAuthClient::VERSION")
+            gem push zaikio-oauth_client-${VERSION}.gem
+
+workflows:
+  default:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /.*/
+      - publish:
+          context:
+            - rubygems-push
+          requires: [test]
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
