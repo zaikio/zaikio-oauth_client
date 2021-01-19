@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 0.4.4 - 2021-01-19
+
+* Fix another compatibility issue with Ruby 3.0
+
 ## 0.4.3 - 2021-01-15
 
 * Automatically publish to RubyGems
