@@ -25,7 +25,7 @@ module Zaikio
       end
 
       def logger
-        @logger ||= Logger.new(STDOUT)
+        @logger ||= Logger.new($stdout)
       end
 
       def register_client(name)

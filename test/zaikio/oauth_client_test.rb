@@ -352,7 +352,9 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     obj = OpenStruct.new
     obj.expects(:call)
 
-    Zaikio::OAuthClient.with_auth(bearer_type: "Organization", bearer_id: "123", scopes: %w[directory.organization.r]) do
+    Zaikio::OAuthClient.with_auth(bearer_type: "Organization",
+                                  bearer_id: "123",
+                                  scopes: %w[directory.organization.r]) do
       obj.call
     end
   end
