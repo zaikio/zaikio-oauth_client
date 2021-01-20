@@ -29,7 +29,7 @@ Metrics/BlockLength:
     - test/**/*.rb
 
 Metrics/AbcSize:
-  Max: 16
+  Max: 22
 
 Metrics/CyclomaticComplexity:
   Max: 10

@@ -45,7 +45,7 @@ module Zaikio
         access_token = if options_or_access_token.is_a?(Zaikio::AccessToken)
                          options_or_access_token
                        else
-                         get_access_token(options_or_access_token)
+                         get_access_token(**options_or_access_token)
                        end
 
         return unless block_given?

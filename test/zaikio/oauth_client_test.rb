@@ -322,4 +322,40 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       assert_equal "abc", MyLib.my_token
     end
   end
+
+  test "use with auth helper to generate token" do
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
+    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
+      .with(
+        basic_auth: %w[abc secret],
+        body: {
+          "grant_type" => "client_credentials",
+          "scope" => "Org/123.directory.organization.r"
+        },
+        headers: {
+          "Accept" => "application/json"
+        }
+      )
+      .to_return(status: 200, body: {
+        "access_token" => org_token,
+        "refresh_token" => "refresh_token",
+        "token_type" => "bearer",
+        "scope" => "directory.organization.r",
+        "audiences" => ["warehouse"],
+        "expires_in" => 600,
+        "bearer" => {
+          "id": "123",
+          "type": "Organization"
+        }
+      }.to_json, headers: { "Content-Type" => "application/json" })
+
+    obj = OpenStruct.new
+    obj.expects(:call)
+
+    Zaikio::OAuthClient.with_auth(bearer_type: "Organization",
+                                  bearer_id: "123",
+                                  scopes: %w[directory.organization.r]) do
+      obj.call
+    end
+  end
 end
