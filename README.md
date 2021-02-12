@@ -60,7 +60,7 @@ Zaikio::OAuthClient.configure do |config|
   end
 
   config.around_auth do |access_token, block|
-    Zaikio::Directory.with_token(access_token.token) do
+    Zaikio::Hub.with_token(access_token.token) do
       block.call(access_token)
     end
   end
@@ -93,7 +93,7 @@ Configure sidekiq scheduler in `config/sidekiq.yml`:
 
 ### OAuth Flow
 
-From any point in your application you can start using the Zaikio Directory OAuth2 flow with
+From any point in your application you can start using the Zaikio Hub OAuth2 flow with
 
 ```rb
 redirect_to zaikio_oauth_client.new_session_path
@@ -109,10 +109,10 @@ This will redirect the user to the OAuth Authorize endpoint of the Zaikio Direct
 
 The Zaikio gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaikio_person_id]`.
 
-If you are using for example `Zaikio::Directory::Models`, you can use this snippet to set the current user:
+If you are using for example `Zaikio::Hub::Models`, you can use this snippet to set the current user:
 
 ```ruby
-Current.user ||= Zaikio::Directory::Models::Person.find_by(id: cookies.encrypted[:zaikio_person_id])
+Current.user ||= Zaikio::Hub::Models::Person.find_by(id: cookies.encrypted[:zaikio_person_id])
 ````
 
 You can then use `Current.user` anywhere.
@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
     cookies.encrypted[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
 
     # Sync data on login
-    Zaikio::Directory.with_token(access_token.token) do
+    Zaikio::Hub.with_token(access_token.token) do
       access_token.bearer_klass.find_and_reload!(access_token.bearer_id, includes: :all)
     end
 
