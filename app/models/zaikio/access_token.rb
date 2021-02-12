@@ -60,7 +60,7 @@ module Zaikio
     end
 
     def bearer_klass
-      return unless Zaikio.const_defined?("Directory::Models")
+      return unless Zaikio.const_defined?("Hub::Models")
 
       if Zaikio::Hub::Models.configuration.respond_to?(:"#{bearer_type.underscore}_class_name")
         Zaikio::Hub::Models.configuration.public_send(:"#{bearer_type.underscore}_class_name").constantize
