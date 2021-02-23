@@ -38,13 +38,20 @@ module Zaikio
         .where("refresh_token IS NOT NULL")
         .where.not(id: Zaikio::JWTAuth.revoked_token_ids)
     }
-    scope :by_bearer, lambda { |bearer_id:, scopes: [], bearer_type: "Person"|
+    scope :by_bearer, lambda { |bearer_id:, bearer_type: "Person"|
       where(bearer_type: bearer_type, bearer_id: bearer_id)
-        .where("scopes @> ARRAY[?]::varchar[]", scopes)
     }
-    scope :usable, lambda { |options|
-      by_bearer(**options).valid.or(by_bearer(**options).valid_refresh)
-                          .order(expires_at: :desc)
+    scope :by_scopes, lambda { |scopes = []|
+      where("scopes @> ARRAY[?]::varchar[]", scopes)
+    }
+    scope :usable, lambda { |bearer_id:, scopes: [], bearer_type: "Person"|
+      by_bearer(
+        bearer_id: bearer_id,
+        bearer_type: bearer_type
+      ).valid
+        .or(by_bearer(bearer_id: bearer_id, bearer_type: bearer_type).valid_refresh)
+        .by_scopes(scopes)
+        .order(expires_at: :desc)
     }
 
     def expired?

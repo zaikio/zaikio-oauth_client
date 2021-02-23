@@ -73,6 +73,24 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_equal Zaikio::OAuthClient.configuration.host, client_config.oauth_client.site
   end
 
+  test "gets valid access token without refresh token" do
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
+    access_token = Zaikio::AccessToken.create!(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      audience: "warehouse",
+      token: "abc",
+      expires_at: 1.hour.from_now,
+      scopes: %w[directory.organization.r directory.something.r]
+    )
+
+    assert_equal access_token, Zaikio::OAuthClient.get_access_token(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      scopes: %w[directory.something.r]
+    )
+  end
+
   test "gets valid access token" do
     Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(

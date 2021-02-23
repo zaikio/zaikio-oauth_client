@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 * Improved index to improve access token lookup, run `$ rails zaikio_oauth_client:install:migrations` to apply
+* Simplified and improve order of conditions in Access Token lookup
 
 ## 0.5.1
 
