@@ -82,7 +82,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       token: "abc",
       refresh_token: "def",
       expires_at: 1.hour.from_now,
-      scopes: %w[directory.organization.r directory.something.r]
+      scopes: %w[directory.organization.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
 
     assert_equal access_token, Zaikio::OAuthClient.get_access_token(
@@ -102,7 +103,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       token: "abc",
       refresh_token: "def",
       expires_at: 10.hours.from_now,
-      scopes: %w[directory.organization.r directory.something.r]
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
     access_token2 = Zaikio::AccessToken.create!(
       bearer_type: "Organization",
@@ -111,7 +113,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       token: "def",
       refresh_token: "ghi",
       expires_at: 1.hour.from_now,
-      scopes: %w[directory.organization.r directory.something.r]
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
 
     assert_equal access_token2, Zaikio::OAuthClient.get_access_token(
@@ -131,7 +134,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       token: "abc",
       refresh_token: "def",
       expires_at: 10.hours.from_now,
-      scopes: %w[directory.organization.r directory.something.r]
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
     access_token2 = Zaikio::AccessToken.create!(
       bearer_type: "Organization",
@@ -140,7 +144,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       token: "def",
       refresh_token: "ghi",
       expires_at: 1.hour.from_now,
-      scopes: %w[directory.organization.r directory.something.r]
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
 
     Zaikio::OAuthClient.with_client("other_app") do
@@ -161,7 +166,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       token: "abc",
       refresh_token: "def",
       expires_at: 1.hour.ago,
-      scopes: %w[directory.organization.r directory.something.r]
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
 
     stub_request(:post, "http://hub.zaikio.test/oauth/access_token")

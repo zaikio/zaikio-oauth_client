@@ -72,7 +72,8 @@ module Zaikio
               bearer_type: bearer_type,
               bearer_id: bearer_id,
               scopes: scopes
-            )
+            ),
+            requested_scopes: scopes
           )
           access_token.save!
         elsif access_token&.expired?

@@ -5,8 +5,9 @@ module Zaikio
   class AccessToken < ApplicationRecord
     self.table_name = "zaikio_access_tokens"
 
-    def self.build_from_access_token(access_token) # rubocop:disable Metrics/AbcSize
+    def self.build_from_access_token(access_token, requested_scopes: nil) # rubocop:disable Metrics/AbcSize
       payload = JWT.decode(access_token.token, nil, false).first rescue {} # rubocop:disable Style/RescueModifier
+      scopes = access_token.params["scope"].split(",")
       new(
         id: payload["jti"],
         bearer_type: access_token.params["bearer"]["type"],
@@ -15,7 +16,8 @@ module Zaikio
         token: access_token.token,
         refresh_token: access_token.refresh_token,
         expires_at: Time.strptime(access_token.expires_at.to_s, "%s"),
-        scopes: access_token.params["scope"].split(",")
+        scopes: scopes,
+        requested_scopes: requested_scopes || scopes
       )
     end
 
@@ -40,7 +42,7 @@ module Zaikio
     }
     scope :by_bearer, lambda { |bearer_id:, scopes: [], bearer_type: "Person"|
       where(bearer_type: bearer_type, bearer_id: bearer_id)
-        .where("scopes @> ARRAY[?]::varchar[]", scopes)
+        .where("requested_scopes @> ARRAY[?]::varchar[]", scopes)
     }
     scope :usable, lambda { |options|
       by_bearer(**options).valid.or(by_bearer(**options).valid_refresh)
@@ -76,7 +78,10 @@ module Zaikio
           attributes.slice("token", "refresh_token")
         ).refresh!
 
-        access_token = self.class.build_from_access_token(refreshed_token)
+        access_token = self.class.build_from_access_token(
+          refreshed_token,
+          requested_scopes: requested_scopes
+        )
 
         transaction { destroy if access_token.save! }
 
