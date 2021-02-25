@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_135920) do
+ActiveRecord::Schema.define(version: 2021_02_24_154303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_135920) do
     t.string "scopes", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "requested_scopes", default: [], null: false, array: true
     t.index ["audience", "bearer_type", "bearer_id"], name: "zaikio_access_tokens_lookup_index"
     t.index ["expires_at"], name: "index_zaikio_access_tokens_on_expires_at"
     t.index ["refresh_token"], name: "index_zaikio_access_tokens_on_refresh_token", unique: true

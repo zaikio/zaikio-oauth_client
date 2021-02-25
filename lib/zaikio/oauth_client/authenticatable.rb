@@ -49,10 +49,10 @@ module Zaikio
       def create_access_token
         access_token_response = oauth_client.auth_code.get_token(params[:code])
 
-        access_token = Zaikio::AccessToken.build_from_access_token(access_token_response)
-        access_token.save!
-
-        access_token
+        Zaikio::AccessToken.build_from_access_token(
+          access_token_response,
+          requested_scopes: client_config.default_scopes
+        ).tap(&:save!)
       end
 
       def client_name
