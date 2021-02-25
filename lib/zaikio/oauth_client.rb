@@ -63,7 +63,11 @@ module Zaikio
         scopes ||= client_config.default_scopes_for(bearer_type)
 
         access_token = Zaikio::AccessToken.where(audience: client_config.client_name)
-                                          .usable(bearer_type: bearer_type, bearer_id: bearer_id, scopes: scopes)
+                                          .usable(
+                                            bearer_type: bearer_type,
+                                            bearer_id: bearer_id,
+                                            requested_scopes: scopes
+                                          )
                                           .first
 
         if access_token.blank?
