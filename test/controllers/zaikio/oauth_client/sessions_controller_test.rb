@@ -33,6 +33,25 @@ module Zaikio
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
+      test "additional permitted OAuth params are passed into the Zaikio OAuth flow" do
+        get zaikio_oauth_client.new_session_path(show_signup: true,
+                                                 force_login: true,
+                                                 state: "entropy",
+                                                 unknown_param: :no)
+
+        params = {
+          client_id: "abc",
+          redirect_uri: zaikio_oauth_client.approve_session_url,
+          response_type: "code",
+          scope: "directory.person.r",
+          show_signup: true,
+          force_login: true,
+          state: "entropy"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
       test "Does code grant flow" do
         my_cookies = ActionDispatch::Request.new(Rails.application.env_config.deep_dup).cookie_jar
         my_cookies.encrypted[:origin] = "/my-redirect"

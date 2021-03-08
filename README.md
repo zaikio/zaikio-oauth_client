@@ -103,7 +103,20 @@ redirect_to zaikio_oauth_client.new_session_path(client_name: 'my_other_client')
 redirect_to zaikio_oauth_client.new_connection_path(client_name: 'my_other_client')
 ```
 
-This will redirect the user to the OAuth Authorize endpoint of the Zaikio Directory `.../oauth/authorize` and include all necessary parameters like your client_id.
+This will redirect the user to the OAuth Authorize endpoint of the Zaikio Directory
+`.../oauth/authorize` and include all necessary parameters like your client_id. You may
+also pass `show_signup`, `force_login` and `state` parameters through, like so:
+
+```ruby
+# Take the user directly to the signup page
+redirect_to zaikio_oauth_client.new_session_path(show_signup: true)
+
+# Force the user to re-authenticate even if they have an existing session
+redirect_to zaikio_oauth_client.new_session_path(force_login: true)
+
+# Pass a custom Oauth 2.0 state parameter
+redirect_to zaikio_oauth_client.new_session_path(state: "something-my-app-uses")
+```
 
 #### Session handling
 
