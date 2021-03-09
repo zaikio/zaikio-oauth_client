@@ -4,11 +4,13 @@ module Zaikio
       extend ActiveSupport::Concern
 
       def new
-        cookies.encrypted[:origin] = params[:origin]
+        opts = params.permit(:client_name, :show_signup, :force_login, :state)
+        client_name = opts.delete(:client_name)
 
         redirect_to oauth_client.auth_code.authorize_url(
-          redirect_uri: approve_url(params[:client_name]),
-          scope: oauth_scope
+          redirect_uri: approve_url(client_name),
+          scope: oauth_scope,
+          **opts
         )
       end
 
