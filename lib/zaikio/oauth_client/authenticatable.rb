@@ -26,6 +26,9 @@ module Zaikio
           respond_to?(:after_approve_path_for) ? :after_approve_path_for : :default_after_approve_path_for,
           access_token, origin
         )
+      rescue OAuth2::Error => e
+        handler = client_config.oauth_error_handler
+        handler ? instance_eval(&handler) : raise(e)
       end
 
       def destroy

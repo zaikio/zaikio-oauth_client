@@ -177,6 +177,30 @@ class ApplicationController < ActionController::Base
 end
 ```
 
+#### Handling errors
+
+Occasionally, there might be an OAuth error when trying to approve a connection. For
+example:
+
+> The application, grant, refresh token or device authorization could not be found
+
+(which happens when trying to replay the same authorization, e.g. refreshing the page).
+
+If you'd like to define a custom error handler to happen in these sorts of situation, you
+can configure a Proc object which receives the `exception` as a parameter and runs in the
+context of a controller. For example:
+
+```ruby
+Zaikio::OAuthClient.configure do |config|
+  config.register_client :warehouse do |warehouse|
+    warehouse.oauth_error_handler = lambda do |exception|
+      flash[:error] = exception.message
+      redirect_to "/"
+    end
+  end
+end
+```
+
 #### Custom behavior
 
 Since the built in `SessionsController` and `ConnectionsController` are inheriting from the main app's `ApplicationController` all behaviour will be added there, too. In some cases you might want to explicitly skip a `before_action` or add custom `before_action` callbacks.

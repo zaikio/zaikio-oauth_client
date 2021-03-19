@@ -2,7 +2,7 @@ module Zaikio
   module OAuthClient
     class ClientConfiguration
       attr_reader :org_config, :client_name
-      attr_accessor :client_id, :client_secret, :default_scopes
+      attr_accessor :client_id, :client_secret, :default_scopes, :oauth_error_handler
 
       def initialize(client_name)
         @default_scopes = []

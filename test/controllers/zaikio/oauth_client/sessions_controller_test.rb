@@ -16,6 +16,10 @@ module Zaikio
             warehouse.register_organization_connection do |org|
               org.default_scopes = %w[directory.organization.r]
             end
+
+            warehouse.oauth_error_handler = lambda do |_exception|
+              render plain: "Sorry, can you try again", status: :bad_request
+            end
           end
         end
       end
@@ -102,6 +106,22 @@ module Zaikio
         assert_nil jar.encrypted["zaikio_person_id"]
         assert_nil jar.encrypted["zaikio_access_token_id"]
         assert_redirected_to "/"
+      end
+
+      test "when an OAuth2::Error is thrown and an error handler is defined" do
+        my_cookies = ActionDispatch::Request.new(Rails.application.env_config.deep_dup).cookie_jar
+        my_cookies.encrypted[:origin] = "/my-redirect"
+        cookies[:origin] = my_cookies[:origin]
+
+        stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
+          .to_return(status: 400, body: {
+            error: "invalid_request",
+            error_description: "The application, grant, refresh token or device authorization could not be found."
+          }.to_json, headers: { "Content-Type" => "application/json" })
+
+        get approve_session_path(code: "mycode")
+        assert_response :bad_request
+        assert_equal "Sorry, can you try again", response.body
       end
     end
   end
