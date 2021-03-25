@@ -3,12 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
+gem "activejob"
 gem "haml-rails"
 gem "sass-rails"
 gem "webpacker"
-
-# To use a debugger
-gem "byebug", group: %i[development test]
 
 group :development do
   gem "pry-rails"
