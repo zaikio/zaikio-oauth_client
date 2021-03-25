@@ -20,7 +20,10 @@ Gem::Specification.new do |spec|
     spec.metadata["changelog_uri"] = "https://github.com/zaikio/zaikio-oauth_client/blob/master/CHANGELOG.md"
   end
 
-  spec.add_dependency "rails", ">= 5.0.0"
+  spec.add_dependency "actionpack", ">= 5.0.0"
+  spec.add_dependency "activerecord", ">= 5.0.0"
+  spec.add_dependency "activesupport", ">= 5.0.0"
+  spec.add_dependency "railties", ">= 5.0.0"
   spec.add_dependency "oauth2"
   spec.add_dependency "zaikio-jwt_auth", ">= 0.2.1", "< 0.5.0"
 
