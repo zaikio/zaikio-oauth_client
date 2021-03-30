@@ -85,6 +85,10 @@ module Zaikio
           requested_scopes: requested_scopes
         ).tap(&:save!)
       end
+    rescue OAuth2::Error => e
+      raise unless e.code == "invalid_grant"
+
+      nil
     end
   end
 end

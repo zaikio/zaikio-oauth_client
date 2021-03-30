@@ -59,6 +59,7 @@ module Zaikio
 
       # Finds the best possible access token, using the DB or an API call
       #   * If the token has expired, it will be refreshed using the refresh_token flow
+      #     (if this fails, we fallback to getting a new token using client_credentials)
       #   * If the token does not exist, we'll get a new one using the client_credentials flow
       def get_access_token(bearer_id:, client_name: nil, bearer_type: "Person", scopes: nil)
         client_config = client_config_for(client_name || self.client_name)
@@ -69,12 +70,12 @@ module Zaikio
                                          bearer_id: bearer_id,
                                          requested_scopes: scopes)
 
+        token = token.refresh! if token&.expired?
+
         token ||= fetch_new_token(client_config: client_config,
                                   bearer_type: bearer_type,
                                   bearer_id: bearer_id,
                                   scopes: scopes)
-
-        token = token.refresh! if token.expired?
         token
       end
 
