@@ -57,34 +57,50 @@ module Zaikio
         end
       end
 
-      def get_access_token(client_name: nil, bearer_type: "Person", bearer_id: nil, scopes: nil) # rubocop:disable Metrics/MethodLength
-        client_name ||= self.client_name
-        client_config = client_config_for(client_name)
+      # Finds the best possible access token, using the DB or an API call
+      #   * If the token has expired, it will be refreshed using the refresh_token flow
+      #     (if this fails, we fallback to getting a new token using client_credentials)
+      #   * If the token does not exist, we'll get a new one using the client_credentials flow
+      def get_access_token(bearer_id:, client_name: nil, bearer_type: "Person", scopes: nil)
+        client_config = client_config_for(client_name || self.client_name)
         scopes ||= client_config.default_scopes_for(bearer_type)
 
-        access_token = Zaikio::AccessToken.where(audience: client_config.client_name)
-                                          .usable(
-                                            bearer_type: bearer_type,
-                                            bearer_id: bearer_id,
-                                            requested_scopes: scopes
-                                          )
-                                          .first
+        token = find_usable_access_token(client_name: client_config.client_name,
+                                         bearer_type: bearer_type,
+                                         bearer_id: bearer_id,
+                                         requested_scopes: scopes)
 
-        if access_token.blank?
-          access_token = Zaikio::AccessToken.build_from_access_token(
-            client_config.token_by_client_credentials(
-              bearer_type: bearer_type,
-              bearer_id: bearer_id,
-              scopes: scopes
-            ),
-            requested_scopes: scopes
+        token = token.refresh! if token&.expired?
+
+        token ||= fetch_new_token(client_config: client_config,
+                                  bearer_type: bearer_type,
+                                  bearer_id: bearer_id,
+                                  scopes: scopes)
+        token
+      end
+
+      # Finds the best usable access token. Note that this token may have expired and
+      # would require refreshing.
+      def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:)
+        Zaikio::AccessToken
+          .where(audience: client_name)
+          .usable(
+            bearer_type: bearer_type,
+            bearer_id: bearer_id,
+            requested_scopes: requested_scopes
           )
-          access_token.save!
-        elsif access_token&.expired?
-          access_token = access_token.refresh!
-        end
+          .first
+      end
 
-        access_token
+      def fetch_new_token(client_config:, bearer_type:, bearer_id:, scopes:)
+        Zaikio::AccessToken.build_from_access_token(
+          client_config.token_by_client_credentials(
+            bearer_type: bearer_type,
+            bearer_id: bearer_id,
+            scopes: scopes
+          ),
+          requested_scopes: scopes
+        ).tap(&:save!)
       end
 
       def get_plain_scopes(scopes)
