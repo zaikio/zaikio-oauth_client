@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 * Always destroy old access token after successful Hub API call in `Zaikio::AccessToken#refresh!`
+* Add `.find_usable_access_token` helper method to get a token without making a Hub API call to refresh it
 
 ## 0.7.2 - 2021-03-25
 
