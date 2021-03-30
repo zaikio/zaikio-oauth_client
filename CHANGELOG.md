@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2021-03-30
+
 * Always destroy old access token after successful Hub API call in `Zaikio::AccessToken#refresh!` and return `nil` if refreshing fails.
 * Add `.find_usable_access_token` helper method to get a token without making a Hub API call to refresh it
 
@@ -50,3 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.4.2 - 2021-01-11
 
 * Fix compatibility issues with Ruby 3.0
+
+[Unreleased]: https://github.com/zaikio/zaikio-oauth_client/compare/v0.8.0..HEAD
+[0.8.0]: https://github.com/zaikio/zaikio-oauth_client/compare/v0.7.2..v0.8.0
