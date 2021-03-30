@@ -15,6 +15,7 @@ end
 
 group :development, :test do
   gem "mocha", require: false
+  gem "puma"
   gem "rubocop", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
