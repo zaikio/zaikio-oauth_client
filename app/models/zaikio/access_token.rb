@@ -78,14 +78,12 @@ module Zaikio
           attributes.slice("token", "refresh_token")
         ).refresh!
 
-        access_token = self.class.build_from_access_token(
+        destroy
+
+        self.class.build_from_access_token(
           refreshed_token,
           requested_scopes: requested_scopes
-        )
-
-        transaction { destroy if access_token.save! }
-
-        access_token
+        ).tap(&:save!)
       end
     end
   end
