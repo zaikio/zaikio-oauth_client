@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* Destroy access token with invalid refresh token
+
 ## [0.8.0] - 2021-03-30
 
 * Always destroy old access token after successful Hub API call in `Zaikio::AccessToken#refresh!` and return `nil` if refreshing fails.

@@ -273,6 +273,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_equal org_token, new_token.token
     assert_equal "5df4590e-7382-4a31-a57f-ae0e0ce902f2", new_token.id
     assert_nil new_token.refresh_token # not set in client credentials
+    assert_nil Zaikio::AccessToken.find_by(id: access_token.id)
   end
 
   test "gets token via client credentials if refresh token is not present" do

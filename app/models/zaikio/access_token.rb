@@ -88,6 +88,8 @@ module Zaikio
     rescue OAuth2::Error => e
       raise unless e.code == "invalid_grant"
 
+      destroy
+
       nil
     end
   end
