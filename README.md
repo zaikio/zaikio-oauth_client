@@ -254,7 +254,7 @@ To release a new version of the gem:
 - Update the version in `lib/zaikio/oauth_client/version.rb`
 - Update `CHANGELOG.md` to include the new version and its release date
 - Commit and push your changes
-- Create a [new release on GitHub](https://github.com/zaikio/zaikio-directory-models/releases/new)
+- Create a [new release on GitHub](https://github.com/zaikio/zaikio-oauth_client/releases/new)
 - CircleCI will build the Gem package and push it Rubygems for you
 
 ## License
