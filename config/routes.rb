@@ -1,15 +1,14 @@
 Zaikio::OAuthClient::Engine.routes.draw do
-  sessions_controller = Zaikio::OAuthClient.configuration.sessions_controller_name
-  connections_controller = Zaikio::OAuthClient.configuration.connections_controller_name
+  config = Zaikio::OAuthClient.configuration
 
-  # People
-  get "(/:client_name)/sessions/new", action: :new, controller: sessions_controller, as: :new_session
-  get "(/:client_name)/sessions/approve", action: :approve, controller: sessions_controller, as: :approve_session
-  delete "(/:client_name)/session", action: :destroy, controller: sessions_controller, as: :session
+  scope path: "(/:client_name)" do
+    # People
+    get "/sessions/new",     action: :new,     controller: config.sessions_controller_name, as: :new_session
+    get "/sessions/approve", action: :approve, controller: config.sessions_controller_name, as: :approve_session
+    delete "/session",       action: :destroy, controller: config.sessions_controller_name, as: :session
 
-  # Organizations
-  get "(/:client_name)/connections/new", action: :new,
-                                         controller: connections_controller, as: :new_connection
-  get "(/:client_name)/connections/approve", action: :approve,
-                                             controller: connections_controller, as: :approve_connection
+    # Organizations
+    get "/connections/new",     action: :new,     controller: config.connections_controller_name, as: :new_connection
+    get "/connections/approve", action: :approve, controller: config.connections_controller_name, as: :approve_connection
+  end
 end
