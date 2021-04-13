@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.9.0 - 2021-04-13
+
 * Add support for subscription flow (for setting up a plan)
 
 ## 0.8.1 - 2021-03-31
