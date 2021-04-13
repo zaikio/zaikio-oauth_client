@@ -118,6 +118,19 @@ redirect_to zaikio_oauth_client.new_session_path(force_login: true)
 redirect_to zaikio_oauth_client.new_session_path(state: "something-my-app-uses")
 ```
 
+You can also send them to the [Subscription Redirect
+flow](https://docs.zaikio.com/api/directory/guides/subscriptions/redirect-flow/), which
+behaves & redirects back like a regular Organization flow except it additionally sets up a
+subscription for the organization:
+
+```ruby
+# Require them to select a plan themselves...
+redirect_to zaikio_oauth_client.new_subscription_path
+
+# Or preselect a plan for them
+redirect_to zaikio_oauth_client.new_subscription_path(plan: "free")
+```
+
 #### Session handling
 
 The Zaikio gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaikio_person_id]`.

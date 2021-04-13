@@ -22,6 +22,9 @@ class Zaikio::OAuthClient::RoutingTest < ActionDispatch::IntegrationTest
 
     assert_equal approve_connection_path, "/zaikio/connections/approve"
     assert_recognizes({ controller: "zaikio/o_auth_client/connections", action: "approve" }, "/connections/approve")
+
+    assert_equal new_subscription_path, "/zaikio/subscriptions/new"
+    assert_recognizes({ controller: "zaikio/o_auth_client/subscriptions", action: "new" }, "/subscriptions/new")
   end
 
   test "routing including a custom :client_name" do
@@ -42,5 +45,9 @@ class Zaikio::OAuthClient::RoutingTest < ActionDispatch::IntegrationTest
     assert_equal approve_connection_path(client_name: "foo"), "/zaikio/foo/connections/approve"
     assert_recognizes({ controller: "zaikio/o_auth_client/connections", action: "approve", client_name: "foo" },
                       "/foo/connections/approve")
+
+    assert_equal new_subscription_path(client_name: "foo"), "/zaikio/foo/subscriptions/new"
+    assert_recognizes({ controller: "zaikio/o_auth_client/subscriptions", action: "new", client_name: "foo" },
+                      "/foo/subscriptions/new")
   end
 end

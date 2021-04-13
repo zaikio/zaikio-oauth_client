@@ -10,5 +10,8 @@ Zaikio::OAuthClient::Engine.routes.draw do
     # Organizations
     get "/connections/new",     action: :new,     controller: config.connections_controller_name, as: :new_connection
     get "/connections/approve", action: :approve, controller: config.connections_controller_name, as: :approve_connection
+
+    # Subscriptions
+    get "/subscriptions/new", action: :new, controller: config.subscriptions_controller_name, as: :new_subscription
   end
 end
