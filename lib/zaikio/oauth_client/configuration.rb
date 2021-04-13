@@ -15,13 +15,14 @@ module Zaikio
       attr_accessor :host
       attr_writer :logger
       attr_reader :client_configurations, :environment, :around_auth_block,
-                  :sessions_controller_name, :connections_controller_name
+                  :sessions_controller_name, :connections_controller_name, :subscriptions_controller_name
 
       def initialize
         @client_configurations = {}
         @around_auth_block = nil
         @sessions_controller_name = "sessions"
         @connections_controller_name = "connections"
+        @subscriptions_controller_name = "subscriptions"
       end
 
       def logger
@@ -56,6 +57,10 @@ module Zaikio
 
       def connections_controller_name=(name)
         @connections_controller_name = "/#{name}"
+      end
+
+      def subscriptions_controller_name=(name)
+        @subscriptions_controller_name = "/#{name}"
       end
 
       private

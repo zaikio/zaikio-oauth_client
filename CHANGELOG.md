@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Add support for subscription flow (for setting up a plan)
+
 ## 0.8.1 - 2021-03-31
 
 * Destroy access token with invalid refresh token
