@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Remove Access Token Lookups Queries from Log
+* Use configured logger for AccessToken queries
+
 ## 0.9.0 - 2021-04-13
 
 * Add support for subscription flow (for setting up a plan)
