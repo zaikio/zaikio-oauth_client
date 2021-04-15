@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Send `redirect_with_error=1` to redirect flow and handle errors like in OAuth spec.
 * Support `error_path_for` for custom error handling.
+* Automatically set `state` parameter for OAuth login and check response to protect
+  against replay attacks.
 
 ## 0.10.0 - 2021-04-15
 

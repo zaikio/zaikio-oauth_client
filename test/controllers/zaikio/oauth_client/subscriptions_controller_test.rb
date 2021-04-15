@@ -21,45 +21,61 @@ module Zaikio
       end
 
       test "an unknown org is redirected to the Zaikio OAuth subscription flow" do
-        get zaikio_oauth_client.new_subscription_path
+        get zaikio_oauth_client.new_subscription_path(state: "foo")
 
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
           redirect_with_error: 1,
           response_type: "code",
-          scope: "Org.subscription_create"
+          scope: "Org.subscription_create",
+          state: "foo"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
       test "with a ?plan parameter it is redirected to the Zaikio OAuth subscription flow" do
-        get zaikio_oauth_client.new_subscription_path(plan: "free")
+        get zaikio_oauth_client.new_subscription_path(plan: "free", state: "bar")
 
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
           redirect_with_error: 1,
           response_type: "code",
-          scope: "Org.subscription_create.free"
+          scope: "Org.subscription_create.free",
+          state: "bar"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
       test "with a ?organization_id parameter it includes that ID in the scope" do
-        get zaikio_oauth_client.new_subscription_path(organization_id: "a4cd0243-2575-4d3f-b143-4c85f959808d")
+        get zaikio_oauth_client.new_subscription_path(organization_id: "a4cd0243-2575-4d3f-b143-4c85f959808d",
+                                                      state: "baz")
 
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
           redirect_with_error: 1,
           response_type: "code",
-          scope: "Org/a4cd0243-2575-4d3f-b143-4c85f959808d.subscription_create"
+          scope: "Org/a4cd0243-2575-4d3f-b143-4c85f959808d.subscription_create",
+          state: "baz"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "without passing a ?state parameter, it sets a high-entropy string cookie" do
+        get zaikio_oauth_client.new_subscription_path
+
+        jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
+        assert jar.encrypted["state"].present?
+        assert jar.encrypted["state"].length > 30
+
+        authorize_url = URI.parse(response.headers["Location"])
+        authorize_params = URI.decode_www_form(authorize_url.query).to_h
+        assert_equal jar.encrypted["state"], authorize_params["state"]
       end
     end
   end

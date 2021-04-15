@@ -23,15 +23,18 @@ module Zaikio
       test "an unknown user is redirected to the Zaikio OAuth flow" do
         get zaikio_oauth_client.new_session_path
 
-        params = {
-          client_id: "abc",
-          redirect_uri: zaikio_oauth_client.approve_session_url,
-          redirect_with_error: 1,
-          response_type: "code",
-          scope: "directory.person.r"
-        }
+        redirect_url = URI.parse(response.headers["Location"])
+        assert_equal "hub.zaikio.test", redirect_url.host
+        assert_equal "/oauth/authorize", redirect_url.path
 
-        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+        query = URI.decode_www_form(redirect_url.query).to_h
+        assert_equal query["client_id"], "abc"
+        assert_equal query["redirect_uri"], zaikio_oauth_client.approve_session_url
+        assert_equal query["response_type"], "code"
+        assert_equal query["scope"], "directory.person.r"
+        assert_equal query["redirect_with_error"], "1"
+
+        assert query["state"].present?
       end
 
       test "additional permitted OAuth params are passed into the Zaikio OAuth flow" do
