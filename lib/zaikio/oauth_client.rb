@@ -82,14 +82,25 @@ module Zaikio
       # Finds the best usable access token. Note that this token may have expired and
       # would require refreshing.
       def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:)
-        Zaikio::AccessToken
-          .where(audience: client_name)
-          .usable(
-            bearer_type: bearer_type,
-            bearer_id: bearer_id,
-            requested_scopes: requested_scopes
-          )
-          .first
+        configuration.logger.debug "Try to fetch token for client_name: #{client_name}, "\
+          "bearer #{bearer_type}/#{bearer_id}, requested_scopes: #{requested_scopes}"
+
+        fetch_access_token = lambda {
+          Zaikio::AccessToken
+            .where(audience: client_name)
+            .usable(
+              bearer_type: bearer_type,
+              bearer_id: bearer_id,
+              requested_scopes: requested_scopes
+            )
+            .first
+        }
+
+        if configuration.logger.respond_to?(:silence)
+          configuration.logger.silence { fetch_access_token.call }
+        else
+          fetch_access_token.call
+        end
       end
 
       def fetch_new_token(client_config:, bearer_type:, bearer_id:, scopes:)

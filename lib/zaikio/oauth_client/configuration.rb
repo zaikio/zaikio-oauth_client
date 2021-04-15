@@ -13,7 +13,6 @@ module Zaikio
       }.freeze
 
       attr_accessor :host
-      attr_writer :logger
       attr_reader :client_configurations, :environment, :around_auth_block,
                   :sessions_controller_name, :connections_controller_name, :subscriptions_controller_name
 
@@ -23,10 +22,16 @@ module Zaikio
         @sessions_controller_name = "sessions"
         @connections_controller_name = "connections"
         @subscriptions_controller_name = "subscriptions"
+        Zaikio::AccessToken.logger = logger
       end
 
       def logger
-        @logger ||= Logger.new($stdout)
+        @logger ||= ActiveSupport::Logger.new($stdout)
+      end
+
+      def logger=(logger)
+        @logger = logger
+        Zaikio::AccessToken.logger = @logger
       end
 
       def register_client(name)
