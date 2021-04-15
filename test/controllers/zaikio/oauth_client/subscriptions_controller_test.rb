@@ -45,6 +45,19 @@ module Zaikio
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
+
+      test "with a ?organization_id parameter it includes that ID in the scope" do
+        get zaikio_oauth_client.new_subscription_path(organization_id: "a4cd0243-2575-4d3f-b143-4c85f959808d")
+
+        params = {
+          client_id: "abc",
+          redirect_uri: zaikio_oauth_client.approve_connection_url,
+          response_type: "code",
+          scope: "Org/a4cd0243-2575-4d3f-b143-4c85f959808d.subscription_create"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
     end
   end
 end

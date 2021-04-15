@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Remove Access Token Lookups Queries from Log
 * Use configured logger for AccessToken queries
+* Support `:organization_id` parameter with subscription flow
 
 ## 0.9.0 - 2021-04-13
 
