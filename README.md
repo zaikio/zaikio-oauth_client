@@ -187,6 +187,11 @@ class ApplicationController < ActionController::Base
 
     main_app.root_path
   end
+
+  def error_path_for(error_code, description: nil)
+    # Handle error
+    main_app.root_path
+  end
 end
 ```
 

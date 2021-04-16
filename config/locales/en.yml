@@ -1,6 +1,7 @@
 en:
   zaikio:
+    oauth_client:
+      error_occured: "An error occurred during login: %{error} %{description}. Please try again."
     forms:
       optional: Optional
       learn_more: Learn more
-

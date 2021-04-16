@@ -26,6 +26,7 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
+          redirect_with_error: 1,
           response_type: "code",
           scope: "Org.subscription_create"
         }
@@ -39,6 +40,7 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
+          redirect_with_error: 1,
           response_type: "code",
           scope: "Org.subscription_create.free"
         }
@@ -52,6 +54,7 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
+          redirect_with_error: 1,
           response_type: "code",
           scope: "Org/a4cd0243-2575-4d3f-b143-4c85f959808d.subscription_create"
         }

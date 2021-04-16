@@ -26,6 +26,7 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_session_url,
+          redirect_with_error: 1,
           response_type: "code",
           scope: "directory.person.r"
         }
@@ -42,6 +43,7 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_session_url,
+          redirect_with_error: 1,
           response_type: "code",
           scope: "directory.person.r",
           show_signup: true,
@@ -50,6 +52,27 @@ module Zaikio
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "Shows error and redirects if redirect flow wasn't successful" do
+        get approve_session_path(error: "invalid_request", error_description: "My Error")
+
+        assert_redirected_to main_app.root_path
+        assert_match "invalid_request", flash[:alert]
+        assert_match "My Error", flash[:alert]
+      end
+
+      test "Raises exception if scope was invalid" do
+        assert_raise Zaikio::OAuthClient::InvalidScopesError do
+          get approve_session_path(error: "invalid_scope", error_description: "malformed_scope")
+        end
+      end
+
+      test "Shows no error but redirects if user cancelled flow" do
+        get approve_session_path(error: "access_denied")
+
+        assert_redirected_to main_app.root_path
+        assert_nil flash[:alert]
       end
 
       test "Does code grant flow" do
