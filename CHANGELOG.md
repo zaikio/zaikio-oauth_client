@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Send `redirect_with_error=1` to redirect flow and handle errors like in OAuth spec.
+* Support `error_path_for` for custom error handling.
+
 ## 0.10.0 - 2021-04-15
 
 * Remove Access Token Lookups Queries from Log

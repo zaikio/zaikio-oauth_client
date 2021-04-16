@@ -3,6 +3,7 @@ module Zaikio
     class SubscriptionsController < ConnectionsController
       def new
         opts = params.permit(:client_name, :state, :plan, :organization_id)
+        opts[:redirect_with_error] = 1
 
         plan            = opts.delete(:plan)
         organization_id = opts.delete(:organization_id)

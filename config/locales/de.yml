@@ -1,0 +1,4 @@
+de:
+  zaikio:
+    oauth_client:
+      error_occured: "Beim Login ist ein Fehler aufgetreten: %{error} %{description}. Bitte versuche es nochmal."

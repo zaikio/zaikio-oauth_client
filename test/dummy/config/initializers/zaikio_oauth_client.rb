@@ -1,5 +1,6 @@
 Zaikio::OAuthClient.configure do |config|
   config.environment = :test
+  config.logger = Rails.logger
   config.sessions_controller_name = "sessions"
   config.register_client :warehouse do |warehouse|
     warehouse.client_id = "da6333fc-19ab-51d7-8295-4904358c5ecb"

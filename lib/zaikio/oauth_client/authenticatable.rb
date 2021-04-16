@@ -5,6 +5,7 @@ module Zaikio
 
       def new
         opts = params.permit(:client_name, :show_signup, :force_login, :state)
+        opts[:redirect_with_error] = 1
         client_name = opts.delete(:client_name)
 
         redirect_to oauth_client.auth_code.authorize_url(
@@ -15,6 +16,14 @@ module Zaikio
       end
 
       def approve
+        if params[:error].present?
+          redirect_to send(
+            respond_to?(:error_path_for) ? :error_path_for : :default_error_path_for,
+            params[:error],
+            description: params[:error_description]
+          ) and return
+        end
+
         access_token = create_access_token
 
         origin = cookies.encrypted[:origin]
@@ -84,6 +93,14 @@ module Zaikio
 
       def default_after_destroy_path_for(_access_token_id)
         cookies.delete :zaikio_person_id
+
+        main_app.root_path
+      end
+
+      def default_error_path_for(error_code, description: nil)
+        unless error_code == "access_denied"
+          flash[:alert] = I18n.t("zaikio.oauth_client.error_occured", error: error_code, description: description)
+        end
 
         main_app.root_path
       end
