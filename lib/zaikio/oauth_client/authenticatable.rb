@@ -98,6 +98,8 @@ module Zaikio
       end
 
       def default_error_path_for(error_code, description: nil)
+        raise Zaikio::OAuthClient::InvalidScopesError, description if error_code == "invalid_scope"
+
         unless error_code == "access_denied"
           flash[:alert] = I18n.t("zaikio.oauth_client.error_occured", error: error_code, description: description)
         end

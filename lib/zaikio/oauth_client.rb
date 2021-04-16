@@ -1,5 +1,6 @@
 require "oauth2"
 
+require "zaikio/oauth_client/error"
 require "zaikio/oauth_client/engine"
 require "zaikio/oauth_client/configuration"
 require "zaikio/oauth_client/authenticatable"

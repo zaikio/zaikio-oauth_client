@@ -62,6 +62,12 @@ module Zaikio
         assert_match "My Error", flash[:alert]
       end
 
+      test "Raises exception if scope was invalid" do
+        assert_raise Zaikio::OAuthClient::InvalidScopesError do
+          get approve_session_path(error: "invalid_scope", error_description: "malformed_scope")
+        end
+      end
+
       test "Shows no error but redirects if user cancelled flow" do
         get approve_session_path(error: "access_denied")
 
