@@ -7,6 +7,7 @@ module Zaikio
         opts = params.permit(:client_name, :show_signup, :force_login, :state)
         opts[:redirect_with_error] = 1
         client_name = opts.delete(:client_name)
+        opts[:state] ||= cookies.encrypted[:state] = SecureRandom.urlsafe_base64(32)
 
         redirect_to oauth_client.auth_code.authorize_url(
           redirect_uri: approve_url(client_name),
@@ -22,6 +23,13 @@ module Zaikio
             params[:error],
             description: params[:error_description]
           ) and return
+        end
+
+        if cookies.encrypted[:state].present? && params[:state] != cookies.encrypted[:state]
+          return redirect_to send(
+            respond_to?(:error_path_for) ? :error_path_for : :default_error_path_for,
+            "invalid_state"
+          )
         end
 
         access_token = create_access_token
@@ -40,6 +48,7 @@ module Zaikio
       def destroy
         access_token_id = cookies.encrypted[:zaikio_access_token_id]
         cookies.delete :zaikio_access_token_id
+        cookies.delete :state
 
         redirect_to send(
           respond_to?(:after_destroy_path_for) ? :after_destroy_path_for : :default_after_destroy_path_for,

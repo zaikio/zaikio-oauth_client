@@ -21,31 +21,45 @@ module Zaikio
       end
 
       test "an unknown org is redirected to the Zaikio OAuth flow" do
-        get zaikio_oauth_client.new_connection_path
+        get zaikio_oauth_client.new_connection_path(state: "")
 
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
           redirect_with_error: 1,
           response_type: "code",
-          scope: "Org.directory.organization.r"
+          scope: "Org.directory.organization.r",
+          state: ""
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
-      test "an known org is redirected to the Zaikio OAuth flow" do
-        get zaikio_oauth_client.new_connection_path(organization_id: "123")
+      test "a known org is redirected to the Zaikio OAuth flow" do
+        get zaikio_oauth_client.new_connection_path(organization_id: "123", state: "yes-me")
 
         params = {
           client_id: "abc",
           redirect_uri: approve_connection_url,
           redirect_with_error: 1,
           response_type: "code",
-          scope: "Org/123.directory.organization.r"
+          scope: "Org/123.directory.organization.r",
+          state: "yes-me"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "without passing a ?state parameter, it sets a high-entropy string cookie" do
+        get zaikio_oauth_client.new_connection_path
+
+        jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
+        assert jar.encrypted["state"].present?
+        assert jar.encrypted["state"].length > 30
+
+        authorize_url = URI.parse(response.headers["Location"])
+        authorize_params = URI.decode_www_form(authorize_url.query).to_h
+        assert_equal jar.encrypted["state"], authorize_params["state"]
       end
 
       test "Does code grant flow" do
@@ -92,6 +106,17 @@ module Zaikio
         assert_equal "749ceefd1f7909a1773501e0bc57d5b2", access_token.token
         assert_equal "be4ae927cf49466293049c993ad911b2", access_token.refresh_token
         assert_equal %w[directory.organization.r], access_token.scopes
+      end
+
+      test "checks ?state parameter when approving with encrypted :state cookie" do
+        my_cookies = ActionDispatch::Request.new(Rails.application.env_config.deep_dup).cookie_jar
+        my_cookies.encrypted[:state] = "not-me"
+        cookies[:state] = my_cookies[:state]
+
+        get zaikio_oauth_client.approve_connection_path(code: "mycode", state: "yes-me")
+
+        assert_redirected_to "/"
+        assert_match "An error occurred during login: invalid_state", flash[:alert]
       end
     end
   end

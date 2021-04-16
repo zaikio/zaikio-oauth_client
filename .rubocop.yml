@@ -22,7 +22,7 @@ Metrics/ClassLength:
     - test/**/*.rb
 
 Metrics/MethodLength:
-  Max: 14
+  Max: 15
   Exclude:
     - test/**/*.rb
 
@@ -31,7 +31,7 @@ Metrics/BlockLength:
     - test/**/*.rb
 
 Metrics/AbcSize:
-  Max: 22
+  Max: 25
 
 Metrics/CyclomaticComplexity:
   Max: 10
