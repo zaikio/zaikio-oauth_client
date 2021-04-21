@@ -4,7 +4,7 @@ module Zaikio
       def new
         opts = params.permit(:client_name, :state, :plan, :organization_id)
         opts[:redirect_with_error] = 1
-        opts[:state] ||= cookies.encrypted[:state] = SecureRandom.urlsafe_base64(32)
+        opts[:state] ||= session[:state] = SecureRandom.urlsafe_base64(32)
 
         plan            = opts.delete(:plan)
         organization_id = opts.delete(:organization_id)

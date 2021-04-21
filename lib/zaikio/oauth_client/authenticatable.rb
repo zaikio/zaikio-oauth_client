@@ -7,7 +7,7 @@ module Zaikio
         opts = params.permit(:client_name, :show_signup, :force_login, :state)
         opts[:redirect_with_error] = 1
         client_name = opts.delete(:client_name)
-        opts[:state] ||= cookies.encrypted[:state] = SecureRandom.urlsafe_base64(32)
+        opts[:state] ||= session[:state] = SecureRandom.urlsafe_base64(32)
 
         redirect_to oauth_client.auth_code.authorize_url(
           redirect_uri: approve_url(client_name),
@@ -25,7 +25,7 @@ module Zaikio
           ) and return
         end
 
-        if cookies.encrypted[:state].present? && params[:state] != cookies.encrypted[:state]
+        if session[:state].present? && params[:state] != session[:state]
           return redirect_to send(
             respond_to?(:error_path_for) ? :error_path_for : :default_error_path_for,
             "invalid_state"
@@ -34,10 +34,10 @@ module Zaikio
 
         access_token = create_access_token
 
-        origin = cookies.encrypted[:origin]
-        cookies.delete :origin
+        origin = session[:origin]
+        session.delete(:origin)
 
-        cookies.encrypted[:zaikio_access_token_id] = access_token.id unless access_token.organization?
+        session[:zaikio_access_token_id] = access_token.id unless access_token.organization?
 
         redirect_to send(
           respond_to?(:after_approve_path_for) ? :after_approve_path_for : :default_after_approve_path_for,
@@ -46,9 +46,9 @@ module Zaikio
       end
 
       def destroy
-        access_token_id = cookies.encrypted[:zaikio_access_token_id]
-        cookies.delete :zaikio_access_token_id
-        cookies.delete :state
+        access_token_id = session[:zaikio_access_token_id]
+        session.delete(:origin)
+        session.delete(:origin)
 
         redirect_to send(
           respond_to?(:after_destroy_path_for) ? :after_destroy_path_for : :default_after_destroy_path_for,
@@ -95,13 +95,13 @@ module Zaikio
       end
 
       def default_after_approve_path_for(access_token, origin)
-        cookies.encrypted[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
+        session[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
 
         origin || main_app.root_path
       end
 
       def default_after_destroy_path_for(_access_token_id)
-        cookies.delete :zaikio_person_id
+        session.delete(:origin)
 
         main_app.root_path
       end

@@ -79,9 +79,7 @@ module Zaikio
       end
 
       test "Does code grant flow" do
-        my_cookies = ActionDispatch::Request.new(Rails.application.env_config.deep_dup).cookie_jar
-        my_cookies.encrypted[:origin] = "/my-redirect"
-        cookies[:origin] = my_cookies[:origin]
+        set_session(:origin, "/?a=b")
 
         stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
           .with(
@@ -108,13 +106,13 @@ module Zaikio
             }
           }.to_json, headers: { "Content-Type" => "application/json" })
 
-        get approve_session_path(code: "mycode")
+        get zaikio_oauth_client.approve_session_path(code: "mycode")
         access_token = Zaikio::AccessToken.order(:created_at).last
-        jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
-        assert_nil jar.encrypted["origin"]
-        assert_equal "29b276b7-c0fa-4514-a5b1-c0fb4ee40fa7", jar.encrypted["zaikio_person_id"]
-        assert_equal access_token.id, jar.encrypted["zaikio_access_token_id"]
-        assert_redirected_to "/my-redirect"
+        assert_redirected_to "/?a=b"
+        follow_redirect!
+        assert_nil get_session(:origin)
+        assert_equal "29b276b7-c0fa-4514-a5b1-c0fb4ee40fa7", get_session(:zaikio_person_id)
+        assert_equal access_token.id, get_session(:zaikio_access_token_id)
 
         assert_equal "Person", access_token.bearer_type
         assert_equal "29b276b7-c0fa-4514-a5b1-c0fb4ee40fa7", access_token.bearer_id
