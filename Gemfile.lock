@@ -7,7 +7,7 @@ PATH
       activesupport (>= 5.0.0)
       oauth2
       railties (>= 5.0.0)
-      zaikio-jwt_auth (>= 0.2.1, < 0.5.0)
+      zaikio-jwt_auth (~> 0.5)
 
 GEM
   remote: https://rubygems.org/
@@ -81,7 +81,7 @@ GEM
       ruby_parser (~> 3.5)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
-    jwt (2.2.2)
+    jwt (2.2.3)
     loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -197,7 +197,7 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
-    zaikio-jwt_auth (0.4.4)
+    zaikio-jwt_auth (0.5.0)
       jwt (>= 2.2.1)
       oj (>= 3.0.0)
       railties (>= 5.0.0)
