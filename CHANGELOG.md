@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.11.1 - 2021-04-21
+
+* Update zaikio-jwt_auth dependency
+
 ## 0.11.0 - 2021-04-19
 
 * Send `redirect_with_error=1` to redirect flow and handle errors like in OAuth spec.
