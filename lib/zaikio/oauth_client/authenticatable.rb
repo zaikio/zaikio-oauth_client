@@ -47,7 +47,7 @@ module Zaikio
 
       def destroy
         access_token_id = session[:zaikio_access_token_id]
-        session.delete(:origin)
+        session.delete(:zaikio_access_token_id)
         session.delete(:origin)
 
         redirect_to send(

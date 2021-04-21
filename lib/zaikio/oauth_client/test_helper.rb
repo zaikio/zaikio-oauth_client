@@ -19,14 +19,17 @@ module Zaikio
         end
       end
 
-      def get_session(key)
+      included do
         # This is needed as it is not possible to set sesison values in an ActionDispatch::IntegrationTest
         # This creates a dummy controller to set the session
         Rails.application.routes.disable_clear_and_finalize = true # Keep existing routes
         Rails.application.routes.draw do
           get "/zaikio/oauth_client/test_helper/get_session", to: "zaikio/oauth_client/test_helper/test_session#show"
+          get "/zaikio/oauth_client/test_helper/session", to: "zaikio/oauth_client/test_helper/test_session#create"
         end
+      end
 
+      def get_session(key)
         get "/zaikio/oauth_client/test_helper/get_session", params: { key: key }
 
         if response.status == 204
@@ -37,13 +40,6 @@ module Zaikio
       end
 
       def set_session(key, value)
-        # This is needed as it is not possible to set sesison values in an ActionDispatch::IntegrationTest
-        # This creates a dummy controller to set the session
-        Rails.application.routes.disable_clear_and_finalize = true # Keep existing routes
-        Rails.application.routes.draw do
-          get "/zaikio/oauth_client/test_helper/session", to: "zaikio/oauth_client/test_helper/test_session#create"
-        end
-
         get "/zaikio/oauth_client/test_helper/session", params: { id: value, key: key }
       end
 
