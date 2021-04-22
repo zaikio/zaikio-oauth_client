@@ -133,12 +133,12 @@ redirect_to zaikio_oauth_client.new_subscription_path(plan: "free")
 
 #### Session handling
 
-The Zaikio gem engine will set a cookie for the user after a successful OAuth flow: `cookies.encrypted[:zaikio_person_id]`.
+The Zaikio gem engine will set a cookie for the user after a successful OAuth flow: `session[:zaikio_person_id]`.
 
 If you are using for example `Zaikio::Hub::Models`, you can use this snippet to set the current user:
 
 ```ruby
-Current.user ||= Zaikio::Hub::Models::Person.find_by(id: cookies.encrypted[:zaikio_person_id])
+Current.user ||= Zaikio::Hub::Models::Person.find_by(id: session[:zaikio_person_id])
 ````
 
 You can then use `Current.user` anywhere.
@@ -172,7 +172,7 @@ Additionally you can also specify your own redirect handlers in your `Applicatio
 ```rb
 class ApplicationController < ActionController::Base
   def after_approve_path_for(access_token, origin)
-    cookies.encrypted[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
+    session[:zaikio_person_id] = access_token.bearer_id unless access_token.organization?
 
     # Sync data on login
     Zaikio::Hub.with_token(access_token.token) do
@@ -183,7 +183,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_destroy_path_for(access_token_id)
-    cookies.delete :zaikio_person_id
+    reset_session
 
     main_app.root_path
   end

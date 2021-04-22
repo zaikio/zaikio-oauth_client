@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* **BREAKING CHANGE:** Instead of working `cookies.encrypted` we will switch to `session` because the session cookie will be `httponly` and therefore can prevent XSS attack that set the cookie to another value. See also: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+
 ## 0.11.1 - 2021-04-21
 
 * Update zaikio-jwt_auth dependency
@@ -47,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.7.0
 
-* Don't set `cookies.encrypted[:origin]` when passing `?origin` to `new_session_path`
+* Don't set `session[:origin]` when passing `?origin` to `new_session_path`
 * `show_signup`, `force_login` and `state` params are now passed through `new_session_path`.
 
 ## 0.6.1

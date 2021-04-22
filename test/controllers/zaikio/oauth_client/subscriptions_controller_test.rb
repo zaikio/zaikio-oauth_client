@@ -69,13 +69,14 @@ module Zaikio
       test "without passing a ?state parameter, it sets a high-entropy string cookie" do
         get zaikio_oauth_client.new_subscription_path
 
-        jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
-        assert jar.encrypted["state"].present?
-        assert jar.encrypted["state"].length > 30
+        current_response = response
 
-        authorize_url = URI.parse(response.headers["Location"])
+        assert get_session(:state).present?
+        assert get_session(:state).length > 30
+
+        authorize_url = URI.parse(current_response.headers["Location"])
         authorize_params = URI.decode_www_form(authorize_url.query).to_h
-        assert_equal jar.encrypted["state"], authorize_params["state"]
+        assert_equal get_session(:state), authorize_params["state"]
       end
     end
   end

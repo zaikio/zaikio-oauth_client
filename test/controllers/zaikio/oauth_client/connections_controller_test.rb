@@ -53,19 +53,18 @@ module Zaikio
       test "without passing a ?state parameter, it sets a high-entropy string cookie" do
         get zaikio_oauth_client.new_connection_path
 
-        jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
-        assert jar.encrypted["state"].present?
-        assert jar.encrypted["state"].length > 30
+        current_response = response
 
-        authorize_url = URI.parse(response.headers["Location"])
+        assert get_session(:state).present?
+        assert get_session(:state).length > 30
+
+        authorize_url = URI.parse(current_response.headers["Location"])
         authorize_params = URI.decode_www_form(authorize_url.query).to_h
-        assert_equal jar.encrypted["state"], authorize_params["state"]
+        assert_equal get_session(:state), authorize_params["state"]
       end
 
       test "Does code grant flow" do
-        my_cookies = ActionDispatch::Request.new(Rails.application.env_config.deep_dup).cookie_jar
-        my_cookies.encrypted[:origin] = "/my-redirect"
-        cookies[:origin] = my_cookies[:origin]
+        set_session(:origin, "/my-redirect")
 
         stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
           .with(
@@ -109,9 +108,7 @@ module Zaikio
       end
 
       test "checks ?state parameter when approving with encrypted :state cookie" do
-        my_cookies = ActionDispatch::Request.new(Rails.application.env_config.deep_dup).cookie_jar
-        my_cookies.encrypted[:state] = "not-me"
-        cookies[:state] = my_cookies[:state]
+        set_session(:state, "not-me")
 
         get zaikio_oauth_client.approve_connection_path(code: "mycode", state: "yes-me")
 
