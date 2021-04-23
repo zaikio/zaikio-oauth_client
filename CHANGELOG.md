@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.12.0 - 2021-04-23
+
 * **BREAKING CHANGE:** Instead of working `cookies.encrypted` we will switch to `session` because the session cookie will be `httponly` and therefore can prevent XSS attack that set the cookie to another value. See also: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
 
 ## 0.11.1 - 2021-04-21
