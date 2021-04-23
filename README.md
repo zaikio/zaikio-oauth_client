@@ -239,6 +239,21 @@ class MyControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
+For system tests (e.g. with a separate browser instance), there's a special helper:
+
+```rb
+class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include Zaikio::OAuthClient::SystemTestHelper
+
+  test "does request" do
+    person = people(:my_person)
+    logged_in_as(person)
+
+    visit "/"
+  end
+end
+```
+
 #### Authenticated requests
 
 Now further requests to the Directory API or to other Zaikio APIs should be made. For this purpose the OAuthClient provides a helper method `with_auth` that automatically fetches an access token from the database, requests a refresh token or creates a new access token via client credentials flow.
