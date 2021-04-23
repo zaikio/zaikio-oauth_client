@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zaikio-oauth_client (0.12.0)
+    zaikio-oauth_client (0.12.1)
       actionpack (>= 5.0.0)
       activerecord (>= 5.0.0)
       activesupport (>= 5.0.0)
