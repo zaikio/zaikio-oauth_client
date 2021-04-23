@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   if spec.respond_to?(:metadata)
-    spec.metadata["changelog_uri"] = "https://github.com/zaikio/zaikio-oauth_client/blob/master/CHANGELOG.md"
+    spec.metadata["changelog_uri"] = "https://github.com/zaikio/zaikio-oauth_client/blob/main/CHANGELOG.md"
   end
 
   spec.add_dependency "actionpack", ">= 5.0.0"
