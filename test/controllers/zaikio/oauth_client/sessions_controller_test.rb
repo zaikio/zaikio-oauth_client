@@ -59,6 +59,24 @@ module Zaikio
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
+      test "?lang is set to I18n.locale if none other given" do
+        I18n.with_locale(:de) do
+          get zaikio_oauth_client.new_session_path(state: "entropy")
+        end
+
+        params = {
+          client_id: "abc",
+          redirect_uri: zaikio_oauth_client.approve_session_url,
+          redirect_with_error: 1,
+          response_type: "code",
+          scope: "directory.person.r",
+          state: "entropy",
+          lang: "de"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
       test "Shows error and redirects if redirect flow wasn't successful" do
         get approve_session_path(error: "invalid_request", error_description: "My Error")
 

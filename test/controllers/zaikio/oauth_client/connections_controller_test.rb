@@ -29,7 +29,8 @@ module Zaikio
           redirect_with_error: 1,
           response_type: "code",
           scope: "Org.directory.organization.r",
-          state: ""
+          state: "",
+          lang: "en"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
@@ -44,7 +45,8 @@ module Zaikio
           redirect_with_error: 1,
           response_type: "code",
           scope: "Org/123.directory.organization.r",
-          state: "yes-me"
+          state: "yes-me",
+          lang: "en"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
