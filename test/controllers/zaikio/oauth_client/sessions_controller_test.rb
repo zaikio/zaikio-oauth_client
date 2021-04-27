@@ -41,6 +41,7 @@ module Zaikio
         get zaikio_oauth_client.new_session_path(show_signup: true,
                                                  force_login: true,
                                                  state: "entropy",
+                                                 lang: "de",
                                                  unknown_param: :no)
 
         params = {
@@ -51,7 +52,8 @@ module Zaikio
           scope: "directory.person.r",
           show_signup: true,
           force_login: true,
-          state: "entropy"
+          state: "entropy",
+          lang: "de"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"

@@ -4,7 +4,7 @@ module Zaikio
       extend ActiveSupport::Concern
 
       def new
-        opts = params.permit(:client_name, :show_signup, :force_login, :state)
+        opts = params.permit(:client_name, :show_signup, :force_login, :state, :lang)
         opts[:redirect_with_error] = 1
         client_name = opts.delete(:client_name)
         opts[:state] ||= session[:state] = SecureRandom.urlsafe_base64(32)
