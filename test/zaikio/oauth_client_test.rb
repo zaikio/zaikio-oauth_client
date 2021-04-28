@@ -189,8 +189,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         "audiences" => ["warehouse"],
         "expires_in" => 600,
         "bearer" => {
-          "id": "123",
-          "type": "Organization"
+          id: "123",
+          type: "Organization"
         }
       }.to_json, headers: { "Content-Type" => "application/json" })
 
@@ -256,8 +256,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         "audiences" => ["warehouse"],
         "expires_in" => 600,
         "bearer" => {
-          "id": "123",
-          "type": "Organization"
+          id: "123",
+          type: "Organization"
         }
       }.to_json, headers: { "Content-Type" => "application/json" })
 
@@ -307,8 +307,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         "audiences" => ["warehouse"],
         "expires_in" => 600,
         "bearer" => {
-          "id": "123",
-          "type": "Organization"
+          id: "123",
+          type: "Organization"
         }
       }.to_json, headers: { "Content-Type" => "application/json" })
 
@@ -349,8 +349,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         "audiences" => ["warehouse"],
         "expires_in" => 600,
         "bearer" => {
-          "id": "123",
-          "type": "Organization"
+          id: "123",
+          type: "Organization"
         }
       }.to_json, headers: { "Content-Type" => "application/json" })
 
@@ -418,8 +418,8 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         "audiences" => ["warehouse"],
         "expires_in" => 600,
         "bearer" => {
-          "id": "123",
-          "type": "Organization"
+          id: "123",
+          type: "Organization"
         }
       }.to_json, headers: { "Content-Type" => "application/json" })
 

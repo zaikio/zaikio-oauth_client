@@ -49,7 +49,7 @@ module Zaikio
                          get_access_token(**options_or_access_token)
                        end
 
-        return unless block_given?
+        return unless block
 
         if configuration.around_auth_block
           configuration.around_auth_block.call(access_token, block)
@@ -117,9 +117,9 @@ module Zaikio
 
       def get_plain_scopes(scopes)
         regex = /^((Org|Per)\.)?(.*)$/
-        scopes.map do |scope|
+        scopes.filter_map do |scope|
           (regex.match(scope) || [])[3]
-        end.compact
+        end
       end
 
       private

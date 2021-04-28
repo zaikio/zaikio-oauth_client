@@ -5,7 +5,7 @@ module Zaikio
   class AccessToken < ApplicationRecord
     self.table_name = "zaikio_access_tokens"
 
-    def self.build_from_access_token(access_token, requested_scopes: nil) # rubocop:disable Metrics/AbcSize
+    def self.build_from_access_token(access_token, requested_scopes: nil)
       payload = JWT.decode(access_token.token, nil, false).first rescue {} # rubocop:disable Style/RescueModifier
       scopes = access_token.params["scope"].split(",")
       new(
@@ -37,7 +37,7 @@ module Zaikio
       where("expires_at <= :now AND created_at > :created_at_max",
             now: Time.current,
             created_at_max: Time.current - refresh_token_valid_for)
-        .where("refresh_token IS NOT NULL")
+        .where.not(refresh_token: nil)
         .where.not(id: Zaikio::JWTAuth.revoked_token_ids)
     }
     scope :by_bearer, lambda { |bearer_id:, requested_scopes: [], bearer_type: "Person"|
