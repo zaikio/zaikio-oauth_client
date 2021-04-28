@@ -3,7 +3,7 @@ module Zaikio
     module TestHelper
       extend ActiveSupport::Concern
 
-      class TestSessionController < ActionController::Base
+      class TestSessionController < ActionController::Base # rubocop:disable Rails/ApplicationController
         def show
           if session[params[:key]].nil?
             head :no_content
