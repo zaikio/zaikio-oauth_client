@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Allow passing `?lang`, or set the default to `I18n.locale`, when starting a new OAuth session
+
 ## 0.12.1 - 2021-04-23
 
 * Add `Zaikio::OAuthClient::SystemTestHelper` for working with system tests
