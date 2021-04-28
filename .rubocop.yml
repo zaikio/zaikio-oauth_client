@@ -1,9 +1,12 @@
+inherit_mode:
+  merge:
+    - Exclude
+
 AllCops:
   TargetRubyVersion: 3.0
   Exclude:
     - bin/*
     - db/**/*.rb
-    - tmp/*
     - Rakefile
     - test/dummy/**/*
     - "*.gemspec"
