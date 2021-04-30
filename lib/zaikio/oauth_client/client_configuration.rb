@@ -20,7 +20,7 @@ module Zaikio
           client_secret,
           authorize_url: "oauth/authorize",
           token_url: "oauth/access_token",
-          connection_opts: { headers: { "Accept": "application/json" } },
+          connection_opts: { headers: { Accept: "application/json" } },
           site: Zaikio::OAuthClient.configuration.host
         )
 

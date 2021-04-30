@@ -17,7 +17,7 @@ module Zaikio
         )
       end
 
-      def approve
+      def approve  # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
         if params[:error].present?
           redirect_to send(
             respond_to?(:error_path_for) ? :error_path_for : :default_error_path_for,

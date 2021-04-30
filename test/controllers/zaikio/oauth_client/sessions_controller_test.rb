@@ -121,8 +121,8 @@ module Zaikio
             "audiences" => ["warehouse"],
             "expires_in" => 600,
             "bearer" => {
-              "id": "29b276b7-c0fa-4514-a5b1-c0fb4ee40fa7",
-              "type": "Person"
+              id: "29b276b7-c0fa-4514-a5b1-c0fb4ee40fa7",
+              type: "Person"
             }
           }.to_json, headers: { "Content-Type" => "application/json" })
 

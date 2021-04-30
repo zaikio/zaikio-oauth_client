@@ -49,7 +49,7 @@ module Zaikio
                          get_access_token(**options_or_access_token)
                        end
 
-        return unless block_given?
+        return unless block
 
         if configuration.around_auth_block
           configuration.around_auth_block.call(access_token, block)
@@ -82,7 +82,7 @@ module Zaikio
 
       # Finds the best usable access token. Note that this token may have expired and
       # would require refreshing.
-      def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:)
+      def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:)  # rubocop:disable Metrics/MethodLength
         configuration.logger.debug "Try to fetch token for client_name: #{client_name}, "\
           "bearer #{bearer_type}/#{bearer_id}, requested_scopes: #{requested_scopes}"
 
@@ -117,9 +117,9 @@ module Zaikio
 
       def get_plain_scopes(scopes)
         regex = /^((Org|Per)\.)?(.*)$/
-        scopes.map do |scope|
+        scopes.filter_map do |scope|
           (regex.match(scope) || [])[3]
-        end.compact
+        end
       end
 
       private

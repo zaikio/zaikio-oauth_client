@@ -1,7 +1,7 @@
 module Zaikio
   module OAuthClient
     class SubscriptionsController < ConnectionsController
-      def new
+      def new # rubocop:disable Metrics/MethodLength
         opts = params.permit(:client_name, :state, :plan, :organization_id)
         opts[:redirect_with_error] = 1
         opts[:state] ||= session[:state] = SecureRandom.urlsafe_base64(32)

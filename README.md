@@ -36,32 +36,34 @@ mount Zaikio::OAuthClient::Engine => "/zaikio"
 
 ```rb
 # config/initializers/zaikio_oauth_client.rb
-Zaikio::OAuthClient.configure do |config|
-  config.environment = :sandbox
+Rails.application.reloader.to_prepare do
+  Zaikio::OAuthClient.configure do |config|
+    config.environment = :sandbox
 
-  config.register_client :warehouse do |warehouse|
-    warehouse.client_id       = "52022d7a-7ba2-41ed-8890-97d88e6472f6"
-    warehouse.client_secret   = "ShiKTnHqEf3M8nyHQPyZgbz7"
-    warehouse.default_scopes  = %w[directory.person.r]
+    config.register_client :warehouse do |warehouse|
+      warehouse.client_id       = "52022d7a-7ba2-41ed-8890-97d88e6472f6"
+      warehouse.client_secret   = "ShiKTnHqEf3M8nyHQPyZgbz7"
+      warehouse.default_scopes  = %w[directory.person.r]
 
-    warehouse.register_organization_connection do |org|
-      org.default_scopes = %w[directory.organization.r]
+      warehouse.register_organization_connection do |org|
+        org.default_scopes = %w[directory.organization.r]
+      end
     end
-  end
 
-  config.register_client :warehouse_goods_call_of do |warehouse_goods_call_of|
-    warehouse_goods_call_of.client_id       = "12345-7ba2-41ed-8890-97d88e6472f6"
-    warehouse_goods_call_of.client_secret   = "secret"
-    warehouse_goods_call_of.default_scopes  = %w[directory.person.r]
+    config.register_client :warehouse_goods_call_of do |warehouse_goods_call_of|
+      warehouse_goods_call_of.client_id       = "12345-7ba2-41ed-8890-97d88e6472f6"
+      warehouse_goods_call_of.client_secret   = "secret"
+      warehouse_goods_call_of.default_scopes  = %w[directory.person.r]
 
-    warehouse_goods_call_of.register_organization_connection do |org|
-      org.default_scopes = %w[directory.organization.r]
+      warehouse_goods_call_of.register_organization_connection do |org|
+        org.default_scopes = %w[directory.organization.r]
+      end
     end
-  end
 
-  config.around_auth do |access_token, block|
-    Zaikio::Hub.with_token(access_token.token) do
-      block.call(access_token)
+    config.around_auth do |access_token, block|
+      Zaikio::Hub.with_token(access_token.token) do
+        block.call(access_token)
+      end
     end
   end
 end
