@@ -26,7 +26,6 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_connection_url,
-          redirect_with_error: 1,
           response_type: "code",
           scope: "Org.directory.organization.r",
           state: "",
@@ -42,7 +41,6 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: approve_connection_url,
-          redirect_with_error: 1,
           response_type: "code",
           scope: "Org/123.directory.organization.r",
           state: "yes-me",

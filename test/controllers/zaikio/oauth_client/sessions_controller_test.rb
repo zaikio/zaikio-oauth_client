@@ -32,7 +32,6 @@ module Zaikio
         assert_equal query["redirect_uri"], zaikio_oauth_client.approve_session_url
         assert_equal query["response_type"], "code"
         assert_equal query["scope"], "directory.person.r"
-        assert_equal query["redirect_with_error"], "1"
 
         assert query["state"].present?
       end
@@ -47,7 +46,6 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_session_url,
-          redirect_with_error: 1,
           response_type: "code",
           scope: "directory.person.r",
           show_signup: true,
@@ -67,7 +65,6 @@ module Zaikio
         params = {
           client_id: "abc",
           redirect_uri: zaikio_oauth_client.approve_session_url,
-          redirect_with_error: 1,
           response_type: "code",
           scope: "directory.person.r",
           state: "entropy",
