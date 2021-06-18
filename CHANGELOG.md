@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Support `prompt` option for SSO
 * Remove `redirect_with_error=1` since it is now the default and deprecated.
 
 ## 0.13.0 - 2021-04-28
