@@ -4,7 +4,7 @@ module Zaikio
       extend ActiveSupport::Concern
 
       def new
-        opts = params.permit(:client_name, :show_signup, :force_login, :state, :lang)
+        opts = params.permit(:client_name, :show_signup, :prompt, :force_login, :state, :lang)
         opts[:lang] ||= I18n.locale if defined?(I18n)
         client_name = opts.delete(:client_name)
         opts[:state] ||= session[:state] = SecureRandom.urlsafe_base64(32)

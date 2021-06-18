@@ -41,6 +41,7 @@ module Zaikio
                                                  force_login: true,
                                                  state: "entropy",
                                                  lang: "de",
+                                                 prompt: "select_account",
                                                  unknown_param: :no)
 
         params = {
@@ -51,7 +52,8 @@ module Zaikio
           show_signup: true,
           force_login: true,
           state: "entropy",
-          lang: "de"
+          lang: "de",
+          prompt: "select_account"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
