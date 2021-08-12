@@ -266,6 +266,18 @@ Zaikio::OAuthClient.with_auth(bearer_type: "Organization", bearer_id: "fd61f5f5-
 end
 ```
 
+If you need the token for a certain period (e.g. a long-running job which makes many
+requests in sequence), you can specify the `valid_for` interval when requesting the token.
+By default, it won't return an access token which was due to expire in less than 30
+seconds from now. If there is an existing token, but it was due to expire before the end
+of the validity period, this will go and get a fresh token anyway:
+
+```rb
+Zaikio::OAuthClient.with_auth(..., valid_for: 10.minutes) do |access_token|
+  # ...
+end
+```
+
 ## Use of dummy app
 
 You can use the included dummy app as a showcase for the workflow and to adjust your own application. To set up the dummy application properly, go into `test/dummy` and use [puma-dev](https://github.com/puma/puma-dev) like this:
