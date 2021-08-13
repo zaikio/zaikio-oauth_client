@@ -81,7 +81,7 @@ module Zaikio
 
       def client_config
         client_config = Zaikio::OAuthClient.configuration.find!(client_name)
-        client_config = use_org_config? ? client_config.org_config : client_config
+        client_config = client_config.org_config if use_org_config?
 
         client_config or raise ActiveRecord::RecordNotFound
       end
