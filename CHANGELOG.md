@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Don't return access tokens which are due to expire in <30 seconds from now, and allow
+  configuring this property with the `valid_for` keyword argument.
+
 ## 0.14.0 - 2021-06-18
 
 * Support `prompt` option for SSO
