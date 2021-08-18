@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/ruby:3.0.0-node
+      - image: circleci/ruby:3.0.2-node
         environment:
           PGHOST: 127.0.0.1
           PGUSER: circleci
