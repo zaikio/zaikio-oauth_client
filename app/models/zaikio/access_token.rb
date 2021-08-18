@@ -26,17 +26,17 @@ module Zaikio
     end
 
     # Scopes
-    scope :valid, lambda {
-      where("expires_at > :now", now: Time.current)
+    scope :valid, lambda { |valid_until = Time.current|
+      where("expires_at > :valid_until", valid_until: valid_until)
         .where.not(id: Zaikio::JWTAuth.revoked_token_ids)
     }
     scope :with_invalid_refresh_token, lambda {
       where("created_at <= ?", Time.current - Zaikio::AccessToken.refresh_token_valid_for)
     }
-    scope :valid_refresh, lambda {
-      where("expires_at <= :now AND created_at > :created_at_max",
-            now: Time.current,
-            created_at_max: Time.current - refresh_token_valid_for)
+    scope :valid_refresh, lambda { |valid_until = Time.current|
+      where("expires_at <= :valid_until AND created_at > :created_at_max",
+            valid_until: valid_until,
+            created_at_max: valid_until - refresh_token_valid_for)
         .where.not(refresh_token: nil)
         .where.not(id: Zaikio::JWTAuth.revoked_token_ids)
     }
@@ -44,9 +44,10 @@ module Zaikio
       where(bearer_type: bearer_type, bearer_id: bearer_id)
         .where("requested_scopes @> ARRAY[?]::varchar[]", requested_scopes)
     }
-    scope :usable, lambda { |options|
-      by_bearer(**options).valid.or(by_bearer(**options).valid_refresh)
-                          .order(expires_at: :desc)
+    scope :usable, lambda { |valid_until: Time.current, **options|
+      by_bearer(**options).valid(valid_until).or(
+        by_bearer(**options).valid_refresh
+      ).order(expires_at: :desc)
     }
 
     def expired?
@@ -72,6 +73,8 @@ module Zaikio
     end
 
     def refresh!
+      return unless refresh_token?
+
       Zaikio::OAuthClient.with_oauth_scheme(:basic_auth) do
         refreshed_token = OAuth2::AccessToken.from_hash(
           Zaikio::OAuthClient.for(audience),
@@ -80,16 +83,12 @@ module Zaikio
 
         destroy
 
-        self.class.build_from_access_token(
-          refreshed_token,
-          requested_scopes: requested_scopes
-        ).tap(&:save!)
+        self.class.build_from_access_token(refreshed_token, requested_scopes: requested_scopes).tap(&:save!)
       end
     rescue OAuth2::Error => e
       raise unless e.code == "invalid_grant"
 
       destroy
-
       nil
     end
   end
