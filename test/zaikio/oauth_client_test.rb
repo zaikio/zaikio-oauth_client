@@ -208,7 +208,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_not_equal access_token, refreshed_token
   end
 
-  test "generates refresh token if expires before valid_for argument" do
+  test "fetches new token using client credentials if existing token expires before :valid_for" do
     Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(
       bearer_type: "Organization",
@@ -225,18 +225,17 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       .with(
         basic_auth: %w[abc secret],
         body: {
-          "grant_type" => "refresh_token",
-          "refresh_token" => access_token.refresh_token
+          "grant_type" => "client_credentials",
+          "scope" => "Org/123.directory.something.r"
         },
         headers: {
           "Accept" => "application/json"
         }
       )
       .to_return(status: 200, body: {
-        "access_token" => "refreshed",
-        "refresh_token" => "refresh_of_refreshed",
+        "access_token" => org_token,
         "token_type" => "bearer",
-        "scope" => "directory.organization.r,directory.something.r",
+        "scope" => "directory.something.r",
         "audiences" => ["warehouse"],
         "expires_in" => 600,
         "bearer" => {
@@ -252,11 +251,11 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       valid_for: 10.minutes
     )
     assert_not refreshed_token.expired?
-    assert_equal %w[directory.organization.r directory.something.r], refreshed_token.scopes
+    assert_equal %w[directory.something.r], refreshed_token.scopes
     assert_equal "123", refreshed_token.bearer_id
     assert_equal "Organization", refreshed_token.bearer_type
-    assert_equal "refreshed", refreshed_token.token
-    assert_equal "refresh_of_refreshed", refreshed_token.refresh_token
+    assert_equal org_token, refreshed_token.token
+    assert_nil refreshed_token.refresh_token
     assert_not_equal access_token, refreshed_token
   end
 
@@ -336,8 +335,9 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       audience: "warehouse",
       token: "abc",
       refresh_token: nil,
-      expires_at: 1.hour.ago,
-      scopes: %w[directory.organization.r directory.something.r]
+      expires_at: 5.seconds.from_now,
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
     )
 
     stub_request(:post, "http://hub.zaikio.test/oauth/access_token")

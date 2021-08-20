@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Consider `valid_for` when fetching AccessTokens from the database, and only return
+  tokens which meet the expected validity period.
+
 ## 0.15.0 - 2021-08-13
 
 * Don't return access tokens which are due to expire in <30 seconds from now, and allow
