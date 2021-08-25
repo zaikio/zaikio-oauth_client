@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Support `prompt_email_confirmation` option for SSO
+
 ## 0.15.1 - 2021-08-20
 
 * Consider `valid_for` when fetching AccessTokens from the database, and only return

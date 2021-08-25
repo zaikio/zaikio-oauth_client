@@ -42,6 +42,7 @@ module Zaikio
                                                  state: "entropy",
                                                  lang: "de",
                                                  prompt: "select_account",
+                                                 prompt_email_confirmation: "1",
                                                  unknown_param: :no)
 
         params = {
@@ -53,7 +54,8 @@ module Zaikio
           force_login: true,
           state: "entropy",
           lang: "de",
-          prompt: "select_account"
+          prompt: "select_account",
+          prompt_email_confirmation: "1"
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
