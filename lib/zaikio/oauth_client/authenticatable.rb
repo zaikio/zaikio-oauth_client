@@ -37,6 +37,7 @@ module Zaikio
 
         origin = session[:origin]
         session.delete(:origin)
+        session.delete(:oauth_attempts)
 
         session[:zaikio_access_token_id] = access_token.id unless access_token.organization?
 
@@ -46,6 +47,9 @@ module Zaikio
         )
       rescue OAuth2::Error => e
         raise e unless e.code == "invalid_grant"
+        raise e if session[:oauth_attempts].to_i >= 3
+
+        session[:oauth_attempts] = session[:oauth_attempts].to_i + 1
 
         redirect_to new_path(client_name: params[:client_name])
       end

@@ -63,6 +63,13 @@ module Zaikio
         get approve_connection_path(code: "expiredcode")
 
         assert_redirected_to zaikio_oauth_client.new_connection_path
+
+        # Retries multiple times
+        get approve_connection_path(code: "expiredcode")
+        get approve_connection_path(code: "expiredcode")
+        assert_raise OAuth2::Error do
+          get approve_connection_path(code: "expiredcode")
+        end
       end
 
       test "without passing a ?state parameter, it sets a high-entropy string cookie" do
