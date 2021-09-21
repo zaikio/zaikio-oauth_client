@@ -17,7 +17,7 @@ module Zaikio
         )
       end
 
-      def approve  # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+      def approve  # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         if params[:error].present?
           redirect_to send(
             respond_to?(:error_path_for) ? :error_path_for : :default_error_path_for,
@@ -37,6 +37,7 @@ module Zaikio
 
         origin = session[:origin]
         session.delete(:origin)
+        session.delete(:oauth_attempts)
 
         session[:zaikio_access_token_id] = access_token.id unless access_token.organization?
 
@@ -44,6 +45,13 @@ module Zaikio
           respond_to?(:after_approve_path_for) ? :after_approve_path_for : :default_after_approve_path_for,
           access_token, origin
         )
+      rescue OAuth2::Error => e
+        raise e unless e.code == "invalid_grant"
+        raise e if session[:oauth_attempts].to_i >= 3
+
+        session[:oauth_attempts] = session[:oauth_attempts].to_i + 1
+
+        redirect_to new_path(client_name: params[:client_name])
       end
 
       def destroy
@@ -58,6 +66,10 @@ module Zaikio
       end
 
       private
+
+      def new_path(options = {})
+        zaikio_oauth_client.new_session_path(options)
+      end
 
       def approve_url(client_name = nil)
         zaikio_oauth_client.approve_session_url(client_name)

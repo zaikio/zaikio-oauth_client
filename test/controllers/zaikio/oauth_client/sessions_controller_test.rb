@@ -86,6 +86,21 @@ module Zaikio
         assert_match "My Error", flash[:alert]
       end
 
+      test "Retries SSO if there is an error when fetching access token" do
+        stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
+          .with(
+            body: { "client_id" => "abc", "client_secret" => "secret", "code" => "expiredcode",
+                    "grant_type" => "authorization_code" }
+          )
+          .to_return(status: 400, body: {
+            error: "invalid_grant",
+            error_description: "The application, grant, refresh token or device authorization could not be found."
+          }.to_json, headers: { "Content-Type" => "application/json" })
+        get approve_session_path(code: "expiredcode")
+
+        assert_redirected_to zaikio_oauth_client.new_session_path
+      end
+
       test "Raises exception if scope was invalid" do
         assert_raise Zaikio::OAuthClient::InvalidScopesError do
           get approve_session_path(error: "invalid_scope", error_description: "malformed_scope")
