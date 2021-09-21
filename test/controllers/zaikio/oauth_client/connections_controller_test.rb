@@ -50,6 +50,21 @@ module Zaikio
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
+      test "Retries SSO if there is an error when fetching access token" do
+        stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
+          .with(
+            body: { "client_id" => "abc", "client_secret" => "secret", "code" => "expiredcode",
+                    "grant_type" => "authorization_code" }
+          )
+          .to_return(status: 400, body: {
+            error: "invalid_grant",
+            error_description: "The application, grant, refresh token or device authorization could not be found."
+          }.to_json, headers: { "Content-Type" => "application/json" })
+        get approve_connection_path(code: "expiredcode")
+
+        assert_redirected_to zaikio_oauth_client.new_connection_path
+      end
+
       test "without passing a ?state parameter, it sets a high-entropy string cookie" do
         get zaikio_oauth_client.new_connection_path
 
