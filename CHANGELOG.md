@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.17.0 - 2021-09-23
+
+* Retry SSO-flow if code is not valid (anymore)
+
 ## 0.16.0 - 2021-08-25
 
 * Support `prompt_email_confirmation` option for SSO
