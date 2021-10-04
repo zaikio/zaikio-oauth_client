@@ -46,7 +46,7 @@ module Zaikio
           access_token, origin
         )
       rescue OAuth2::Error => e
-        raise e unless e.code == "invalid_grant"
+        raise e unless e.code == "invalid_grant" || e.code == "invalid_request"
         raise e if session[:oauth_attempts].to_i >= 3
 
         session[:oauth_attempts] = session[:oauth_attempts].to_i + 1

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Retry SSO-flow if code is not given
+
 ## 0.17.0 - 2021-09-23
 
 * Retry SSO-flow if code is not valid (anymore)
