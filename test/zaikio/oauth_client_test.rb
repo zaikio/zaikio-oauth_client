@@ -440,7 +440,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       end
     end
 
-    obj = OpenStruct.new
+    obj = mock
     obj.expects(:call)
 
     Zaikio::OAuthClient.with_auth(access_token) do
@@ -475,7 +475,7 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
         }
       }.to_json, headers: { "Content-Type" => "application/json" })
 
-    obj = OpenStruct.new
+    obj = mock
     obj.expects(:call)
 
     Zaikio::OAuthClient.with_auth(bearer_type: "Organization",
