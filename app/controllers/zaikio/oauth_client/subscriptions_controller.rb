@@ -20,7 +20,7 @@ module Zaikio
           redirect_uri: approve_url(opts.delete(:client_name)),
           scope: subscription_scope,
           **opts
-        )
+        ), allow_other_host: true
       end
     end
   end
