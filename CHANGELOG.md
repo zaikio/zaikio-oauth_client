@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.17.2 - 2022-01-07
+
+* Fix broken Rubocop auto-corrected code.
+
 ## 0.17.1 - 2022-01-07
+
+**Do not use, please go straight to v0.17.2**
 
 * Retry SSO-flow if code is not given
 * Set `allow_other_host: true` when redirecting to Hub (required for Rails 7 strict
