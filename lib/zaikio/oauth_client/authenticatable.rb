@@ -14,7 +14,7 @@ module Zaikio
           redirect_uri: approve_url(client_name),
           scope: oauth_scope,
           **opts
-        )
+        ), allow_other_host: true
       end
 
       def approve  # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
