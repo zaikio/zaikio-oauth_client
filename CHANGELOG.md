@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.17.1 - 2022-01-07
+
 * Retry SSO-flow if code is not given
 * Set `allow_other_host: true` when redirecting to Hub (required for Rails 7 strict
   redirect policy). This property is backwards-compatible with older versions, it's only
