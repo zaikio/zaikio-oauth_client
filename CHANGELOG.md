@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* **BREAKING:** Encrypt `token` & `refresh_token` with [Active Record Encryption](https://guides.rubyonrails.org/active_record_encryption.html#setup):
+  1. Run `rails db:encryption:init` per environment and copy the values to your encrypted credentials
+  2. Run `rails zaikio_oauth_client:install:migrations` and `rails db:migrate` to encrypt stored access tokens
+
 ## 0.17.2 - 2022-01-07
 
 * Fix broken Rubocop auto-corrected code.
