@@ -14,7 +14,17 @@ Then run `bundle install`.
 
 ## Setup & Configuration
 
-### 1. Copy & run Migrations
+### 1. Setup Active Record encryption
+
+Setup [Active Record Encryption](https://guides.rubyonrails.org/active_record_encryption.html#setup) by running:
+
+```
+rails db:encryption:init
+```
+
+(Continue generating the credentials each for different environments)
+
+### 2. Copy & run Migrations
 
 ```bash
 rails zaikio_oauth_client:install:migrations
@@ -24,7 +34,7 @@ rails db:migrate
 This will create the tables:
 + `zaikio_access_tokens`
 
-### 2. Mount routes
+### 3. Mount routes
 
 Add this to `config/routes.rb`:
 
@@ -32,7 +42,7 @@ Add this to `config/routes.rb`:
 mount Zaikio::OAuthClient::Engine => "/zaikio"
 ```
 
-### 3. Configure Gem
+### 4. Configure Gem
 
 ```rb
 # config/initializers/zaikio_oauth_client.rb
@@ -70,7 +80,7 @@ end
 ```
 
 
-### 4. Clean up outdated access tokens (recommended)
+### 5. Clean up outdated access tokens (recommended)
 
 To avoid keeping all expired oath and refresh tokens in your database, we recommend to implement their scheduled deletion. We recommend therefore to use a schedule gems such as [sidekiq](https://github.com/mperham/sidekiq) and [sidekiq-scheduler](https://github.com/moove-it/sidekiq-scheduler).
 
