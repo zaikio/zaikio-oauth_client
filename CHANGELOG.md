@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.18.1 - 2022-04-29
+
+* Relax dependency on `zaikio-jwt_auth`, allow versions 2.x
+
 ## 0.18.0 - 2022-04-26
 
 * **BREAKING:** Encrypt `token` & `refresh_token` with [Active Record Encryption](https://guides.rubyonrails.org/active_record_encryption.html#setup):
