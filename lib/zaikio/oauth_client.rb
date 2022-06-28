@@ -84,7 +84,7 @@ module Zaikio
       # Finds the best usable access token. Note that this token may have expired and
       # would require refreshing.
       def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:, valid_for: 30.seconds)  # rubocop:disable Metrics/MethodLength
-        configuration.logger.debug "Try to fetch token for client_name: #{client_name}, "\
+        configuration.logger.debug "Try to fetch token for client_name: #{client_name}, " \
                                    "bearer #{bearer_type}/#{bearer_id}, requested_scopes: #{requested_scopes}"
 
         fetch_access_token = lambda {
