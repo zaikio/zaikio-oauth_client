@@ -301,7 +301,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       )
       .to_return(status: 200, body: {
         "access_token" => org_token,
-        "refresh_token" => "refresh_token",
         "token_type" => "bearer",
         "scope" => "directory.something.r",
         "audiences" => ["warehouse"],
@@ -353,7 +352,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       )
       .to_return(status: 200, body: {
         "access_token" => org_token,
-        "refresh_token" => "refresh_token",
         "token_type" => "bearer",
         "scope" => "directory.something.r",
         "audiences" => ["warehouse"],
@@ -395,7 +393,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       )
       .to_return(status: 200, body: {
         "access_token" => org_token,
-        "refresh_token" => "refresh_token",
         "token_type" => "bearer",
         "scope" => "directory.something.r",
         "audiences" => ["warehouse"],
@@ -464,7 +461,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       )
       .to_return(status: 200, body: {
         "access_token" => org_token,
-        "refresh_token" => "refresh_token",
         "token_type" => "bearer",
         "scope" => "directory.organization.r",
         "audiences" => ["warehouse"],
