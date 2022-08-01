@@ -6,7 +6,7 @@ require "zaikio/oauth_client/configuration"
 require "zaikio/oauth_client/authenticatable"
 
 module Zaikio
-  module OAuthClient
+  module OAuthClient # rubocop:disable Metrics/ModuleLength
     class << self
       attr_reader :client_name
 
@@ -58,9 +58,8 @@ module Zaikio
         end
       end
 
-      # Finds the best possible access token, using the DB or an API call
-      #   * If the token has expired, it will be refreshed using the refresh_token flow
-      #     (if this fails, we fallback to getting a new token using client_credentials)
+      # Finds active access token, using the DB or Client Credentials flow
+      #   * It searches in the DB for an active access token
       #   * If the token does not exist, we'll get a new one using the client_credentials flow
       def get_access_token(bearer_id:, client_name: nil, bearer_type: "Person", scopes: nil, valid_for: 30.seconds)
         client_config = client_config_for(client_name || self.client_name)
@@ -72,8 +71,6 @@ module Zaikio
                                          requested_scopes: scopes,
                                          valid_for: valid_for)
 
-        token = token.refresh! if token&.expired?
-
         token ||= fetch_new_token(client_config: client_config,
                                   bearer_type: bearer_type,
                                   bearer_id: bearer_id,
@@ -81,21 +78,31 @@ module Zaikio
         token
       end
 
-      # Finds the best usable access token. Note that this token may have expired and
-      # would require refreshing.
-      def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:, valid_for: 30.seconds)  # rubocop:disable Metrics/MethodLength
+      # This method can be used to find an active access token by id.
+      # It might refresh the access token to get an active one.
+      def find_active_access_token(id)
+        return unless id
+
+        access_token = Zaikio::AccessToken.find_by(id: id)
+        access_token = access_token.refresh! if access_token&.expired?
+
+        access_token
+      end
+
+      # Finds active access token with matching criteria for bearer and scopes.
+      def find_usable_access_token(client_name:, bearer_type:, bearer_id:, requested_scopes:, valid_for: 30.seconds) # rubocop:disable Metrics/MethodLength
         configuration.logger.debug "Try to fetch token for client_name: #{client_name}, " \
                                    "bearer #{bearer_type}/#{bearer_id}, requested_scopes: #{requested_scopes}"
 
         fetch_access_token = lambda {
           Zaikio::AccessToken
             .where(audience: client_name)
-            .usable(
+            .by_bearer(
               bearer_type: bearer_type,
               bearer_id: bearer_id,
-              requested_scopes: requested_scopes,
-              valid_until: valid_for.from_now
+              requested_scopes: requested_scopes
             )
+            .valid(valid_for.from_now)
             .first
         }
 
@@ -113,7 +120,10 @@ module Zaikio
             bearer_id: bearer_id,
             scopes: scopes
           ),
-          requested_scopes: scopes
+          requested_scopes: scopes,
+          skip_refresh_token: true
+          # Do not store refresh token on client credentials flow
+          # https://docs.zaikio.com/changelog/2022-08-09_client-credentials-drop-refresh-token.html
         ).tap(&:save!)
       end
 

@@ -157,57 +157,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     end
   end
 
-  test "generates refresh token" do
-    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
-    access_token = Zaikio::AccessToken.create!(
-      bearer_type: "Organization",
-      bearer_id: "123",
-      audience: "warehouse",
-      token: "abc",
-      refresh_token: "def",
-      expires_at: 1.hour.ago,
-      scopes: %w[directory.organization.r directory.something.r],
-      requested_scopes: %w[directory.organization.r directory.something.r]
-    )
-
-    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
-      .with(
-        basic_auth: %w[abc secret],
-        body: {
-          "grant_type" => "refresh_token",
-          "refresh_token" => access_token.refresh_token
-        },
-        headers: {
-          "Accept" => "application/json"
-        }
-      )
-      .to_return(status: 200, body: {
-        "access_token" => "refreshed",
-        "refresh_token" => "refresh_of_refreshed",
-        "token_type" => "bearer",
-        "scope" => "directory.organization.r,directory.something.r",
-        "audiences" => ["warehouse"],
-        "expires_in" => 600,
-        "bearer" => {
-          id: "123",
-          type: "Organization"
-        }
-      }.to_json, headers: { "Content-Type" => "application/json" })
-
-    refreshed_token = Zaikio::OAuthClient.get_access_token(
-      bearer_type: "Organization",
-      bearer_id: "123",
-      scopes: %w[directory.something.r]
-    )
-    assert_not refreshed_token.expired?
-    assert_equal %w[directory.organization.r directory.something.r], refreshed_token.scopes
-    assert_equal "123", refreshed_token.bearer_id
-    assert_equal "Organization", refreshed_token.bearer_type
-    assert_equal "refreshed", refreshed_token.token
-    assert_equal "refresh_of_refreshed", refreshed_token.refresh_token
-    assert_not_equal access_token, refreshed_token
-  end
-
   test "fetches new token using client credentials if existing token expires before :valid_for" do
     Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(
@@ -259,9 +208,9 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_not_equal access_token, refreshed_token
   end
 
-  test "when refreshing fails, fallback to client_credentials flow" do
+  test "when token is invalid, fallback to client_credentials flow" do
     Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
-    access_token = Zaikio::AccessToken.create!(
+    Zaikio::AccessToken.create!(
       bearer_type: "Organization",
       bearer_id: "123",
       audience: "warehouse",
@@ -271,22 +220,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
       scopes: %w[directory.organization.r directory.something.r],
       requested_scopes: %w[directory.organization.r directory.something.r]
     )
-
-    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
-      .with(
-        basic_auth: %w[abc secret],
-        body: {
-          "grant_type" => "refresh_token",
-          "refresh_token" => access_token.refresh_token
-        },
-        headers: {
-          "Accept" => "application/json"
-        }
-      )
-      .to_return(status: 400, body: {
-        "error" => "invalid_grant",
-        "error_description" => "The application, grant, refresh token or device authorization could not be found."
-      }.to_json, headers: { "Content-Type" => "application/json" })
 
     stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
       .with(
@@ -323,7 +256,6 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_equal org_token, new_token.token
     assert_equal "5df4590e-7382-4a31-a57f-ae0e0ce902f2", new_token.id
     assert_nil new_token.refresh_token # not set in client credentials
-    assert_nil Zaikio::AccessToken.find_by(id: access_token.id)
   end
 
   test "gets token via client credentials if refresh token is not present" do
@@ -479,5 +411,53 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
                                   scopes: %w[directory.organization.r]) do
       obj.call
     end
+  end
+
+  test "#find_active_user with expired but refreshable access token" do
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
+    access_token = Zaikio::AccessToken.create!(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      audience: "warehouse",
+      token: "abc",
+      refresh_token: "def",
+      expires_at: 1.hour.ago,
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
+    )
+
+    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
+      .with(
+        basic_auth: %w[abc secret],
+        body: {
+          "grant_type" => "refresh_token",
+          "refresh_token" => access_token.refresh_token
+        },
+        headers: {
+          "Accept" => "application/json"
+        }
+      )
+      .to_return(status: 200, body: {
+        "access_token" => "refreshed",
+        "refresh_token" => "refresh_of_refreshed",
+        "token_type" => "bearer",
+        "scope" => "directory.organization.r,directory.something.r",
+        "audiences" => ["warehouse"],
+        "expires_in" => 600,
+        "bearer" => {
+          id: "123",
+          type: "Organization"
+        }
+      }.to_json, headers: { "Content-Type" => "application/json" })
+
+    refreshed_token = Zaikio::OAuthClient.find_active_access_token(access_token.id)
+
+    assert_nil Zaikio::AccessToken.find_by(id: access_token.id)
+    assert_not refreshed_token.expired?
+    assert_equal %w[directory.organization.r directory.something.r], refreshed_token.scopes
+    assert_equal "123", refreshed_token.bearer_id
+    assert_equal "Organization", refreshed_token.bearer_type
+    assert_equal "refreshed", refreshed_token.token
+    assert_equal "refresh_of_refreshed", refreshed_token.refresh_token
   end
 end

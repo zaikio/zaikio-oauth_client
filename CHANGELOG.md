@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Do not store refresh tokens from client credentials flow to improve security ([until they are removed by the hub](https://docs.zaikio.com/changelog/2022-08-09_client-credentials-drop-refresh-token.html))
+* Do not redeem refresh tokens in `get_access_token` instead use client credentials flow so that only users redeem refresh tokens
+* Automatically revoke access token on logout (security)
+* Add `Zaikio::OAuthClient.find_active_access_token( session[:zaikio_access_token_id])` that should be used to find the latest valid access token. If the (redirect) access token e.g. was revoked (user disconnected, security breach, ...) the user shall be logged out.
+* Add `Zaikio::AccessToken#revoke!`
+
 ## 0.18.1 - 2022-04-29
 
 * Relax dependency on `zaikio-jwt_auth`, allow versions 2.x

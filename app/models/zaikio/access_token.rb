@@ -9,7 +9,7 @@ module Zaikio
     encrypts :token
     encrypts :refresh_token
 
-    def self.build_from_access_token(access_token, requested_scopes: nil)
+    def self.build_from_access_token(access_token, requested_scopes: nil, skip_refresh_token: false)
       payload = JWT.decode(access_token.token, nil, false).first rescue {} # rubocop:disable Style/RescueModifier
       scopes = access_token.params["scope"].split(",")
       new(
@@ -18,7 +18,7 @@ module Zaikio
         bearer_id: access_token.params["bearer"]["id"],
         audience: access_token.params["audiences"].first,
         token: access_token.token,
-        refresh_token: access_token.refresh_token,
+        refresh_token: (access_token.refresh_token unless skip_refresh_token),
         expires_at: Time.strptime(access_token.expires_at.to_s, "%s"),
         scopes: scopes,
         requested_scopes: requested_scopes || scopes
@@ -94,6 +94,14 @@ module Zaikio
 
       destroy
       nil
+    end
+
+    def revoke!
+      return unless Zaikio.const_defined?("Hub::RevokedAccessToken", false)
+
+      Zaikio::Hub.with_token(token) do
+        Zaikio::Hub::RevokedAccessToken.create
+      end
     end
   end
 end
