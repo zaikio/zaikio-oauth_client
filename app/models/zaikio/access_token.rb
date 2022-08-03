@@ -102,6 +102,8 @@ module Zaikio
       Zaikio::Hub.with_token(token) do
         Zaikio::Hub::RevokedAccessToken.create
       end
+    rescue Zaikio::ConnectionError => e
+      Zaikio::OAuthClient.configuration.logger.warn "Access Token #{id} could not be revoked: #{e.message}"
     end
   end
 end
