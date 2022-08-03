@@ -121,7 +121,7 @@ module Zaikio
             scopes: scopes
           ),
           requested_scopes: scopes,
-          skip_refresh_token: true
+          include_refresh_token: false
           # Do not store refresh token on client credentials flow
           # https://docs.zaikio.com/changelog/2022-08-09_client-credentials-drop-refresh-token.html
         ).tap(&:save!)
