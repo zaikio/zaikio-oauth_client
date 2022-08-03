@@ -83,6 +83,11 @@ module Zaikio
       def find_active_access_token(id)
         return unless id
 
+        if Rails.env.test?
+          access_token = TestHelper.find_active_access_token(id)
+          return access_token if access_token
+        end
+
         access_token = Zaikio::AccessToken.find_by(id: id)
         access_token = access_token.refresh! if access_token&.expired?
 
