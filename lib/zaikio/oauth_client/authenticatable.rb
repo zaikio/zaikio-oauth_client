@@ -55,13 +55,16 @@ module Zaikio
       end
 
       def destroy
-        access_token_id = session[:zaikio_access_token_id]
+        if (access_token = Zaikio::AccessToken.valid.or(Zaikio::AccessToken.valid_refresh)
+                                             .find_by(id: session[:zaikio_access_token_id]))
+          access_token.revoke!
+        end
         session.delete(:zaikio_access_token_id)
         session.delete(:origin)
 
         redirect_to send(
           respond_to?(:after_destroy_path_for) ? :after_destroy_path_for : :default_after_destroy_path_for,
-          access_token_id
+          access_token.id
         )
       end
 

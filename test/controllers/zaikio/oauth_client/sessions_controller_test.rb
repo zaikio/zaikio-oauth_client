@@ -130,6 +130,7 @@ module Zaikio
       end
 
       test "Does code grant flow" do
+        Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
         set_session(:origin, "/?a=b")
 
         stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
@@ -172,6 +173,10 @@ module Zaikio
         assert_equal "be4ae927cf49466293049c993ad911b2", access_token.refresh_token
         assert_equal %w[directory.person.r], access_token.scopes
 
+        Zaikio::Hub = Module.new
+        Zaikio::Hub::RevokedAccessToken = Class.new
+        Zaikio::Hub.stubs(:with_token).with("749ceefd1f7909a1773501e0bc57d5b2").yields
+        Zaikio::Hub::RevokedAccessToken.expects(:create)
         delete zaikio_oauth_client.session_path(client_name: "warehouse")
         jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
         assert_nil jar.encrypted["zaikio_person_id"]
