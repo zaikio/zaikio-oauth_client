@@ -64,7 +64,7 @@ module Zaikio
 
         redirect_to send(
           respond_to?(:after_destroy_path_for) ? :after_destroy_path_for : :default_after_destroy_path_for,
-          session[:zaikio_access_token_id]
+          access_token.id
         )
       end
 
