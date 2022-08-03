@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Fix `logged_in_as` helper to create a proper access token
+
 ## 0.19.0 - 2022-08-03
 
 * Do not store refresh tokens from client credentials flow to improve security ([until they are removed by the hub](https://docs.zaikio.com/changelog/2022-08-09_client-credentials-drop-refresh-token.html))
