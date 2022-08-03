@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.19.0 - 2022-08-03
+
 * Do not store refresh tokens from client credentials flow to improve security ([until they are removed by the hub](https://docs.zaikio.com/changelog/2022-08-09_client-credentials-drop-refresh-token.html))
 * Do not redeem refresh tokens in `get_access_token` instead use client credentials flow so that only users redeem refresh tokens
 * Automatically revoke access token on logout (security)
