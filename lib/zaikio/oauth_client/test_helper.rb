@@ -3,7 +3,7 @@ module Zaikio
     module TestHelper
       extend ActiveSupport::Concern
 
-      VirtualAccessToken = Struct.new(:bearer_id, :bearer_type, :audience, :expired?, keyword_init: true)
+      VirtualAccessToken = Struct.new(:id, :bearer_id, :bearer_type, :audience, :expired?, keyword_init: true)
 
       class << self
         def find_active_access_token(id)
@@ -12,6 +12,7 @@ module Zaikio
           _, audience, person_id = id.split(":")
 
           VirtualAccessToken.new(
+            id: id,
             bearer_id: person_id,
             audience: audience,
             bearer_type: "Person",

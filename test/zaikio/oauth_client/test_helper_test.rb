@@ -14,6 +14,7 @@ class Zaikio::OAuthClient::TestHelperTest < ActionDispatch::IntegrationTest
     access_token = Zaikio::OAuthClient.find_active_access_token(@controller.session[:zaikio_access_token_id])
     assert_equal "my-id", access_token.bearer_id
     assert_equal "Person", access_token.bearer_type
+    assert_equal "AT:warehouse:my-id", access_token.id
     assert_not access_token.expired?
   end
 end

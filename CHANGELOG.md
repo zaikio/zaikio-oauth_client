@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Fix `logged_in_as` to return access token ID
+
 ## 0.19.1 - 2022-08-03
 
 * Fix `logged_in_as` helper to create a proper access token
