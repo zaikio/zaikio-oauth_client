@@ -460,4 +460,20 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_equal "refreshed", refreshed_token.token
     assert_equal "refresh_of_refreshed", refreshed_token.refresh_token
   end
+
+  test "#find_active_user does not return invalid tokens" do
+    access_token = Zaikio::AccessToken.create!(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      audience: "warehouse",
+      token: "abc",
+      refresh_token: "def",
+      expires_at: 1.hour.ago,
+      scopes: %w[directory.organization.r directory.something.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
+    )
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([access_token.id])
+
+    assert_nil Zaikio::OAuthClient.find_active_access_token(access_token.id)
+  end
 end

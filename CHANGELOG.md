@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Fix: only include valid or refreshable access token in `find_active_access_token`
+
 ## 0.19.2 - 2022-08-03
 
 * Fix `logged_in_as` to return access token ID
