@@ -150,7 +150,7 @@ The Zaikio gem engine will set a cookie for the access token after a successful 
 If you are using for example `Zaikio::Hub::Models`, you can use this snippet to set the current user:
 
 ```ruby
-access_token = Zaikio::OAuthClient.find_active_access_token(, session[:zaikio_access_token_id])
+access_token = Zaikio::OAuthClient.find_active_access_token(session[:zaikio_access_token_id])
 session[:zaikio_access_token_id] = access_token&.id
 Current.user = Zaikio::Hub::Models::Person.find_by(id: access_token&.bearer_id)
 
