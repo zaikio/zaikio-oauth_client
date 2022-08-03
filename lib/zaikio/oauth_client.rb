@@ -80,7 +80,7 @@ module Zaikio
 
       # This method can be used to find an active access token by id.
       # It might refresh the access token to get an active one.
-      def find_active_access_token(id)
+      def find_active_access_token(id, valid_for: 30.seconds)
         return unless id
 
         if Rails.env.test?
@@ -88,7 +88,9 @@ module Zaikio
           return access_token if access_token
         end
 
-        access_token = Zaikio::AccessToken.find_by(id: id)
+        access_token = Zaikio::AccessToken.valid(valid_for.from_now).or(
+          Zaikio::AccessToken.valid_refresh(valid_for.from_now)
+        ).find_by(id: id)
         access_token = access_token.refresh! if access_token&.expired?
 
         access_token
