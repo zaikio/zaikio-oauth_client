@@ -1,11 +1,13 @@
 module Zaikio
   module OAuthClient
-    module Authenticatable
+    module Authenticatable # rubocop:disable Metrics/ModuleLength
       extend ActiveSupport::Concern
 
       def new
         opts = params.permit(:client_name, :show_signup, :prompt, :prompt_email_confirmation,
-                             :force_login, :state, :lang)
+                             :force_login, :state, :lang,
+                             person: %i[first_name name email],
+                             organization: [:name, :country_code, { kinds: [] }])
         opts[:lang] ||= I18n.locale if defined?(I18n)
         client_name = opts.delete(:client_name)
         opts[:state] ||= session[:state] = SecureRandom.urlsafe_base64(32)

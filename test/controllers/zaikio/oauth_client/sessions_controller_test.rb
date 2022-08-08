@@ -43,6 +43,16 @@ module Zaikio
                                                  lang: "de",
                                                  prompt: "select_account",
                                                  prompt_email_confirmation: "1",
+                                                 person: {
+                                                   first_name: "Emily",
+                                                   name: "Young",
+                                                   email: "emily.young@example.com"
+                                                 },
+                                                 organization: {
+                                                   name: "Awesome Print",
+                                                   country_code: "US",
+                                                   kinds: ["printer"]
+                                                 },
                                                  unknown_param: :no)
 
         params = {
@@ -55,7 +65,17 @@ module Zaikio
           state: "entropy",
           lang: "de",
           prompt: "select_account",
-          prompt_email_confirmation: "1"
+          prompt_email_confirmation: "1",
+          person: {
+            first_name: "Emily",
+            name: "Young",
+            email: "emily.young@example.com"
+          },
+          organization: {
+            name: "Awesome Print",
+            country_code: "US",
+            kinds: ["printer"]
+          }
         }
 
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
