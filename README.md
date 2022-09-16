@@ -95,7 +95,7 @@ Then run `bundle install`.
 Configure sidekiq scheduler in `config/sidekiq.yml`:
 ```yaml
 :schedule:
-  cleanup_acces_tokens_job:
+  cleanup_access_tokens_job:
     cron: '0 3 * * *'               # This will delete all expired tokens every day at 3am.
     class: 'Zaikio::CleanupAccessTokensJob'
 ```
