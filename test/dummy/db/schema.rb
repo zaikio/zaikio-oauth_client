@@ -19,10 +19,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_25_130923) do
     t.string "bearer_type", default: "Organization", null: false
     t.string "bearer_id", null: false
     t.string "audience", null: false
-    t.datetime "expires_at"
+    t.datetime "expires_at", precision: nil
     t.string "scopes", default: [], null: false, array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "requested_scopes", default: [], null: false, array: true
     t.string "token", null: false
     t.string "refresh_token"

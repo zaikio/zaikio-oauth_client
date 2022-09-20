@@ -8,8 +8,6 @@ require "zaikio/oauth_client/authenticatable"
 module Zaikio
   module OAuthClient # rubocop:disable Metrics/ModuleLength
     class << self
-      attr_reader :client_name
-
       def configure
         @configuration ||= Configuration.new
         yield(configuration)
@@ -17,6 +15,14 @@ module Zaikio
 
       def configuration
         @configuration ||= Configuration.new
+      end
+
+      def client_name
+        Thread.current[:zaikio_oauth_client_name]
+      end
+
+      def client_name=(new_value)
+        Thread.current[:zaikio_oauth_client_name] = new_value
       end
 
       def for(client_name = nil)
@@ -34,12 +40,14 @@ module Zaikio
         @oauth_scheme = :request_body
       end
 
-      def with_client(client_name)
-        original_client_name = @client_name || nil
-        @client_name = client_name
+      def with_client(new_client_name)
+        original_client_name = client_name
+
+        self.client_name = new_client_name
+
         yield
       ensure
-        @client_name = original_client_name
+        self.client_name = original_client_name
       end
 
       def with_auth(options_or_access_token, &block)
