@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Refactor `Zaikio::OAuthClient.client_name` to be thread-safe
+
 ## 0.20.0 - 2022-08-08
 
 * Support prefilled person and organization data
