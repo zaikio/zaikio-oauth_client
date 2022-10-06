@@ -63,6 +63,65 @@ module Zaikio
         assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
       end
 
+      test "with ?app_name parameters it includes that app_name in the scope" do
+        get zaikio_oauth_client.new_subscription_path(app_name: "some_app", state: "baz")
+
+        params = {
+          client_id: "abc",
+          redirect_uri: zaikio_oauth_client.approve_connection_url,
+          response_type: "code",
+          scope: "Org.subscription_create_some_app",
+          state: "baz"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "with ?app_name and ?plan parameters it includes that app_name and plan in the scope" do
+        get zaikio_oauth_client.new_subscription_path(app_name: "some_app", plan: "my_plan", state: "baz")
+
+        params = {
+          client_id: "abc",
+          redirect_uri: zaikio_oauth_client.approve_connection_url,
+          response_type: "code",
+          scope: "Org.subscription_create_some_app.my_plan",
+          state: "baz"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "with a ?organization_id and ?app_name parameters it includes that ID and the app_name in the scope" do
+        get zaikio_oauth_client.new_subscription_path(organization_id: "a4cd0243-2575-4d3f-b143-4c85f959808d",
+                                                      app_name: "some_app", state: "baz")
+
+        params = {
+          client_id: "abc",
+          redirect_uri: zaikio_oauth_client.approve_connection_url,
+          response_type: "code",
+          scope: "Org/a4cd0243-2575-4d3f-b143-4c85f959808d.subscription_create_some_app",
+          state: "baz"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
+      test "with a ?redirect_url it uses that redirect_url" do
+        get zaikio_oauth_client.new_subscription_path(rganization_id: "a4cd0243-2575-4d3f-b143-4c85f959808d",
+                                                      redirect_uri: "https://example.com", app_name: "some_app",
+                                                      state: "baz")
+
+        params = {
+          client_id: "abc",
+          redirect_uri: "https://example.com",
+          response_type: "code",
+          scope: "Org.subscription_create_some_app",
+          state: "baz"
+        }
+
+        assert_redirected_to "http://hub.zaikio.test/oauth/authorize?#{params.to_query}"
+      end
+
       test "without passing a ?state parameter, it sets a high-entropy string cookie" do
         get zaikio_oauth_client.new_subscription_path
 
