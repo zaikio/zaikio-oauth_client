@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.21.0 - 2022-10-10
+
 * Refactor `Zaikio::OAuthClient.client_name` to be thread-safe
 
 * Support `:app_name` and `:redirect_uri` parameters with subscription flow
