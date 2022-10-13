@@ -162,7 +162,7 @@ end
 
 You can then use `Current.user` anywhere.
 
-For **logout** use: `zaikio_oauth_client.session_path, method: :delete` or build your own controller for deleting the cookie.
+For **logout** use: `zaikio_oauth_client.session_path, method: :delete` or build your own controller for deleting the cookie. If you do build your own controller, please be aware that it is possible for the access token to be nil, and you should handle this accordingly.
 
 #### Multiple clients
 

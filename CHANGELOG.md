@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.21.1 - 2022-10-13
+
+* Fix `access_token` can be nil when deleting a session so add guard for this.
+
 ## 0.21.0 - 2022-10-10
 
 * Refactor `Zaikio::OAuthClient.client_name` to be thread-safe
