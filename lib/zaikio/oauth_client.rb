@@ -118,6 +118,7 @@ module Zaikio
               requested_scopes: requested_scopes
             )
             .valid(valid_for.from_now)
+            .order(created_at: :desc)
             .first
         }
 

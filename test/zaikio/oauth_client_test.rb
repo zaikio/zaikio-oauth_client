@@ -93,6 +93,37 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     )
   end
 
+  test "gets latest valid access token" do
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
+    Zaikio::AccessToken.create!(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      audience: "warehouse",
+      token: "abc",
+      refresh_token: "def",
+      expires_at: 1.hour.from_now,
+      created_at: 1.hour.ago,
+      scopes: %w[directory.organization.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
+    )
+    newer_access_token = Zaikio::AccessToken.create!(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      audience: "warehouse",
+      token: "abc",
+      refresh_token: "def",
+      expires_at: 1.hour.from_now,
+      created_at: 20.minutes.ago,
+      scopes: %w[directory.organization.r],
+      requested_scopes: %w[directory.organization.r directory.something.r]
+    )
+
+    assert_equal newer_access_token, Zaikio::OAuthClient.get_access_token(
+      bearer_type: "Organization",
+      bearer_id: "123"
+    )
+  end
+
   test "removes blacklisted tokens" do
     Zaikio::JWTAuth.stubs(:revoked_token_ids).returns(["23d5b639-7d7b-4583-829b-159a08d0c099"])
     Zaikio::AccessToken.create!(
