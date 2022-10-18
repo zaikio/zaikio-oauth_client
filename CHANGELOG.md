@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.21.2 - 2022-10-18
+
 * Fix: Use latest access token instead of first valid one in case user granted new permissions
 
 ## 0.21.1 - 2022-10-13
