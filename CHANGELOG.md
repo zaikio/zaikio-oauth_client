@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* Fix: Use latest access token instead of first valid one in case user granted new permissions
+
 ## 0.21.1 - 2022-10-13
 
 * Fix `access_token` can be nil when deleting a session so add guard for this.
