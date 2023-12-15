@@ -46,6 +46,13 @@ module Zaikio
         Zaikio::OAuthClient.with_oauth_scheme(:basic_auth) do
           oauth_client.client_credentials.get_token(scope: scopes_with_prefix.join(","))
         end
+      rescue OAuth2::Error => e
+        if e.response.body.include?("bearer_does_not_exist")
+          Rails.logger.error "#{bearer_type[0..2]}/#{bearer_id} does not exist"
+          return
+        end
+
+        raise e
       end
 
       class OrganizationConnection

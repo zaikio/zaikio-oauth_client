@@ -380,6 +380,34 @@ class Zaikio::OAuthClient::Test < ActiveSupport::TestCase
     assert_nil access_token.refresh_token # not set in client credentials
   end
 
+  test "client credentials token returns nil if bearer_not_exist" do
+    Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
+    Zaikio::AccessToken.delete_all
+
+    stub_request(:post, "http://hub.zaikio.test/oauth/access_token")
+      .with(
+        basic_auth: %w[abc secret],
+        body: {
+          "grant_type" => "client_credentials",
+          "scope" => "Org/123.directory.something.r"
+        },
+        headers: {
+          "Accept" => "application/json"
+        }
+      )
+      .to_return(status: 402, body: {
+        errors: { scopes: ["bearer_does_not_exist"] }
+      }.to_json, headers: { "Content-Type" => "application/json" })
+
+    access_token = Zaikio::OAuthClient.get_access_token(
+      bearer_type: "Organization",
+      bearer_id: "123",
+      scopes: %w[directory.something.r]
+    )
+
+    assert_nil access_token
+  end
+
   test "use with auth helper" do
     Zaikio::JWTAuth.stubs(:revoked_token_ids).returns([])
     access_token = Zaikio::AccessToken.create!(
