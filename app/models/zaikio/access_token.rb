@@ -10,6 +10,8 @@ module Zaikio
     encrypts :refresh_token
 
     def self.build_from_access_token(access_token, requested_scopes: nil, include_refresh_token: true)
+      return if access_token.nil?
+
       payload = JWT.decode(access_token.token, nil, false).first rescue {} # rubocop:disable Style/RescueModifier
       scopes = access_token.params["scope"].split(",")
       new(
